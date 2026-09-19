@@ -16,6 +16,8 @@ export const Route = createFileRoute("/best-sellers")({
         property: "og:description",
         content: "Our most-loved handcrafted sweets and premium nuts.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: () => {

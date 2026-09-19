@@ -18,9 +18,9 @@
 - [x] Verify desktop and mobile presentation
 
 ## Storefront enrichment
-- [ ] Create unique product photography for featured best sellers and new launches
-- [ ] Expand the Shop menu with spreadsheet categories, flavours, descriptions, and alternating brand accents
-- [ ] Add social icons, email and WhatsApp subscriptions, and floating WhatsApp chat
-- [ ] Add icons to the three About links
-- [ ] Add a 30-item labeled sample-review carousel with autoplay and manual controls
+- [x] Create unique product photography for featured best sellers and new launches
+- [x] Expand the Shop menu with spreadsheet categories, flavours, descriptions, and alternating brand accents
+- [x] Add social icons, email and WhatsApp subscriptions, and floating WhatsApp chat
+- [x] Add icons to the three About links
+- [x] Add a 30-item labeled sample-review carousel with autoplay and manual controls
 - [ ] Verify route metadata, desktop/mobile layouts, interactions, and TypeScript
