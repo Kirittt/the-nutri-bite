@@ -14,7 +14,7 @@ export function ProductCard({ product }: { product: Product }) {
     <Link
       to="/product/$slug"
       params={{ slug: product.slug }}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all hover:-translate-y-1 hover:shadow-lift"
+      className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lift"
     >
       <div className="relative grid aspect-4/3 place-items-center overflow-hidden bg-linear-to-br from-softgreen to-beige">
         {image ? <img src={image} alt={product.name} className="size-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" /> : <CategoryIcon

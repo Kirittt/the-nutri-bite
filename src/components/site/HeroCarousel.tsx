@@ -43,7 +43,7 @@ export function HeroCarousel() {
   return (
     <section className="relative min-h-[34rem] overflow-hidden bg-deep text-cream sm:min-h-[39rem]" aria-roledescription="carousel" aria-label="Featured collections">
       {heroVisuals.map((image, index) => (
-        <img key={image} src={image} alt="" className={`absolute inset-0 size-full object-cover transition-opacity duration-700 ${index === active ? "opacity-60" : "opacity-0"}`} />
+        <img key={image} src={image} alt="" className={`absolute inset-0 size-full object-cover transition-[opacity,transform] duration-700 ${index === active ? "scale-100 opacity-65" : "scale-105 opacity-0"}`} />
       ))}
       <div className="absolute inset-0 bg-linear-to-r from-deep via-deep/75 to-transparent" />
       <div className="container-page relative flex min-h-[34rem] items-center py-14 sm:min-h-[39rem]">

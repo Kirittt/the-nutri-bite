@@ -5,6 +5,8 @@ import { toast } from "sonner";
 
 import { CategoryIcon } from "@/components/site/icons";
 import { ProductCard } from "@/components/site/ProductCard";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 import { formatINR, getCategory, getProduct, productsIn } from "@/data/catalog";
 import { BRAND } from "@/data/catalog";
 import { useCart } from "@/lib/cart";
@@ -35,6 +37,8 @@ export const Route = createFileRoute("/product/$slug")({
         { name: "description", content: product.tagline },
         { property: "og:title", content: title },
         { property: "og:description", content: product.tagline },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
       ],
     };
   },
@@ -65,8 +69,8 @@ function ProductPage() {
       </nav>
 
       <div className="mt-6 grid gap-10 lg:grid-cols-2">
-        <div className="grid aspect-square place-items-center overflow-hidden rounded-lg bg-linear-to-br from-softgreen to-beige">
-          {image ? <img src={image} alt={product.name} className="size-full object-cover" /> : <CategoryIcon name={cat?.icon ?? "cookie"} className="size-28 text-primary/25" />}
+        <div className="group grid aspect-square place-items-center overflow-hidden rounded-lg bg-linear-to-br from-softgreen to-beige">
+          {image ? <img src={image} alt={product.name} className="size-full object-cover transition-transform duration-500 group-hover:scale-105" width={1200} height={900} /> : <CategoryIcon name={cat?.icon ?? "cookie"} className="size-28 text-primary/25 transition-transform group-hover:scale-110" />}
         </div>
 
         <div>
@@ -170,6 +174,16 @@ function ProductPage() {
         <div className="rounded-lg bg-softgreen p-6"><Sparkles className="text-leaf" /><h2 className="mt-3 font-display text-xl text-primary">Why you’ll enjoy it</h2><ul className="mt-3 space-y-2 text-sm text-muted-foreground"><li>• Thoughtfully selected ingredients</li><li>• Convenient packs for home, work or travel</li><li>• Satisfying flavour and texture</li></ul></div>
         <div className="rounded-lg bg-beige p-6"><Heart className="text-primary" /><h2 className="mt-3 font-display text-xl text-primary">Made with care</h2><ul className="mt-3 space-y-2 text-sm text-muted-foreground"><li>• Neat and hygienic preparation</li><li>• Handmade in carefully managed batches</li><li>• Checked and packed with extra care and love</li></ul></div>
         <div className="rounded-lg border border-border p-6"><div className="flex gap-1 text-sun">{[1,2,3,4,5].map((n)=><Star key={n} className="size-4 fill-current" />)}</div><h2 className="mt-3 font-display text-xl text-primary">“Fresh, flavourful and beautifully packed.”</h2><p className="mt-3 text-sm text-muted-foreground">A representative customer-style testimonial while verified reviews are collected.</p><span className="mt-4 inline-block rounded-full bg-muted px-2 py-1 text-[0.65rem] font-bold uppercase">Sample review — not included in ratings</span></div>
+      </section>
+
+      <section className="mt-16 grid gap-10 border-y border-border py-14 lg:grid-cols-[.85fr_1.15fr]">
+        <div><p className="text-sm font-bold uppercase text-leaf">Need help choosing?</p><h2 className="mt-2 font-display text-3xl text-primary">Questions about {product.name}</h2><p className="mt-4 text-muted-foreground">Our team can help with pack sizes, ingredients, gifting quantities and delivery before you order.</p><div className="mt-6 flex flex-wrap gap-3"><Button asChild size="lg"><a href={BRAND.whatsapp}><MessageCircle /> Ask on WhatsApp</a></Button><Button asChild size="lg" variant="outline"><a href={`tel:${BRAND.phoneHref}`}>Call {BRAND.phone}</a></Button></div></div>
+        <Accordion type="single" collapsible className="border-t border-border">
+          <AccordionItem value="freshness"><AccordionTrigger>How is this product prepared and packed?</AccordionTrigger><AccordionContent className="text-muted-foreground">It is prepared in carefully managed batches, handled hygienically, checked and packed by hand with extra care.</AccordionContent></AccordionItem>
+          <AccordionItem value="storage"><AccordionTrigger>How should I store it?</AccordionTrigger><AccordionContent className="text-muted-foreground">Keep the pack sealed in a cool, dry place away from direct sunlight. After opening, close it securely and follow any storage directions printed on the pack.</AccordionContent></AccordionItem>
+          <AccordionItem value="ingredients"><AccordionTrigger>Where can I check ingredients and allergens?</AccordionTrigger><AccordionContent className="text-muted-foreground">The ingredient list is shown above. Please check the delivered pack before eating and contact us if you have a food allergy or dietary concern.</AccordionContent></AccordionItem>
+          <AccordionItem value="bulk"><AccordionTrigger>Can I order this for gifting or in bulk?</AccordionTrigger><AccordionContent className="text-muted-foreground">Yes. Pack selection and availability depend on quantity. Send us your required quantity and date on WhatsApp for options.</AccordionContent></AccordionItem>
+        </Accordion>
       </section>
 
       {related.length > 0 && (

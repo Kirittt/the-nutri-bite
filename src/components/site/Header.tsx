@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, Phone, ShoppingBag, UserRound, X } from "lucide-react";
+import { ChevronDown, Menu, Phone, ShoppingBag, UserRound, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import logo from "@/assets/nutri-bite-logo.png.asset.json";
@@ -32,16 +32,21 @@ function AnnouncementBar() {
 const navLinks = [
   { to: "/best-sellers", label: "Best Sellers" },
   { to: "/new-launches", label: "New Launches" },
-  { to: "/our-story", label: "Our Story" },
-  { to: "/our-process", label: "Our Process" },
   { to: "/bulk-orders", label: "Bulk / Corporate" },
   { to: "/contact", label: "Contact" },
+] as const;
+
+const aboutLinks = [
+  { to: "/our-story", label: "Our Story", body: "Why we started" },
+  { to: "/our-process", label: "Our Process", body: "How every batch is made" },
+  { to: "/about-us", label: "About Us", body: "Meet The Nutri Bite" },
 ] as const;
 
 export function Header() {
   const { count } = useCart();
   const [open, setOpen] = useState(false);
   const [shopOpen, setShopOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50">
@@ -56,8 +61,8 @@ export function Header() {
             {open ? <Menu className="size-5" /> : <Menu className="size-5" />}
           </button>
 
-          <Link to="/" className="flex items-center gap-3">
-            <img src={logo.url} alt="The Nutri Bite" className="size-14 object-contain" />
+          <Link to="/" className="group flex items-center gap-3">
+            <img src={logo.url} alt="The Nutri Bite" className="size-14 object-contain transition-transform duration-300 group-hover:scale-105 group-hover:rotate-2" />
             <span className="hidden text-sm leading-tight sm:block">
               <span className="block font-display text-lg text-primary">The Nutri Bite</span>
               <span className="block text-[0.7rem] tracking-wide text-muted-foreground">
@@ -100,8 +105,12 @@ export function Header() {
                 </div>
               )}
             </div>
+            <div className="relative" onMouseEnter={() => setAboutOpen(true)} onMouseLeave={() => setAboutOpen(false)}>
+              <button type="button" className="flex items-center gap-1 hover:text-primary" onClick={() => setAboutOpen((value) => !value)}>About <ChevronDown className="size-3.5" /></button>
+              {aboutOpen && <div className="absolute top-full left-1/2 w-64 -translate-x-1/2 pt-4"><div className="border border-border bg-popover p-2 shadow-lift">{aboutLinks.map((item) => <Link key={item.to} to={item.to} onClick={() => setAboutOpen(false)} className="group block p-3 transition-colors hover:bg-softgreen"><span className="block font-semibold transition-transform group-hover:translate-x-1">{item.label}</span><span className="text-xs text-muted-foreground">{item.body}</span></Link>)}</div></div>}
+            </div>
             {navLinks.map((l) => (
-              <Link key={l.to} to={l.to} className="hover:text-primary">
+              <Link key={l.to} to={l.to} className="transition-transform hover:-translate-y-0.5 hover:text-primary">
                 {l.label}
               </Link>
             ))}
@@ -146,6 +155,8 @@ export function Header() {
               Shop All
             </Link>
             <Link to="/auth" onClick={() => setOpen(false)} className="py-2 font-medium">Sign in / Account</Link>
+            <p className="pt-3 text-xs font-bold uppercase text-muted-foreground">About</p>
+            {aboutLinks.map((item) => <Link key={item.to} to={item.to} onClick={() => setOpen(false)} className="py-2 pl-3 font-medium">{item.label}</Link>)}
             <div className="grid grid-cols-2 gap-1 pb-2">
               {categories.map((c) => (
                 <Link
