@@ -8,6 +8,13 @@
       "when": 1789799935773,
       "tag": "0000_create_nutri_bite_store",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789800413162,
+      "tag": "0001_add_admin_invitation_claim",
+      "breakpoints": true
     }
   ]
 }
