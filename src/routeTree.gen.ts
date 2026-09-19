@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BestSellersRouteImport } from './routes/best-sellers'
 import { Route as BulkOrdersRouteImport } from './routes/bulk-orders'
 import { Route as CartRouteImport } from './routes/cart'
@@ -17,6 +19,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as NewLaunchesRouteImport } from './routes/new-launches'
 import { Route as OurProcessRouteImport } from './routes/our-process'
 import { Route as OurStoryRouteImport } from './routes/our-story'
+import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
 import { Route as ShopIndexRouteImport } from './routes/shop.index'
 import { Route as ShopCategoryRouteImport } from './routes/shop.$category'
@@ -24,6 +27,15 @@ import { Route as ShopCategoryRouteImport } from './routes/shop.$category'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BestSellersRoute = BestSellersRouteImport.update({
@@ -61,6 +73,11 @@ const OurStoryRoute = OurStoryRouteImport.update({
   path: '/our-story',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const ProductSlugRoute = ProductSlugRouteImport.update({
   id: '/product/$slug',
   path: '/product/$slug',
@@ -79,6 +96,7 @@ const ShopCategoryRoute = ShopCategoryRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/best-sellers': typeof BestSellersRoute
   '/bulk-orders': typeof BulkOrdersRoute
   '/cart': typeof CartRoute
@@ -86,12 +104,14 @@ export interface FileRoutesByFullPath {
   '/new-launches': typeof NewLaunchesRoute
   '/our-process': typeof OurProcessRoute
   '/our-story': typeof OurStoryRoute
+  '/account': typeof AuthenticatedAccountRoute
   '/product/$slug': typeof ProductSlugRoute
   '/shop/$category': typeof ShopCategoryRoute
   '/shop/': typeof ShopIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/best-sellers': typeof BestSellersRoute
   '/bulk-orders': typeof BulkOrdersRoute
   '/cart': typeof CartRoute
@@ -99,6 +119,7 @@ export interface FileRoutesByTo {
   '/new-launches': typeof NewLaunchesRoute
   '/our-process': typeof OurProcessRoute
   '/our-story': typeof OurStoryRoute
+  '/account': typeof AuthenticatedAccountRoute
   '/product/$slug': typeof ProductSlugRoute
   '/shop/$category': typeof ShopCategoryRoute
   '/shop': typeof ShopIndexRoute
@@ -106,6 +127,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
   '/best-sellers': typeof BestSellersRoute
   '/bulk-orders': typeof BulkOrdersRoute
   '/cart': typeof CartRoute
@@ -113,6 +136,7 @@ export interface FileRoutesById {
   '/new-launches': typeof NewLaunchesRoute
   '/our-process': typeof OurProcessRoute
   '/our-story': typeof OurStoryRoute
+  '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/product/$slug': typeof ProductSlugRoute
   '/shop/$category': typeof ShopCategoryRoute
   '/shop/': typeof ShopIndexRoute
@@ -121,6 +145,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/best-sellers'
     | '/bulk-orders'
     | '/cart'
@@ -128,12 +153,14 @@ export interface FileRouteTypes {
     | '/new-launches'
     | '/our-process'
     | '/our-story'
+    | '/account'
     | '/product/$slug'
     | '/shop/$category'
     | '/shop/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/best-sellers'
     | '/bulk-orders'
     | '/cart'
@@ -141,12 +168,15 @@ export interface FileRouteTypes {
     | '/new-launches'
     | '/our-process'
     | '/our-story'
+    | '/account'
     | '/product/$slug'
     | '/shop/$category'
     | '/shop'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
+    | '/auth'
     | '/best-sellers'
     | '/bulk-orders'
     | '/cart'
@@ -154,6 +184,7 @@ export interface FileRouteTypes {
     | '/new-launches'
     | '/our-process'
     | '/our-story'
+    | '/_authenticated/account'
     | '/product/$slug'
     | '/shop/$category'
     | '/shop/'
@@ -161,6 +192,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
   BestSellersRoute: typeof BestSellersRoute
   BulkOrdersRoute: typeof BulkOrdersRoute
   CartRoute: typeof CartRoute
@@ -180,6 +213,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/best-sellers': {
@@ -231,6 +278,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OurStoryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/account': {
+      id: '/_authenticated/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AuthenticatedAccountRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/product/$slug': {
       id: '/product/$slug'
       path: '/product/$slug'
@@ -255,8 +309,21 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAccountRoute: AuthenticatedAccountRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
   BestSellersRoute: BestSellersRoute,
   BulkOrdersRoute: BulkOrdersRoute,
   CartRoute: CartRoute,

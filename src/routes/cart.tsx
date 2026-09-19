@@ -1,8 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { BRAND, formatINR } from "@/data/catalog";
 import { useCart } from "@/lib/cart";
+import { createOrder } from "@/lib/store.functions";
 
 export const Route = createFileRoute("/cart")({
   head: () => ({
@@ -19,6 +25,9 @@ export const Route = createFileRoute("/cart")({
 
 function CartPage() {
   const { items, setQty, remove, subtotal, clear } = useCart();
+  const [checkout, setCheckout] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [confirmation, setConfirmation] = useState<string | null>(null);
 
   const whatsappOrder =
     "https://wa.me/918487879935?text=" +
@@ -28,11 +37,29 @@ function CartPage() {
         `\nTotal: ${formatINR(subtotal)}`,
     );
 
+  async function placeOrder(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    setBusy(true);
+    try {
+      const result = await createOrder({ data: {
+        customerName: String(form.get("name") ?? ""), phone: String(form.get("phone") ?? ""),
+        email: String(form.get("email") ?? ""), addressLine: String(form.get("address") ?? ""),
+        city: String(form.get("city") ?? ""), state: String(form.get("state") ?? ""),
+        pinCode: String(form.get("pin") ?? ""), notes: String(form.get("notes") ?? ""),
+        items: items.map((item) => ({ slug: item.slug, variant: item.variant, qty: item.qty })),
+      }});
+      setConfirmation(result.orderNumber);
+      clear();
+    } catch (error) { toast.error(error instanceof Error ? error.message : "Could not save your order."); }
+    finally { setBusy(false); }
+  }
+
   return (
     <div className="container-page section-y">
       <h1 className="font-display text-4xl text-primary">Your Cart</h1>
 
-      {items.length === 0 ? (
+      {confirmation ? <div className="mt-10 rounded-lg bg-softgreen p-10 text-center"><h2 className="font-display text-3xl text-primary">Order saved</h2><p className="mt-3">Your reference is <strong>{confirmation}</strong>.</p><p className="mt-2 text-sm text-muted-foreground">Send it to our team to confirm delivery and payment.</p><a href={BRAND.whatsapp} className="mt-6 inline-flex rounded-md bg-primary px-6 py-3 font-semibold text-primary-foreground">Confirm on WhatsApp</a></div> : items.length === 0 ? (
         <div className="mt-10 grid place-items-center rounded-3xl bg-softgreen p-16 text-center">
           <ShoppingBag className="size-10 text-primary/40" />
           <p className="mt-4 text-muted-foreground">Your cart is empty.</p>
@@ -95,12 +122,8 @@ function CartPage() {
             <p className="mt-2 text-xs text-muted-foreground">
               Shipping and taxes are confirmed when we take your order.
             </p>
-            <a
-              href={whatsappOrder}
-              className="mt-5 block rounded-xl bg-primary px-5 py-3 text-center font-semibold text-primary-foreground hover:bg-deep"
-            >
-              Place order on WhatsApp
-            </a>
+            <Button className="mt-5 w-full" onClick={() => setCheckout(true)}>Save order & continue</Button>
+            <a href={whatsappOrder} className="mt-2 block text-center text-xs text-primary underline">Or send cart directly on WhatsApp</a>
             <a
               href={`tel:${BRAND.phoneHref}`}
               className="mt-2 block rounded-xl border border-primary px-5 py-3 text-center font-semibold text-primary"
@@ -113,6 +136,7 @@ function CartPage() {
           </aside>
         </div>
       )}
+      {checkout && items.length > 0 && <div className="fixed inset-0 z-50 grid place-items-center bg-deep/60 p-4" role="dialog" aria-modal="true" aria-label="Delivery details"><form onSubmit={placeOrder} className="max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-lg bg-background p-6 shadow-lift"><div className="flex items-center justify-between"><h2 className="font-display text-3xl text-primary">Delivery details</h2><Button type="button" variant="ghost" size="icon" onClick={() => setCheckout(false)} aria-label="Close"><Trash2 className="rotate-45" /></Button></div><p className="mt-1 text-sm text-muted-foreground">No online payment now. Our team will confirm your order personally.</p><div className="mt-5 grid gap-4 sm:grid-cols-2"><div><Label htmlFor="name">Full name</Label><Input id="name" name="name" required /></div><div><Label htmlFor="phone">Phone</Label><Input id="phone" name="phone" type="tel" required /></div><div className="sm:col-span-2"><Label htmlFor="email">Email</Label><Input id="email" name="email" type="email" required /></div><div className="sm:col-span-2"><Label htmlFor="address">Address</Label><Input id="address" name="address" required /></div><div><Label htmlFor="city">City</Label><Input id="city" name="city" required /></div><div><Label htmlFor="state">State</Label><Input id="state" name="state" required defaultValue="Gujarat" /></div><div><Label htmlFor="pin">PIN code</Label><Input id="pin" name="pin" required /></div><div><Label htmlFor="notes">Order note</Label><Input id="notes" name="notes" /></div></div><Button type="submit" className="mt-6 w-full" disabled={busy}>{busy ? "Saving order…" : `Save order • ${formatINR(subtotal)}`}</Button></form></div>}
     </div>
   );
 }

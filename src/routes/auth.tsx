@@ -24,7 +24,7 @@ function AuthPage() {
     event.preventDefault(); setBusy(true);
     const result = signUp ? await supabase.auth.signUp({ email, password }) : await supabase.auth.signInWithPassword({ email, password });
     setBusy(false);
-    if (result.error) return toast.error(result.error.message);
+    if (result.error) { toast.error(result.error.message); return; }
     if (signUp) toast.success("Check your email to confirm your account.");
     else navigate({ to: "/account" });
   }
