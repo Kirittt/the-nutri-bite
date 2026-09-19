@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BestSellersRouteImport } from './routes/best-sellers'
+import { Route as BulkOrdersRouteImport } from './routes/bulk-orders'
 import { Route as CartRouteImport } from './routes/cart'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as NewLaunchesRouteImport } from './routes/new-launches'
 import { Route as OurProcessRouteImport } from './routes/our-process'
 import { Route as OurStoryRouteImport } from './routes/our-story'
@@ -29,9 +31,19 @@ const BestSellersRoute = BestSellersRouteImport.update({
   path: '/best-sellers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BulkOrdersRoute = BulkOrdersRouteImport.update({
+  id: '/bulk-orders',
+  path: '/bulk-orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CartRoute = CartRouteImport.update({
   id: '/cart',
   path: '/cart',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NewLaunchesRoute = NewLaunchesRouteImport.update({
@@ -68,7 +80,9 @@ const ShopCategoryRoute = ShopCategoryRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/best-sellers': typeof BestSellersRoute
+  '/bulk-orders': typeof BulkOrdersRoute
   '/cart': typeof CartRoute
+  '/contact': typeof ContactRoute
   '/new-launches': typeof NewLaunchesRoute
   '/our-process': typeof OurProcessRoute
   '/our-story': typeof OurStoryRoute
@@ -79,7 +93,9 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/best-sellers': typeof BestSellersRoute
+  '/bulk-orders': typeof BulkOrdersRoute
   '/cart': typeof CartRoute
+  '/contact': typeof ContactRoute
   '/new-launches': typeof NewLaunchesRoute
   '/our-process': typeof OurProcessRoute
   '/our-story': typeof OurStoryRoute
@@ -91,7 +107,9 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/best-sellers': typeof BestSellersRoute
+  '/bulk-orders': typeof BulkOrdersRoute
   '/cart': typeof CartRoute
+  '/contact': typeof ContactRoute
   '/new-launches': typeof NewLaunchesRoute
   '/our-process': typeof OurProcessRoute
   '/our-story': typeof OurStoryRoute
@@ -104,7 +122,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/best-sellers'
+    | '/bulk-orders'
     | '/cart'
+    | '/contact'
     | '/new-launches'
     | '/our-process'
     | '/our-story'
@@ -115,7 +135,9 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/best-sellers'
+    | '/bulk-orders'
     | '/cart'
+    | '/contact'
     | '/new-launches'
     | '/our-process'
     | '/our-story'
@@ -126,7 +148,9 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/best-sellers'
+    | '/bulk-orders'
     | '/cart'
+    | '/contact'
     | '/new-launches'
     | '/our-process'
     | '/our-story'
@@ -138,7 +162,9 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BestSellersRoute: typeof BestSellersRoute
+  BulkOrdersRoute: typeof BulkOrdersRoute
   CartRoute: typeof CartRoute
+  ContactRoute: typeof ContactRoute
   NewLaunchesRoute: typeof NewLaunchesRoute
   OurProcessRoute: typeof OurProcessRoute
   OurStoryRoute: typeof OurStoryRoute
@@ -163,11 +189,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BestSellersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/bulk-orders': {
+      id: '/bulk-orders'
+      path: '/bulk-orders'
+      fullPath: '/bulk-orders'
+      preLoaderRoute: typeof BulkOrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cart': {
       id: '/cart'
       path: '/cart'
       fullPath: '/cart'
       preLoaderRoute: typeof CartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/new-launches': {
@@ -218,7 +258,9 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BestSellersRoute: BestSellersRoute,
+  BulkOrdersRoute: BulkOrdersRoute,
   CartRoute: CartRoute,
+  ContactRoute: ContactRoute,
   NewLaunchesRoute: NewLaunchesRoute,
   OurProcessRoute: OurProcessRoute,
   OurStoryRoute: OurStoryRoute,
