@@ -52,6 +52,12 @@ export function Header() {
   const selectedCategory = categories.find((category) => category.slug === activeCategory) ?? categories[0];
   const activeIndex = Math.max(0, categories.findIndex((category) => category.slug === selectedCategory?.slug));
   const bulletColor = activeIndex % 2 === 0 ? "bg-leaf" : "bg-sun";
+  const [userId, setUserId] = useState<string | null>(null);
+  useEffect(() => {
+    void supabase.auth.getUser().then(({ data }) => setUserId(data.user?.id ?? null));
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => setUserId(session?.user.id ?? null));
+    return () => listener.unsubscribe();
+  }, []);
 
   return (
     <header className="sticky top-0 z-50">
