@@ -7,17 +7,17 @@ import { BRAND } from "@/data/catalog";
 import { heroVisuals } from "@/data/catalog-images";
 
 const slides = [
-  ["Small Bite. Big Benefits.", "Handcrafted sweets and wholesome snacks for everyday happiness.", "/shop"],
-  ["Mornings Made Better", "Activated almonds for a simple, wholesome morning ritual.", "/product/morning-activated-almonds"],
-  ["Premium Almonds", "Roasted, seasoned and packed with care for a satisfying crunch.", "/shop/almonds"],
-  ["Cashews, Crafted Better", "Premium cashews in familiar and adventurous flavours.", "/shop/cashews"],
-  ["Trail Mix for Every Day", "Nuts, seeds and berries balanced for work, travel and home.", "/shop/trail-mix"],
-  ["A Better Kind of Crunch", "Thoughtful nut mixes with bold flavour and premium ingredients.", "/shop/nut-mix"],
-  ["Wholesome Health Mixes", "Seeds, berries and nuts in easy everyday combinations.", "/shop/health-mix"],
-  ["Snack Bright", "Playful flavours, quality ingredients and careful small-batch preparation.", "/shop/super-snack"],
-  ["Berry & Fruit Mix", "Colourful fruit and berry blends with a lively Indian twist.", "/shop/berry-fruit-mix"],
-  ["Mastana Makhana", "Four exciting flavours, roasted and ready to launch soon.", "/shop/mastana-makhana"],
-  ["Packed With Extra Care & Love", "Hygienically prepared, checked and thoughtfully packed.", "/our-process"],
+  ["Small Bite. Big Benefits.", "Handcrafted sweets and wholesome snacks for everyday happiness."],
+  ["Mornings Made Better", "Activated almonds for a simple, wholesome morning ritual."],
+  ["Premium Almonds", "Roasted, seasoned and packed with care for a satisfying crunch."],
+  ["Cashews, Crafted Better", "Premium cashews in familiar and adventurous flavours."],
+  ["Trail Mix for Every Day", "Nuts, seeds and berries balanced for work, travel and home."],
+  ["A Better Kind of Crunch", "Thoughtful nut mixes with bold flavour and premium ingredients."],
+  ["Wholesome Health Mixes", "Seeds, berries and nuts in easy everyday combinations."],
+  ["Snack Bright", "Playful flavours, quality ingredients and careful small-batch preparation."],
+  ["Berry & Fruit Mix", "Colourful fruit and berry blends with a lively Indian twist."],
+  ["Mastana Makhana", "Four exciting flavours, roasted and ready to launch soon."],
+  ["Packed With Extra Care & Love", "Hygienically prepared, checked and thoughtfully packed."],
 ] as const;
 
 export function HeroCarousel() {
@@ -52,7 +52,7 @@ export function HeroCarousel() {
           <h1 className="mt-4 font-display text-5xl leading-tight sm:text-6xl">{slide[0]}</h1>
           <p className="mt-5 max-w-xl text-lg text-cream/85">{slide[1]}</p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild size="lg" className="bg-sun text-accent-foreground hover:bg-gold"><Link to={slide[2]}>Explore now</Link></Button>
+            <Button asChild size="lg" className="bg-sun text-accent-foreground hover:bg-gold"><Link to="/shop">Explore now</Link></Button>
             <Button asChild size="lg" variant="outline" className="border-cream/60 bg-deep/20 text-cream hover:bg-cream hover:text-deep"><a href={BRAND.whatsapp}><MessageCircle /> WhatsApp us</a></Button>
           </div>
         </div>
