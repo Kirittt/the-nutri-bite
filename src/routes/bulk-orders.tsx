@@ -17,6 +17,8 @@ export const Route = createFileRoute("/bulk-orders")({
         property: "og:description",
         content: "Talk to us about bulk orders, corporate gifting and private label snacks.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: BulkPage,

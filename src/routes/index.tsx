@@ -8,6 +8,7 @@ import { PromiseMarquee } from "@/components/site/PromiseMarquee";
 import { BRAND, categories, products } from "@/data/catalog";
 import { categoryImages } from "@/data/catalog-images";
 import { Button } from "@/components/ui/button";
+import { ReviewCarousel } from "@/components/site/ReviewCarousel";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -31,7 +32,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const bestSellers = products.filter((p) => p.bestSeller);
+  const bestSellers = products.filter((p) => p.bestSeller).slice(0, 5);
   const fresh = products.filter((p) => p.newLaunch);
 
   return (
@@ -72,7 +73,7 @@ function Home() {
               View all
             </Link>
           </div>
-          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
             {bestSellers.map((p) => (
               <ProductCard key={p.slug} product={p} />
             ))}
@@ -113,6 +114,7 @@ function Home() {
           ))}
         </div>
       </section>
+      <ReviewCarousel />
     </div>
   );
 }

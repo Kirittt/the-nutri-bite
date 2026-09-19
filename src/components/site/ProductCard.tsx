@@ -17,7 +17,7 @@ export function ProductCard({ product }: { product: Product }) {
       className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lift"
     >
       <div className="relative grid aspect-4/3 place-items-center overflow-hidden bg-linear-to-br from-softgreen to-beige">
-        {image ? <img src={image} alt={product.name} className="size-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" /> : <CategoryIcon
+        {image ? <img src={image} alt={product.name} className="size-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" width={1200} height={900} /> : <CategoryIcon
           name={cat?.icon ?? "cookie"}
           className="size-14 text-primary/30 transition-transform group-hover:scale-110"
         />}

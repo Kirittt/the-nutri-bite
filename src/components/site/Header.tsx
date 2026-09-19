@@ -1,9 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import { ChevronDown, Menu, Phone, ShoppingBag, UserRound, X } from "lucide-react";
+import { BookHeart, ChevronDown, Factory, Menu, Phone, ShoppingBag, Store, UserRound, UsersRound, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import logo from "@/assets/nutri-bite-logo.png.asset.json";
-import { BRAND, categories } from "@/data/catalog";
+import { BRAND, categories, categorySubcategories } from "@/data/catalog";
 import { useCart } from "@/lib/cart";
 import { CategoryIcon } from "./icons";
 
@@ -37,9 +37,9 @@ const navLinks = [
 ] as const;
 
 const aboutLinks = [
-  { to: "/our-story", label: "Our Story", body: "Why we started" },
-  { to: "/our-process", label: "Our Process", body: "How every batch is made" },
-  { to: "/about-us", label: "About Us", body: "Meet The Nutri Bite" },
+  { to: "/our-story", label: "Our Story", body: "Why we started", icon: BookHeart },
+  { to: "/our-process", label: "Our Process", body: "How every batch is made", icon: Factory },
+  { to: "/about-us", label: "About Us", body: "Meet The Nutri Bite", icon: UsersRound },
 ] as const;
 
 export function Header() {
@@ -47,6 +47,8 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [shopOpen, setShopOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState(categories[0]?.slug ?? "");
+  const selectedCategory = categories.find((category) => category.slug === activeCategory) ?? categories[0];
 
   return (
     <header className="sticky top-0 z-50">
@@ -84,30 +86,25 @@ export function Header() {
                 Shop
               </Link>
               {shopOpen && (
-                <div className="absolute top-full left-1/2 w-[46rem] -translate-x-1/2 pt-4">
-                  <div className="grid grid-cols-3 gap-1 rounded-2xl border border-border bg-popover p-4 shadow-lift">
-                    {categories.map((c) => (
-                      <Link
-                        key={c.slug}
-                        to="/shop/$category"
-                        params={{ category: c.slug }}
-                        className="flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-softgreen"
-                        onClick={() => setShopOpen(false)}
-                      >
-                        <CategoryIcon name={c.icon} className="mt-0.5 size-5 text-leaf" />
-                        <span>
-                          <span className="block text-sm font-semibold">{c.name}</span>
-                          <span className="block text-xs text-muted-foreground">{c.blurb}</span>
-                        </span>
-                      </Link>
-                    ))}
+                <div className="absolute top-full left-1/2 w-[56rem] -translate-x-1/2 pt-4">
+                  <div className="grid grid-cols-[19rem_1fr] overflow-hidden border border-border bg-popover shadow-lift">
+                    <div className="grid max-h-[31rem] overflow-y-auto border-r border-border p-2">
+                      {categories.map((c, index) => (
+                        <button key={c.slug} type="button" onMouseEnter={() => setActiveCategory(c.slug)} onFocus={() => setActiveCategory(c.slug)} onClick={() => setActiveCategory(c.slug)} className={`flex items-center gap-3 p-3 text-left transition-all ${activeCategory === c.slug ? index % 2 === 0 ? "bg-softgreen text-primary" : "bg-beige text-deep" : "hover:bg-muted"}`}>
+                          <CategoryIcon name={c.icon} className={`size-5 shrink-0 ${index % 2 === 0 ? "text-leaf" : "text-sun"}`} />
+                          <span className="text-sm font-semibold">{c.name}</span>
+                          <ChevronDown className="ml-auto size-3 -rotate-90" />
+                        </button>
+                      ))}
+                    </div>
+                    {selectedCategory && <div className="p-6"><div className="flex items-start gap-4"><span className="grid size-12 shrink-0 place-items-center bg-softgreen"><CategoryIcon name={selectedCategory.icon} className="size-6 text-primary" /></span><div><h3 className="font-display text-2xl text-primary">{selectedCategory.name}</h3><p className="mt-1 text-sm text-muted-foreground">{selectedCategory.blurb}</p></div></div><div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-2">{(categorySubcategories[selectedCategory.slug] ?? []).map((item, index) => <Link key={item} to="/shop/$category" params={{ category: selectedCategory.slug }} onClick={() => setShopOpen(false)} className={`border-l-2 px-3 py-2 text-sm transition-transform hover:translate-x-1 ${index % 2 === 0 ? "border-leaf hover:text-leaf" : "border-sun hover:text-primary"}`}>{item}</Link>)}</div><Link to="/shop/$category" params={{ category: selectedCategory.slug }} onClick={() => setShopOpen(false)} className="mt-6 inline-flex items-center gap-2 bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-deep"><Store className="size-4" /> Shop {selectedCategory.name}</Link></div>}
                   </div>
                 </div>
               )}
             </div>
             <div className="relative" onMouseEnter={() => setAboutOpen(true)} onMouseLeave={() => setAboutOpen(false)}>
               <button type="button" className="flex items-center gap-1 hover:text-primary" onClick={() => setAboutOpen((value) => !value)}>About <ChevronDown className="size-3.5" /></button>
-              {aboutOpen && <div className="absolute top-full left-1/2 w-64 -translate-x-1/2 pt-4"><div className="border border-border bg-popover p-2 shadow-lift">{aboutLinks.map((item) => <Link key={item.to} to={item.to} onClick={() => setAboutOpen(false)} className="group block p-3 transition-colors hover:bg-softgreen"><span className="block font-semibold transition-transform group-hover:translate-x-1">{item.label}</span><span className="text-xs text-muted-foreground">{item.body}</span></Link>)}</div></div>}
+               {aboutOpen && <div className="absolute top-full left-1/2 w-72 -translate-x-1/2 pt-4"><div className="border border-border bg-popover p-2 shadow-lift">{aboutLinks.map((item, index) => <Link key={item.to} to={item.to} onClick={() => setAboutOpen(false)} className={`group flex gap-3 p-3 transition-colors ${index % 2 === 0 ? "hover:bg-softgreen" : "hover:bg-beige"}`}><item.icon className={`mt-0.5 size-5 ${index % 2 === 0 ? "text-leaf" : "text-sun"}`} /><span><span className="block font-semibold transition-transform group-hover:translate-x-1">{item.label}</span><span className="text-xs text-muted-foreground">{item.body}</span></span></Link>)}</div></div>}
             </div>
             {navLinks.map((l) => (
               <Link key={l.to} to={l.to} className="transition-transform hover:-translate-y-0.5 hover:text-primary">
@@ -156,18 +153,18 @@ export function Header() {
             </Link>
             <Link to="/auth" onClick={() => setOpen(false)} className="py-2 font-medium">Sign in / Account</Link>
             <p className="pt-3 text-xs font-bold uppercase text-muted-foreground">About</p>
-            {aboutLinks.map((item) => <Link key={item.to} to={item.to} onClick={() => setOpen(false)} className="py-2 pl-3 font-medium">{item.label}</Link>)}
-            <div className="grid grid-cols-2 gap-1 pb-2">
+             {aboutLinks.map((item, index) => <Link key={item.to} to={item.to} onClick={() => setOpen(false)} className="flex items-center gap-2 py-2 pl-3 font-medium"><item.icon className={`size-4 ${index % 2 === 0 ? "text-leaf" : "text-sun"}`} />{item.label}</Link>)}
+             <div className="grid gap-2 pb-2 sm:grid-cols-2">
               {categories.map((c) => (
                 <Link
                   key={c.slug}
                   to="/shop/$category"
                   params={{ category: c.slug }}
                   onClick={() => setOpen(false)}
-                  className="flex items-center gap-2 rounded-lg bg-softgreen px-3 py-2 text-xs"
+                   className="group border border-border bg-softgreen px-3 py-3 text-xs transition-transform hover:-translate-y-0.5 odd:bg-softgreen even:bg-beige"
                 >
-                  <CategoryIcon name={c.icon} className="size-4 text-leaf" />
-                  {c.name}
+                   <span className="flex items-center gap-2 font-semibold"><CategoryIcon name={c.icon} className="size-4 text-leaf" />{c.name}</span>
+                   <span className="mt-1 block text-[0.68rem] leading-relaxed text-muted-foreground">{(categorySubcategories[c.slug] ?? []).join(" • ")}</span>
                 </Link>
               ))}
             </div>

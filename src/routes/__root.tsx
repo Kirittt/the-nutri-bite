@@ -16,6 +16,7 @@ import { Footer } from "@/components/site/Footer";
 import { CartProvider } from "@/lib/cart";
 import { Toaster } from "@/components/ui/sonner";
 import { CookieConsent } from "@/components/site/CookieConsent";
+import { WhatsAppChat } from "@/components/site/WhatsAppChat";
 
 function NotFoundComponent() {
   return (
@@ -147,6 +148,7 @@ function RootComponent() {
         </div>
         <Toaster position="top-center" />
         <CookieConsent />
+        <WhatsAppChat />
       </CartProvider>
     </QueryClientProvider>
   );

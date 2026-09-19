@@ -1,10 +1,15 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, BookOpen, Instagram, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { ArrowRight, BookOpen, Facebook, Instagram, MapPin, MessageCircle, Phone, Youtube } from "lucide-react";
 
 import logo from "@/assets/nutri-bite-logo.png.asset.json";
 import brochure from "@/assets/the-nutri-bite-brochure.pdf.asset.json";
 import { BRAND, categories } from "@/data/catalog";
 import { Button } from "@/components/ui/button";
+import { NewsletterForm } from "./NewsletterForm";
+
+function XIcon({ className }: { className?: string }) {
+  return <span className={className} aria-hidden="true">𝕏</span>;
+}
 
 export function Footer() {
   return (
@@ -25,6 +30,13 @@ export function Footer() {
             with extra care and love.
           </p>
           <a href={brochure.url} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 font-semibold text-sun transition-transform hover:translate-x-1 hover:text-cream"><BookOpen className="size-4" /> View our brochure <ArrowRight className="size-4" /></a>
+          <div className="mt-5 flex items-center gap-2" aria-label="Social media">
+            <span title="Facebook link coming soon" aria-label="Facebook link coming soon" className="grid size-9 place-items-center rounded-full border border-cream/25 text-cream/45"><Facebook className="size-4" /></span>
+            <a href={BRAND.whatsapp} target="_blank" rel="noreferrer" aria-label="WhatsApp" className="grid size-9 place-items-center rounded-full border border-cream/25 transition hover:-translate-y-1 hover:border-sun hover:text-sun"><MessageCircle className="size-4" /></a>
+            <a href={BRAND.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="grid size-9 place-items-center rounded-full border border-cream/25 transition hover:-translate-y-1 hover:border-sun hover:text-sun"><Instagram className="size-4" /></a>
+            <span title="X link coming soon" aria-label="X link coming soon" className="grid size-9 place-items-center rounded-full border border-cream/25 text-cream/45"><XIcon className="text-base" /></span>
+            <span title="YouTube link coming soon" aria-label="YouTube link coming soon" className="grid size-9 place-items-center rounded-full border border-cream/25 text-cream/45"><Youtube className="size-4" /></span>
+          </div>
         </div>
 
         <div>
@@ -121,8 +133,8 @@ export function Footer() {
         </div>
         <div className="border-t border-cream/15 pt-8 sm:col-span-2 lg:col-span-5">
           <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
-            <div><h3 className="font-display text-2xl">Subscribe now</h3><p className="mt-1 text-sm text-cream/70">Get new launch updates and special collection news on WhatsApp.</p></div>
-            <Button asChild size="lg" className="bg-sun text-accent-foreground hover:bg-gold"><a href={`https://wa.me/${BRAND.phoneHref.replace("+", "")}?text=${encodeURIComponent("Please subscribe me to The Nutri Bite updates.")}`} target="_blank" rel="noreferrer"><Mail /> Subscribe on WhatsApp</a></Button>
+            <div><h3 className="font-display text-2xl">Subscribe now</h3><p className="mt-1 text-sm text-cream/70">Get new launches and collection news by email or WhatsApp.</p></div>
+            <div className="flex flex-col gap-3"><NewsletterForm /><Button asChild size="lg" variant="outline" className="self-start border-cream/40 bg-transparent text-cream hover:bg-cream hover:text-deep"><a href={`https://wa.me/${BRAND.phoneHref.replace("+", "")}?text=${encodeURIComponent("Please subscribe me to The Nutri Bite updates.")}`} target="_blank" rel="noreferrer"><MessageCircle /> Subscribe on WhatsApp</a></Button></div>
           </div>
         </div>
       </div>

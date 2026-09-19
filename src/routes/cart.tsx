@@ -17,6 +17,8 @@ export const Route = createFileRoute("/cart")({
       { name: "description", content: "Review the handcrafted sweets and snacks in your cart." },
       { property: "og:title", content: "Your Cart — The Nutri Bite" },
       { property: "og:description", content: "Review your Nutri Bite selection before ordering." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "noindex" },
     ],
   }),

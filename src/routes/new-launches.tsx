@@ -13,6 +13,8 @@ export const Route = createFileRoute("/new-launches")({
       },
       { property: "og:title", content: "New Launches — The Nutri Bite" },
       { property: "og:description", content: "Fresh arrivals and collections launching soon." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: () => {
