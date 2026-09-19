@@ -14,6 +14,8 @@ export const Route = createFileRoute("/contact")({
       },
       { property: "og:title", content: "Contact — The Nutri Bite" },
       { property: "og:description", content: "We would love to hear from you." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: ContactPage,

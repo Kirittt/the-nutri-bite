@@ -23,4 +23,4 @@
 - [x] Add social icons, email and WhatsApp subscriptions, and floating WhatsApp chat
 - [x] Add icons to the three About links
 - [x] Add a 30-item labeled sample-review carousel with autoplay and manual controls
-- [ ] Verify route metadata, desktop/mobile layouts, interactions, and TypeScript
+- [x] Verify route metadata, desktop/mobile layouts, interactions, and TypeScript

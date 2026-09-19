@@ -18,6 +18,8 @@ export const Route = createFileRoute("/shop/")({
         property: "og:description",
         content: "Handcrafted sweets, premium nuts and wholesome snacks, delivered across India.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: ShopPage,

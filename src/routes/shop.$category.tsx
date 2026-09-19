@@ -21,6 +21,8 @@ export const Route = createFileRoute("/shop/$category")({
         { name: "description", content: loaderData.category.blurb },
         { property: "og:title", content: title },
         { property: "og:description", content: loaderData.category.blurb },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
       ],
     };
   },
