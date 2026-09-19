@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, Pause, Play, Star } from "lucide-react";
+import { ArrowLeft, ArrowRight, Pause, Play, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -36,23 +36,34 @@ const reviews = [
   ["Neil Parmar", "Bhavnagar", "Handmade quality comes through in every bite."],
 ] as const;
 
+function ReviewCard({ name, city, body }: { name: string; city: string; body: string }) {
+  return (
+    <article className="w-[280px] shrink-0 border-t-4 border-sun bg-background p-6 shadow-soft sm:w-[340px]">
+      <div className="flex gap-1 text-sun" aria-label="5 out of 5 stars">{[1, 2, 3, 4, 5].map((star) => <Star key={star} className="size-4 fill-current" />)}</div>
+      <p className="mt-5 leading-relaxed">“{body}”</p>
+      <p className="mt-5 font-semibold text-primary">{name}</p>
+      <p className="text-sm text-muted-foreground">{city}, India</p>
+    </article>
+  );
+}
+
 export function ReviewCarousel() {
-  const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(true);
-  const move = (step: number) => setIndex((current) => (current + step + reviews.length) % reviews.length);
+  const [leftward, setLeftward] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
-    if (!playing || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timer = window.setInterval(() => move(1), 5000);
-    return () => window.clearInterval(timer);
-  }, [playing]);
+    setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }, []);
 
-  const visible = [0, 1, 2]
-    .map((offset) => reviews[(index + offset) % reviews.length])
-    .filter((review): review is (typeof reviews)[number] => review !== undefined);
+  const moving = playing && !reducedMotion;
+  const trackStyle: React.CSSProperties = {
+    animationPlayState: moving ? "running" : "paused",
+    animationDirection: leftward ? "normal" : "reverse",
+  };
 
   return (
-    <section className="bg-beige" aria-labelledby="customer-notes-title">
+    <section className="overflow-hidden bg-beige" aria-labelledby="customer-notes-title">
       <div className="container-page section-y">
         <div className="flex flex-wrap items-end justify-between gap-5">
           <div>
@@ -60,27 +71,21 @@ export function ReviewCarousel() {
             <h2 id="customer-notes-title" className="mt-2 font-display text-3xl text-primary sm:text-4xl">Happy bites across India</h2>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" size="icon" onClick={() => { setPlaying(false); move(-1); }} aria-label="Previous testimonials"><ChevronLeft /></Button>
+            <Button variant="outline" size="icon" onClick={() => setLeftward(true)} aria-label="Move testimonials left"><ArrowLeft /></Button>
             <Button variant="outline" size="icon" onClick={() => setPlaying((value) => !value)} aria-label={playing ? "Pause testimonials" : "Play testimonials"}>{playing ? <Pause /> : <Play />}</Button>
-            <Button variant="outline" size="icon" onClick={() => { setPlaying(false); move(1); }} aria-label="Next testimonials"><ChevronRight /></Button>
+            <Button variant="outline" size="icon" onClick={() => setLeftward(false)} aria-label="Move testimonials right"><ArrowRight /></Button>
           </div>
         </div>
-        <div className="mt-8 grid gap-4 md:grid-cols-3" aria-live="polite">
-          {visible.map(([name, city, body]) => (
-            <article key={`${name}-${index}`} className="border-t-4 border-sun bg-background p-6 shadow-soft">
-              <div className="flex gap-1 text-sun" aria-label="5 out of 5 stars">{[1, 2, 3, 4, 5].map((star) => <Star key={star} className="size-4 fill-current" />)}</div>
-              <p className="mt-5 leading-relaxed">“{body}”</p>
-              <p className="mt-5 font-semibold text-primary">{name}</p>
-              <p className="text-sm text-muted-foreground">{city}, India</p>
-            </article>
+      </div>
+      <div
+        className="pb-4"
+        onMouseEnter={() => setPlaying(false)}
+        onMouseLeave={() => setPlaying(true)}
+      >
+        <div className="testimonial-marquee flex w-max gap-4 px-2" style={trackStyle}>
+          {[...reviews, ...reviews].map(([name, city, body], position) => (
+            <ReviewCard key={`${name}-${position}`} name={name} city={city} body={body} />
           ))}
-        </div>
-        <div className="mt-7 flex items-center justify-center gap-4" aria-hidden="true">
-          <ChevronLeft className="size-6 text-primary" />
-          <div className="relative h-px w-full max-w-2xl overflow-visible bg-primary/25">
-            <span className="testimonial-runner absolute top-1/2 block h-1 w-16 -translate-y-1/2 rounded-full bg-sun" />
-          </div>
-          <ChevronRight className="size-6 text-primary" />
         </div>
       </div>
     </section>

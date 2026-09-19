@@ -130,14 +130,13 @@
   to { transform: translateX(-50%); }
 }
 
-@keyframes testimonial-run {
-  0% { left: 0; transform: translateY(-50%); }
-  50% { left: calc(100% - 4rem); transform: translateY(-50%); }
-  100% { left: 0; transform: translateY(-50%); }
+@keyframes testimonial-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
-@utility testimonial-runner {
-  animation: testimonial-run 8s ease-in-out infinite;
+@utility testimonial-marquee {
+  animation: testimonial-scroll 60s linear infinite;
 }
 
 @utility promise-marquee {
@@ -146,6 +145,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .promise-marquee { animation: none; }
-  .testimonial-runner { animation: none; left: 50%; }
+  .testimonial-marquee { animation: none; }
 }
 
