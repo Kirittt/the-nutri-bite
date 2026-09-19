@@ -1,19 +1,21 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, MapPin, MessageCircle, Phone } from "lucide-react";
+import { ArrowRight, BookOpen, Instagram, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 
 import logo from "@/assets/nutri-bite-logo.png.asset.json";
+import brochure from "@/assets/the-nutri-bite-brochure.pdf.asset.json";
 import { BRAND, categories } from "@/data/catalog";
+import { Button } from "@/components/ui/button";
 
 export function Footer() {
   return (
     <footer className="mt-16 bg-deep text-cream">
-      <div className="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-5">
-        <div>
+      <div className="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.3fr_.8fr_.9fr_1.2fr_1fr]">
+        <div className="max-w-sm">
           <div className="flex items-center gap-3">
             <img
               src={logo.url}
               alt="The Nutri Bite"
-              className="size-16 rounded-full bg-white object-contain p-1"
+              className="size-16 rounded-full bg-background object-contain p-1 transition duration-300 hover:scale-105 hover:rotate-2"
               loading="lazy"
             />
             <span className="font-display text-xl">The Nutri Bite</span>
@@ -22,6 +24,7 @@ export function Footer() {
             Nature’s goodness in every bite. Handcrafted and hygienically prepared, then packed
             with extra care and love.
           </p>
+          <a href={brochure.url} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 font-semibold text-sun transition-transform hover:translate-x-1 hover:text-cream"><BookOpen className="size-4" /> View our brochure <ArrowRight className="size-4" /></a>
         </div>
 
         <div>
@@ -55,6 +58,7 @@ export function Footer() {
                 Our Process
               </Link>
             </li>
+            <li><Link to="/about-us" className="hover:text-sun">About Us</Link></li>
             <li>
               <Link to="/bulk-orders" className="hover:text-sun">
                 Bulk / Corporate / Private Label
@@ -101,6 +105,12 @@ export function Footer() {
               </span>
             </li>
           </ul>
+        </div>
+        <div className="sm:col-span-2 lg:col-span-5 border-t border-cream/15 pt-8">
+          <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
+            <div><h3 className="font-display text-2xl">Subscribe now</h3><p className="mt-1 text-sm text-cream/70">Get new launch updates and special collection news on WhatsApp.</p></div>
+            <Button asChild size="lg" className="bg-sun text-accent-foreground hover:bg-gold"><a href={`${BRAND.whatsapp}&text=${encodeURIComponent("Please subscribe me to The Nutri Bite updates.")}`} target="_blank" rel="noreferrer"><Mail /> Subscribe on WhatsApp</a></Button>
+          </div>
         </div>
         <div>
           <h3 className="font-display text-lg">Help & policies</h3>
