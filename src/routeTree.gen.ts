@@ -10,6 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BestSellersRouteImport } from './routes/best-sellers'
+import { Route as CartRouteImport } from './routes/cart'
+import { Route as NewLaunchesRouteImport } from './routes/new-launches'
+import { Route as OurProcessRouteImport } from './routes/our-process'
+import { Route as OurStoryRouteImport } from './routes/our-story'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
 import { Route as ShopIndexRouteImport } from './routes/shop.index'
 import { Route as ShopCategoryRouteImport } from './routes/shop.$category'
@@ -17,6 +22,31 @@ import { Route as ShopCategoryRouteImport } from './routes/shop.$category'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BestSellersRoute = BestSellersRouteImport.update({
+  id: '/best-sellers',
+  path: '/best-sellers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewLaunchesRoute = NewLaunchesRouteImport.update({
+  id: '/new-launches',
+  path: '/new-launches',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OurProcessRoute = OurProcessRouteImport.update({
+  id: '/our-process',
+  path: '/our-process',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OurStoryRoute = OurStoryRouteImport.update({
+  id: '/our-story',
+  path: '/our-story',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductSlugRoute = ProductSlugRouteImport.update({
@@ -37,12 +67,22 @@ const ShopCategoryRoute = ShopCategoryRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/best-sellers': typeof BestSellersRoute
+  '/cart': typeof CartRoute
+  '/new-launches': typeof NewLaunchesRoute
+  '/our-process': typeof OurProcessRoute
+  '/our-story': typeof OurStoryRoute
   '/product/$slug': typeof ProductSlugRoute
   '/shop/$category': typeof ShopCategoryRoute
   '/shop/': typeof ShopIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/best-sellers': typeof BestSellersRoute
+  '/cart': typeof CartRoute
+  '/new-launches': typeof NewLaunchesRoute
+  '/our-process': typeof OurProcessRoute
+  '/our-story': typeof OurStoryRoute
   '/product/$slug': typeof ProductSlugRoute
   '/shop/$category': typeof ShopCategoryRoute
   '/shop': typeof ShopIndexRoute
@@ -50,20 +90,58 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/best-sellers': typeof BestSellersRoute
+  '/cart': typeof CartRoute
+  '/new-launches': typeof NewLaunchesRoute
+  '/our-process': typeof OurProcessRoute
+  '/our-story': typeof OurStoryRoute
   '/product/$slug': typeof ProductSlugRoute
   '/shop/$category': typeof ShopCategoryRoute
   '/shop/': typeof ShopIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/product/$slug' | '/shop/$category' | '/shop/'
+  fullPaths:
+    | '/'
+    | '/best-sellers'
+    | '/cart'
+    | '/new-launches'
+    | '/our-process'
+    | '/our-story'
+    | '/product/$slug'
+    | '/shop/$category'
+    | '/shop/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/product/$slug' | '/shop/$category' | '/shop'
-  id: '__root__' | '/' | '/product/$slug' | '/shop/$category' | '/shop/'
+  to:
+    | '/'
+    | '/best-sellers'
+    | '/cart'
+    | '/new-launches'
+    | '/our-process'
+    | '/our-story'
+    | '/product/$slug'
+    | '/shop/$category'
+    | '/shop'
+  id:
+    | '__root__'
+    | '/'
+    | '/best-sellers'
+    | '/cart'
+    | '/new-launches'
+    | '/our-process'
+    | '/our-story'
+    | '/product/$slug'
+    | '/shop/$category'
+    | '/shop/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BestSellersRoute: typeof BestSellersRoute
+  CartRoute: typeof CartRoute
+  NewLaunchesRoute: typeof NewLaunchesRoute
+  OurProcessRoute: typeof OurProcessRoute
+  OurStoryRoute: typeof OurStoryRoute
   ProductSlugRoute: typeof ProductSlugRoute
   ShopCategoryRoute: typeof ShopCategoryRoute
   ShopIndexRoute: typeof ShopIndexRoute
@@ -76,6 +154,41 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/best-sellers': {
+      id: '/best-sellers'
+      path: '/best-sellers'
+      fullPath: '/best-sellers'
+      preLoaderRoute: typeof BestSellersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/new-launches': {
+      id: '/new-launches'
+      path: '/new-launches'
+      fullPath: '/new-launches'
+      preLoaderRoute: typeof NewLaunchesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/our-process': {
+      id: '/our-process'
+      path: '/our-process'
+      fullPath: '/our-process'
+      preLoaderRoute: typeof OurProcessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/our-story': {
+      id: '/our-story'
+      path: '/our-story'
+      fullPath: '/our-story'
+      preLoaderRoute: typeof OurStoryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/product/$slug': {
@@ -104,6 +217,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BestSellersRoute: BestSellersRoute,
+  CartRoute: CartRoute,
+  NewLaunchesRoute: NewLaunchesRoute,
+  OurProcessRoute: OurProcessRoute,
+  OurStoryRoute: OurStoryRoute,
   ProductSlugRoute: ProductSlugRoute,
   ShopCategoryRoute: ShopCategoryRoute,
   ShopIndexRoute: ShopIndexRoute,
