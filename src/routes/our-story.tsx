@@ -17,6 +17,8 @@ export const Route = createFileRoute("/our-story")({
         property: "og:description",
         content: "Handcrafted sweets and wholesome snacks for healthier everyday living.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: StoryPage,

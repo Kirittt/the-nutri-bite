@@ -106,12 +106,6 @@ export function Footer() {
             </li>
           </ul>
         </div>
-        <div className="sm:col-span-2 lg:col-span-5 border-t border-cream/15 pt-8">
-          <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
-            <div><h3 className="font-display text-2xl">Subscribe now</h3><p className="mt-1 text-sm text-cream/70">Get new launch updates and special collection news on WhatsApp.</p></div>
-            <Button asChild size="lg" className="bg-sun text-accent-foreground hover:bg-gold"><a href={`${BRAND.whatsapp}&text=${encodeURIComponent("Please subscribe me to The Nutri Bite updates.")}`} target="_blank" rel="noreferrer"><Mail /> Subscribe on WhatsApp</a></Button>
-          </div>
-        </div>
         <div>
           <h3 className="font-display text-lg">Help & policies</h3>
           <ul className="mt-4 space-y-2 text-sm text-cream/75">
@@ -124,6 +118,12 @@ export function Footer() {
             <li><Link to="/cookie-policy" className="hover:text-sun">Cookie policy</Link></li>
             <li><Link to="/product-disclaimer" className="hover:text-sun">Product disclaimer</Link></li>
           </ul>
+        </div>
+        <div className="border-t border-cream/15 pt-8 sm:col-span-2 lg:col-span-5">
+          <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
+            <div><h3 className="font-display text-2xl">Subscribe now</h3><p className="mt-1 text-sm text-cream/70">Get new launch updates and special collection news on WhatsApp.</p></div>
+            <Button asChild size="lg" className="bg-sun text-accent-foreground hover:bg-gold"><a href={`https://wa.me/${BRAND.phoneHref.replace("+", "")}?text=${encodeURIComponent("Please subscribe me to The Nutri Bite updates.")}`} target="_blank" rel="noreferrer"><Mail /> Subscribe on WhatsApp</a></Button>
+          </div>
         </div>
       </div>
       <div className="border-t border-cream/15">

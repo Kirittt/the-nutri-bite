@@ -16,6 +16,8 @@ export const Route = createFileRoute("/our-process")({
         property: "og:description",
         content: "Handcrafted and hygienically prepared, then packed with extra care and love.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: ProcessPage,
