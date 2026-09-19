@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import storyImg from "@/assets/story-craft.jpg";
+import storyImg from "@/assets/clean/sweets.jpg";
+import trailImage from "@/assets/clean/trail-mix.jpg";
 
 export const Route = createFileRoute("/our-story")({
   head: () => ({
@@ -51,7 +52,7 @@ function StoryPage() {
         <img
           src={storyImg}
           alt="Assorted Nutri Bite sweets and flavoured nuts in kraft bowls"
-          className="rounded-3xl shadow-lift"
+          className="rounded-lg shadow-lift transition duration-500 hover:scale-[1.02]"
           loading="lazy"
           width={1200}
           height={912}
@@ -73,6 +74,8 @@ function StoryPage() {
           </div>
         </div>
       </div>
+
+      <section className="bg-beige"><div className="container-page section-y grid gap-10 lg:grid-cols-2 lg:items-center"><div><p className="text-sm font-bold uppercase text-leaf">Why we began</p><h2 className="mt-3 font-display text-3xl text-primary">Making thoughtful food easier to enjoy</h2><p className="mt-4 leading-relaxed text-muted-foreground">The Nutri Bite began with a belief that familiar ingredients and careful craftsmanship can create snacks people genuinely look forward to. We combine traditional dry-fruit goodness with modern flavours, convenient packs and warm, dependable service.</p><p className="mt-4 leading-relaxed text-muted-foreground">From a family snack drawer to festive gifting, every collection is designed to feel generous, fresh and easy to share.</p></div><img src={trailImage} alt="A clean bowl of nuts, seeds and dried fruit" className="aspect-4/3 w-full rounded-lg object-cover transition duration-500 hover:scale-[1.02]" loading="lazy" width={1200} height={900} /></div></section>
 
       <div className="container-page pb-16">
         <h2 className="font-display text-2xl text-primary">What we stand for</h2>
