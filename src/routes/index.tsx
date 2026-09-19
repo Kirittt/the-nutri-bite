@@ -104,7 +104,14 @@ function Home() {
         </div>
       </section>
 
-      <section className="bg-deep text-cream"><div className="container-page section-y flex flex-col justify-between gap-7 md:flex-row md:items-center"><div><p className="text-sm font-bold uppercase text-sun">Ready for a better snack?</p><h2 className="mt-2 max-w-2xl font-display text-3xl sm:text-4xl">Bring home a box packed with flavour and care.</h2><p className="mt-3 text-cream/75">Order available products online or ask our team to help you choose.</p></div><div className="flex shrink-0 flex-wrap gap-3"><Button asChild size="lg" className="bg-sun text-accent-foreground hover:bg-gold"><Link to="/shop">Shop now <ArrowRight /></Link></Button><Button asChild size="lg" variant="outline" className="border-cream/50 bg-transparent text-cream hover:bg-cream hover:text-deep"><a href={BRAND.whatsapp}><MessageCircle /> WhatsApp</a></Button></div></div></section>
+      <section className="relative isolate min-h-80 overflow-hidden text-cream">
+        <img src={categoryImages["natural-sweets-bites"]} alt="Handcrafted natural sweets arranged for sharing" className="absolute inset-0 -z-20 size-full object-cover" loading="lazy" width={1200} height={900} />
+        <div className="absolute inset-0 -z-10 bg-linear-to-r from-deep/95 via-deep/75 to-deep/35" />
+        <div className="container-page section-y flex min-h-80 flex-col justify-center gap-8 md:flex-row md:items-center md:justify-between">
+          <div><p className="text-sm font-bold uppercase text-sun">Ready for a better snack?</p><h2 className="mt-2 max-w-2xl font-display text-3xl sm:text-4xl">Bring home a box packed with flavour and care.</h2><p className="mt-3 max-w-xl text-cream/85">Discover handcrafted sweets, premium nuts and wholesome mixes prepared for everyday moments and thoughtful gifting.</p></div>
+          <div className="flex shrink-0 flex-wrap gap-3"><Button asChild size="lg" className="bg-sun text-accent-foreground hover:bg-gold"><Link to="/shop">Shop now <ArrowRight /></Link></Button><Button asChild size="lg" variant="outline" className="border-cream/60 bg-deep/30 text-cream hover:bg-cream hover:text-deep"><a href={BRAND.whatsapp}><MessageCircle /> WhatsApp</a></Button></div>
+        </div>
+      </section>
 
       {/* Best sellers */}
       <section className="bg-softgreen">
