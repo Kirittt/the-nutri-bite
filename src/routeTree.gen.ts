@@ -34,6 +34,7 @@ import { Route as AuthenticatedAdminInviteRouteImport } from './routes/_authenti
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
 import { Route as ShopIndexRouteImport } from './routes/shop.index'
 import { Route as ShopCategoryRouteImport } from './routes/shop.$category'
+import { Route as ShopCategorySubcategoryRouteImport } from './routes/shop.$category.$subcategory'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -160,6 +161,11 @@ const ShopCategoryRoute = ShopCategoryRouteImport.update({
   path: '/shop/$category',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShopCategorySubcategoryRoute = ShopCategorySubcategoryRouteImport.update({
+  id: '/$subcategory',
+  path: '/$subcategory',
+  getParentRoute: () => ShopCategoryRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -184,8 +190,9 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRoute
   '/admin-invite': typeof AuthenticatedAdminInviteRoute
   '/product/$slug': typeof ProductSlugRoute
-  '/shop/$category': typeof ShopCategoryRoute
+  '/shop/$category': typeof ShopCategoryRouteWithChildren
   '/shop/': typeof ShopIndexRoute
+  '/shop/$category/$subcategory': typeof ShopCategorySubcategoryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -210,8 +217,9 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminRoute
   '/admin-invite': typeof AuthenticatedAdminInviteRoute
   '/product/$slug': typeof ProductSlugRoute
-  '/shop/$category': typeof ShopCategoryRoute
+  '/shop/$category': typeof ShopCategoryRouteWithChildren
   '/shop': typeof ShopIndexRoute
+  '/shop/$category/$subcategory': typeof ShopCategorySubcategoryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -238,8 +246,9 @@ export interface FileRoutesById {
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/admin-invite': typeof AuthenticatedAdminInviteRoute
   '/product/$slug': typeof ProductSlugRoute
-  '/shop/$category': typeof ShopCategoryRoute
+  '/shop/$category': typeof ShopCategoryRouteWithChildren
   '/shop/': typeof ShopIndexRoute
+  '/shop/$category/$subcategory': typeof ShopCategorySubcategoryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -268,6 +277,7 @@ export interface FileRouteTypes {
     | '/product/$slug'
     | '/shop/$category'
     | '/shop/'
+    | '/shop/$category/$subcategory'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -294,6 +304,7 @@ export interface FileRouteTypes {
     | '/product/$slug'
     | '/shop/$category'
     | '/shop'
+    | '/shop/$category/$subcategory'
   id:
     | '__root__'
     | '/'
@@ -321,6 +332,7 @@ export interface FileRouteTypes {
     | '/product/$slug'
     | '/shop/$category'
     | '/shop/'
+    | '/shop/$category/$subcategory'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -344,7 +356,7 @@ export interface RootRouteChildren {
   ShippingPolicyRoute: typeof ShippingPolicyRoute
   TermsAndConditionsRoute: typeof TermsAndConditionsRoute
   ProductSlugRoute: typeof ProductSlugRoute
-  ShopCategoryRoute: typeof ShopCategoryRoute
+  ShopCategoryRoute: typeof ShopCategoryRouteWithChildren
   ShopIndexRoute: typeof ShopIndexRoute
 }
 
@@ -525,6 +537,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShopCategoryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/shop/$category/$subcategory': {
+      id: '/shop/$category/$subcategory'
+      path: '/$subcategory'
+      fullPath: '/shop/$category/$subcategory'
+      preLoaderRoute: typeof ShopCategorySubcategoryRouteImport
+      parentRoute: typeof ShopCategoryRoute
+    }
   }
 }
 
@@ -542,6 +561,18 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
+interface ShopCategoryRouteChildren {
+  ShopCategorySubcategoryRoute: typeof ShopCategorySubcategoryRoute
+}
+
+const ShopCategoryRouteChildren: ShopCategoryRouteChildren = {
+  ShopCategorySubcategoryRoute: ShopCategorySubcategoryRoute,
+}
+
+const ShopCategoryRouteWithChildren = ShopCategoryRoute._addFileChildren(
+  ShopCategoryRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -564,7 +595,7 @@ const rootRouteChildren: RootRouteChildren = {
   ShippingPolicyRoute: ShippingPolicyRoute,
   TermsAndConditionsRoute: TermsAndConditionsRoute,
   ProductSlugRoute: ProductSlugRoute,
-  ShopCategoryRoute: ShopCategoryRoute,
+  ShopCategoryRoute: ShopCategoryRouteWithChildren,
   ShopIndexRoute: ShopIndexRoute,
 }
 export const routeTree = rootRouteImport
