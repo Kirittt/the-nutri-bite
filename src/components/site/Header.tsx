@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, Phone, ShoppingBag, X } from "lucide-react";
+import { Menu, Phone, ShoppingBag, UserRound, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import logo from "@/assets/nutri-bite-logo.png.asset.json";
@@ -115,6 +115,9 @@ export function Header() {
             >
               <Phone className="size-5" />
             </a>
+            <Link to="/auth" className="rounded-full p-2 hover:bg-softgreen" aria-label="Sign in or view account">
+              <UserRound className="size-5" />
+            </Link>
             <Link to="/cart" className="relative rounded-full p-2 hover:bg-softgreen" aria-label="Cart">
               <ShoppingBag className="size-5" />
               {count > 0 && (
@@ -142,6 +145,7 @@ export function Header() {
             <Link to="/shop" onClick={() => setOpen(false)} className="py-2 font-medium">
               Shop All
             </Link>
+            <Link to="/auth" onClick={() => setOpen(false)} className="py-2 font-medium">Sign in / Account</Link>
             <div className="grid grid-cols-2 gap-1 pb-2">
               {categories.map((c) => (
                 <Link

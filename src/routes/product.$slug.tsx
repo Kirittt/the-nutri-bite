@@ -8,6 +8,7 @@ import { ProductCard } from "@/components/site/ProductCard";
 import { formatINR, getCategory, getProduct, productsIn } from "@/data/catalog";
 import { BRAND } from "@/data/catalog";
 import { useCart } from "@/lib/cart";
+import { getProductImage } from "@/data/catalog-images";
 
 export const Route = createFileRoute("/product/$slug")({
   loader: ({ params }) => {
@@ -47,6 +48,7 @@ function ProductPage() {
   const firstPriced = product.variants.findIndex((v) => v.price !== null);
   const [selected, setSelected] = useState(firstPriced === -1 ? 0 : firstPriced);
   const variant = product.variants[selected];
+  const image = getProductImage(product.slug, product.category);
 
   return (
     <div className="container-page section-y">
@@ -63,8 +65,8 @@ function ProductPage() {
       </nav>
 
       <div className="mt-6 grid gap-10 lg:grid-cols-2">
-        <div className="grid aspect-square place-items-center rounded-3xl bg-linear-to-br from-softgreen to-beige">
-          <CategoryIcon name={cat?.icon ?? "cookie"} className="size-28 text-primary/25" />
+        <div className="grid aspect-square place-items-center overflow-hidden rounded-lg bg-linear-to-br from-softgreen to-beige">
+          {image ? <img src={image} alt={product.name} className="size-full object-cover" /> : <CategoryIcon name={cat?.icon ?? "cookie"} className="size-28 text-primary/25" />}
         </div>
 
         <div>

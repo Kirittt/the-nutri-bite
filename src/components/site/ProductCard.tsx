@@ -3,10 +3,12 @@ import { Link } from "@tanstack/react-router";
 import { formatINR, fromPrice, type Product } from "@/data/catalog";
 import { CategoryIcon } from "./icons";
 import { getCategory } from "@/data/catalog";
+import { getProductImage } from "@/data/catalog-images";
 
 export function ProductCard({ product }: { product: Product }) {
   const price = fromPrice(product);
   const cat = getCategory(product.category);
+  const image = getProductImage(product.slug, product.category);
 
   return (
     <Link
@@ -14,11 +16,11 @@ export function ProductCard({ product }: { product: Product }) {
       params={{ slug: product.slug }}
       className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all hover:-translate-y-1 hover:shadow-lift"
     >
-      <div className="relative grid aspect-4/3 place-items-center bg-linear-to-br from-softgreen to-beige">
-        <CategoryIcon
+      <div className="relative grid aspect-4/3 place-items-center overflow-hidden bg-linear-to-br from-softgreen to-beige">
+        {image ? <img src={image} alt={product.name} className="size-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" /> : <CategoryIcon
           name={cat?.icon ?? "cookie"}
           className="size-14 text-primary/30 transition-transform group-hover:scale-110"
-        />
+        />}
         <div className="absolute top-3 left-3 flex gap-2">
           {product.bestSeller && (
             <span className="rounded-full bg-sun px-2.5 py-1 text-[0.65rem] font-bold tracking-wide text-accent-foreground uppercase">
@@ -26,7 +28,7 @@ export function ProductCard({ product }: { product: Product }) {
             </span>
           )}
           {product.newLaunch && (
-            <span className="rounded-full bg-leaf px-2.5 py-1 text-[0.65rem] font-bold tracking-wide text-white uppercase">
+            <span className="rounded-full bg-leaf px-2.5 py-1 text-[0.65rem] font-bold tracking-wide text-primary-foreground uppercase">
               New
             </span>
           )}
