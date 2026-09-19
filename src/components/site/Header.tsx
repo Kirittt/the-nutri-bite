@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import logo from "@/assets/nutri-bite-logo.png.asset.json";
 import { BRAND, categories, categorySubcategories, getProductForSubcategory, subcategorySlug } from "@/data/catalog";
 import { useCart } from "@/lib/cart";
+import { supabase } from "@/integrations/supabase/client";
 import { CategoryIcon } from "./icons";
 
 const messages = [
