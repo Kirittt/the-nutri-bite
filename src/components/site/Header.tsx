@@ -130,9 +130,7 @@ export function Header() {
             >
               <Phone className="size-5" />
             </a>
-            <Link to="/auth" className="rounded-full p-2 hover:bg-softgreen" aria-label="Sign in or view account">
-              <UserRound className="size-5" />
-            </Link>
+            {userId ? <Link to="/account" className="rounded-full p-2 hover:bg-softgreen" aria-label="View account"><UserRound className="size-5" /></Link> : <Link to="/auth" className="rounded-full p-2 hover:bg-softgreen" aria-label="Sign in or view account"><UserRound className="size-5" /></Link>}
             <Link to="/cart" className="relative rounded-full p-2 hover:bg-softgreen" aria-label="Cart">
               <ShoppingBag className="size-5" />
               {count > 0 && (
@@ -160,7 +158,7 @@ export function Header() {
             <Link to="/shop" onClick={() => setOpen(false)} className="py-2 font-medium">
               Shop All
             </Link>
-            <Link to="/auth" onClick={() => setOpen(false)} className="py-2 font-medium">Sign in / Account</Link>
+            {userId ? <Link to="/account" onClick={() => setOpen(false)} className="py-2 font-medium">My account</Link> : <Link to="/auth" onClick={() => setOpen(false)} className="py-2 font-medium">Sign in / Account</Link>}
             <p className="pt-3 text-xs font-bold uppercase text-muted-foreground">About</p>
              {aboutLinks.map((item, index) => <Link key={item.to} to={item.to} onClick={() => setOpen(false)} className="flex items-center gap-2 py-2 pl-3 font-medium"><item.icon className={`size-4 ${index % 2 === 0 ? "text-leaf" : "text-sun"}`} />{item.label}</Link>)}
              <div className="grid gap-2 pb-2 sm:grid-cols-2">
