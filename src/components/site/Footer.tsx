@@ -7,7 +7,7 @@ import { BRAND, categories } from "@/data/catalog";
 export function Footer() {
   return (
     <footer className="mt-16 bg-deep text-cream">
-      <div className="container-page grid gap-10 py-14 md:grid-cols-4">
+      <div className="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-5">
         <div>
           <div className="flex items-center gap-3">
             <img
@@ -102,10 +102,24 @@ export function Footer() {
             </li>
           </ul>
         </div>
+        <div>
+          <h3 className="font-display text-lg">Help & policies</h3>
+          <ul className="mt-4 space-y-2 text-sm text-cream/75">
+            <li><Link to="/faq" className="hover:text-sun">FAQs</Link></li>
+            <li><Link to="/shipping-policy" className="hover:text-sun">Shipping policy</Link></li>
+            <li><Link to="/return-refund-policy" className="hover:text-sun">Returns & refunds</Link></li>
+            <li><Link to="/cancellation-policy" className="hover:text-sun">Cancellation policy</Link></li>
+            <li><Link to="/privacy-policy" className="hover:text-sun">Privacy policy</Link></li>
+            <li><Link to="/terms-and-conditions" className="hover:text-sun">Terms & conditions</Link></li>
+            <li><Link to="/cookie-policy" className="hover:text-sun">Cookie policy</Link></li>
+            <li><Link to="/product-disclaimer" className="hover:text-sun">Product disclaimer</Link></li>
+          </ul>
+        </div>
       </div>
       <div className="border-t border-cream/15">
-        <div className="container-page py-5 text-xs text-cream/60">
-          © {new Date().getFullYear()} The Nutri Bite — Healthy Bite, Happy Life.
+        <div className="container-page flex flex-wrap items-center justify-between gap-3 py-5 text-xs text-cream/60">
+          <span>© {new Date().getFullYear()} The Nutri Bite — Healthy Bite, Happy Life.</span>
+          <span>Handmade • Hygienically prepared • Packed with care</span>
         </div>
       </div>
     </footer>

@@ -14,11 +14,19 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BestSellersRouteImport } from './routes/best-sellers'
 import { Route as BulkOrdersRouteImport } from './routes/bulk-orders'
+import { Route as CancellationPolicyRouteImport } from './routes/cancellation-policy'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CookiePolicyRouteImport } from './routes/cookie-policy'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as NewLaunchesRouteImport } from './routes/new-launches'
 import { Route as OurProcessRouteImport } from './routes/our-process'
 import { Route as OurStoryRouteImport } from './routes/our-story'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
+import { Route as ProductDisclaimerRouteImport } from './routes/product-disclaimer'
+import { Route as ReturnRefundPolicyRouteImport } from './routes/return-refund-policy'
+import { Route as ShippingPolicyRouteImport } from './routes/shipping-policy'
+import { Route as TermsAndConditionsRouteImport } from './routes/terms-and-conditions'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
 import { Route as ShopIndexRouteImport } from './routes/shop.index'
@@ -48,6 +56,11 @@ const BulkOrdersRoute = BulkOrdersRouteImport.update({
   path: '/bulk-orders',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CancellationPolicyRoute = CancellationPolicyRouteImport.update({
+  id: '/cancellation-policy',
+  path: '/cancellation-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CartRoute = CartRouteImport.update({
   id: '/cart',
   path: '/cart',
@@ -56,6 +69,16 @@ const CartRoute = CartRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookiePolicyRoute = CookiePolicyRouteImport.update({
+  id: '/cookie-policy',
+  path: '/cookie-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NewLaunchesRoute = NewLaunchesRouteImport.update({
@@ -71,6 +94,31 @@ const OurProcessRoute = OurProcessRouteImport.update({
 const OurStoryRoute = OurStoryRouteImport.update({
   id: '/our-story',
   path: '/our-story',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductDisclaimerRoute = ProductDisclaimerRouteImport.update({
+  id: '/product-disclaimer',
+  path: '/product-disclaimer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReturnRefundPolicyRoute = ReturnRefundPolicyRouteImport.update({
+  id: '/return-refund-policy',
+  path: '/return-refund-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShippingPolicyRoute = ShippingPolicyRouteImport.update({
+  id: '/shipping-policy',
+  path: '/shipping-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsAndConditionsRoute = TermsAndConditionsRouteImport.update({
+  id: '/terms-and-conditions',
+  path: '/terms-and-conditions',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
@@ -99,11 +147,19 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/best-sellers': typeof BestSellersRoute
   '/bulk-orders': typeof BulkOrdersRoute
+  '/cancellation-policy': typeof CancellationPolicyRoute
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
+  '/cookie-policy': typeof CookiePolicyRoute
+  '/faq': typeof FaqRoute
   '/new-launches': typeof NewLaunchesRoute
   '/our-process': typeof OurProcessRoute
   '/our-story': typeof OurStoryRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/product-disclaimer': typeof ProductDisclaimerRoute
+  '/return-refund-policy': typeof ReturnRefundPolicyRoute
+  '/shipping-policy': typeof ShippingPolicyRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/account': typeof AuthenticatedAccountRoute
   '/product/$slug': typeof ProductSlugRoute
   '/shop/$category': typeof ShopCategoryRoute
@@ -114,11 +170,19 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/best-sellers': typeof BestSellersRoute
   '/bulk-orders': typeof BulkOrdersRoute
+  '/cancellation-policy': typeof CancellationPolicyRoute
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
+  '/cookie-policy': typeof CookiePolicyRoute
+  '/faq': typeof FaqRoute
   '/new-launches': typeof NewLaunchesRoute
   '/our-process': typeof OurProcessRoute
   '/our-story': typeof OurStoryRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/product-disclaimer': typeof ProductDisclaimerRoute
+  '/return-refund-policy': typeof ReturnRefundPolicyRoute
+  '/shipping-policy': typeof ShippingPolicyRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/account': typeof AuthenticatedAccountRoute
   '/product/$slug': typeof ProductSlugRoute
   '/shop/$category': typeof ShopCategoryRoute
@@ -131,11 +195,19 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/best-sellers': typeof BestSellersRoute
   '/bulk-orders': typeof BulkOrdersRoute
+  '/cancellation-policy': typeof CancellationPolicyRoute
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
+  '/cookie-policy': typeof CookiePolicyRoute
+  '/faq': typeof FaqRoute
   '/new-launches': typeof NewLaunchesRoute
   '/our-process': typeof OurProcessRoute
   '/our-story': typeof OurStoryRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/product-disclaimer': typeof ProductDisclaimerRoute
+  '/return-refund-policy': typeof ReturnRefundPolicyRoute
+  '/shipping-policy': typeof ShippingPolicyRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/product/$slug': typeof ProductSlugRoute
   '/shop/$category': typeof ShopCategoryRoute
@@ -148,11 +220,19 @@ export interface FileRouteTypes {
     | '/auth'
     | '/best-sellers'
     | '/bulk-orders'
+    | '/cancellation-policy'
     | '/cart'
     | '/contact'
+    | '/cookie-policy'
+    | '/faq'
     | '/new-launches'
     | '/our-process'
     | '/our-story'
+    | '/privacy-policy'
+    | '/product-disclaimer'
+    | '/return-refund-policy'
+    | '/shipping-policy'
+    | '/terms-and-conditions'
     | '/account'
     | '/product/$slug'
     | '/shop/$category'
@@ -163,11 +243,19 @@ export interface FileRouteTypes {
     | '/auth'
     | '/best-sellers'
     | '/bulk-orders'
+    | '/cancellation-policy'
     | '/cart'
     | '/contact'
+    | '/cookie-policy'
+    | '/faq'
     | '/new-launches'
     | '/our-process'
     | '/our-story'
+    | '/privacy-policy'
+    | '/product-disclaimer'
+    | '/return-refund-policy'
+    | '/shipping-policy'
+    | '/terms-and-conditions'
     | '/account'
     | '/product/$slug'
     | '/shop/$category'
@@ -179,11 +267,19 @@ export interface FileRouteTypes {
     | '/auth'
     | '/best-sellers'
     | '/bulk-orders'
+    | '/cancellation-policy'
     | '/cart'
     | '/contact'
+    | '/cookie-policy'
+    | '/faq'
     | '/new-launches'
     | '/our-process'
     | '/our-story'
+    | '/privacy-policy'
+    | '/product-disclaimer'
+    | '/return-refund-policy'
+    | '/shipping-policy'
+    | '/terms-and-conditions'
     | '/_authenticated/account'
     | '/product/$slug'
     | '/shop/$category'
@@ -196,11 +292,19 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   BestSellersRoute: typeof BestSellersRoute
   BulkOrdersRoute: typeof BulkOrdersRoute
+  CancellationPolicyRoute: typeof CancellationPolicyRoute
   CartRoute: typeof CartRoute
   ContactRoute: typeof ContactRoute
+  CookiePolicyRoute: typeof CookiePolicyRoute
+  FaqRoute: typeof FaqRoute
   NewLaunchesRoute: typeof NewLaunchesRoute
   OurProcessRoute: typeof OurProcessRoute
   OurStoryRoute: typeof OurStoryRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
+  ProductDisclaimerRoute: typeof ProductDisclaimerRoute
+  ReturnRefundPolicyRoute: typeof ReturnRefundPolicyRoute
+  ShippingPolicyRoute: typeof ShippingPolicyRoute
+  TermsAndConditionsRoute: typeof TermsAndConditionsRoute
   ProductSlugRoute: typeof ProductSlugRoute
   ShopCategoryRoute: typeof ShopCategoryRoute
   ShopIndexRoute: typeof ShopIndexRoute
@@ -243,6 +347,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BulkOrdersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cancellation-policy': {
+      id: '/cancellation-policy'
+      path: '/cancellation-policy'
+      fullPath: '/cancellation-policy'
+      preLoaderRoute: typeof CancellationPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cart': {
       id: '/cart'
       path: '/cart'
@@ -255,6 +366,20 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cookie-policy': {
+      id: '/cookie-policy'
+      path: '/cookie-policy'
+      fullPath: '/cookie-policy'
+      preLoaderRoute: typeof CookiePolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/new-launches': {
@@ -276,6 +401,41 @@ declare module '@tanstack/react-router' {
       path: '/our-story'
       fullPath: '/our-story'
       preLoaderRoute: typeof OurStoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/product-disclaimer': {
+      id: '/product-disclaimer'
+      path: '/product-disclaimer'
+      fullPath: '/product-disclaimer'
+      preLoaderRoute: typeof ProductDisclaimerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/return-refund-policy': {
+      id: '/return-refund-policy'
+      path: '/return-refund-policy'
+      fullPath: '/return-refund-policy'
+      preLoaderRoute: typeof ReturnRefundPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shipping-policy': {
+      id: '/shipping-policy'
+      path: '/shipping-policy'
+      fullPath: '/shipping-policy'
+      preLoaderRoute: typeof ShippingPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms-and-conditions': {
+      id: '/terms-and-conditions'
+      path: '/terms-and-conditions'
+      fullPath: '/terms-and-conditions'
+      preLoaderRoute: typeof TermsAndConditionsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/account': {
@@ -326,11 +486,19 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   BestSellersRoute: BestSellersRoute,
   BulkOrdersRoute: BulkOrdersRoute,
+  CancellationPolicyRoute: CancellationPolicyRoute,
   CartRoute: CartRoute,
   ContactRoute: ContactRoute,
+  CookiePolicyRoute: CookiePolicyRoute,
+  FaqRoute: FaqRoute,
   NewLaunchesRoute: NewLaunchesRoute,
   OurProcessRoute: OurProcessRoute,
   OurStoryRoute: OurStoryRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
+  ProductDisclaimerRoute: ProductDisclaimerRoute,
+  ReturnRefundPolicyRoute: ReturnRefundPolicyRoute,
+  ShippingPolicyRoute: ShippingPolicyRoute,
+  TermsAndConditionsRoute: TermsAndConditionsRoute,
   ProductSlugRoute: ProductSlugRoute,
   ShopCategoryRoute: ShopCategoryRoute,
   ShopIndexRoute: ShopIndexRoute,
