@@ -13,8 +13,16 @@ export const Route = createFileRoute("/_authenticated/account")({
   component: AccountPage,
 });
 function AccountPage() {
-  const navigate = useNavigate(); const [orders, setOrders] = useState<Order[]>([]);
-  useEffect(() => { getMyOrders().then(setOrders).catch(() => setOrders([])); }, []);
+  const navigate = useNavigate(); const [orders, setOrders] = useState<Order[]>([]); const [roles, setRoles] = useState<string[]>([]);
+  useEffect(() => {
+    getMyOrders().then(setOrders).catch(() => setOrders([]));
+    void supabase.auth.getUser().then(async ({ data }) => {
+      if (!data.user) return;
+      const { data: rows } = await supabase.from("user_roles").select("role").eq("user_id", data.user.id);
+      setRoles((rows ?? []).map((row) => String(row.role)));
+    });
+  }, []);
+  const isManager = roles.includes("admin") || roles.includes("super_admin");
   return <div className="container-page section-y"><div className="flex items-center justify-between"><div><h1 className="font-display text-4xl text-primary">My orders</h1><p className="mt-2 text-muted-foreground">Confirmed orders and delivery progress.</p></div><Button variant="outline" onClick={async () => { await supabase.auth.signOut(); navigate({ to: "/auth", replace: true }); }}>Sign out</Button></div>
     <div className="mt-8 grid gap-3">{orders.length ? orders.map((order) => <article key={order.order_number} className="flex flex-wrap items-center justify-between gap-4 rounded-lg border border-border p-5"><div className="flex gap-3"><PackageCheck className="text-leaf" /><div><h2 className="font-semibold">{order.order_number}</h2><p className="text-sm capitalize text-muted-foreground">{order.status.replaceAll("_", " ")}</p></div></div><div className="text-right"><strong>{formatINR(order.total)}</strong><p className="text-xs text-muted-foreground">{new Date(order.created_at).toLocaleDateString("en-IN")}</p></div></article>) : <div className="rounded-lg bg-softgreen p-10 text-center text-muted-foreground">No account-linked orders yet.</div>}</div>
   </div>;
