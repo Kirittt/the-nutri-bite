@@ -121,11 +121,18 @@ const g = (label: string, price: number | null): Variant => ({ label, price });
 const sweetNote =
   "Handcrafted and hygienically prepared, then packed with extra care and love.";
 
+const pet = (p50: number, p100: number, p150: number, p200: number): Variant[] => [
+  g("50 g", p50),
+  g("100 g", p100),
+  g("150 g", p150),
+  g("200 g", p200),
+];
+
 const pendingFlavours: Product[] = [
-  ...["Teekha Chatpata", "Achari Masti", "Lime & Pepper", "Peri Peri"].map((flavour) => ({ slug: `trail-mix-${flavour.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`, name: `Trail Mix — ${flavour}`, category: "trail-mix", subcategory: flavour, tagline: `${flavour} seasoning on a balanced nut, seed and berry mix.`, description: `Almonds, cashews, peanuts, raisins, cranberry, pumpkin and sunflower seeds finished with ${flavour.toLowerCase()} seasoning.`, ingredients: ["Almonds", "Cashews", "Peanuts", "Black Raisins", "Cranberry", "Pumpkin Seeds", "Sunflower Seeds"], variants: [], status: "coming-soon" as const })),
-  ...["Lime & Pepper", "Honey BBQ", "Peri Peri", "Herbs & Spices", "Korean Kimchi", "Mexican Salsa"].map((flavour) => ({ slug: `super-snack-${flavour.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`, name: `Super Snack — ${flavour}`, category: "super-snack", subcategory: flavour, tagline: `${flavour} flavour across premium nuts, raisins and seeds.`, description: `Almonds, cashews, green raisins, pumpkin and sunflower seeds with ${flavour.toLowerCase()} seasoning.`, ingredients: ["Almonds", "Cashews", "Green Raisins", "Pumpkin Seeds", "Sunflower Seeds"], variants: [], status: "coming-soon" as const })),
-  ...["Honey Roasted", "Korean Kimchi", "Mexican Salsa", "Herbs & Spices", "Achari Masti", "Lime & Pepper"].map((flavour) => ({ slug: `nut-mix-${flavour.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`, name: `Nut Mix — ${flavour}`, category: "nut-mix", subcategory: flavour, tagline: `${flavour} almonds and cashews for satisfying everyday crunch.`, description: `A premium almond and cashew blend finished with ${flavour.toLowerCase()} seasoning.`, ingredients: ["Almonds", "Cashews"], variants: [], status: "coming-soon" as const })),
-  ...(["320", "240"] as const).flatMap((count) => ["Sriracha", "Thai Chilli Sweet", "Salted Caramel", "Tangique", "Mexican Salsa", "Korean Kimchi", "Habanero Spicy", "Smoky BBQ"].map((flavour) => ({ slug: `cashews-${count}-${flavour.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`, name: `Cashews ${count} — ${flavour}`, category: "cashews", subcategory: `${count} Count`, tagline: `Premium ${count} count cashews with ${flavour.toLowerCase()} flavour.`, description: `Carefully roasted ${count} count cashews finished with ${flavour.toLowerCase()} seasoning.`, ingredients: ["Cashews"], variants: [], status: "coming-soon" as const }))),
+  ...["Teekha Chatpata", "Achari Masti", "Lime & Pepper", "Peri Peri"].map((flavour) => ({ slug: `trail-mix-${flavour.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`, name: `Trail Mix — ${flavour}`, category: "trail-mix", subcategory: flavour, tagline: `${flavour} seasoning on a balanced nut, seed and berry mix.`, description: `Almonds, cashews, peanuts, raisins, cranberry, pumpkin and sunflower seeds finished with ${flavour.toLowerCase()} seasoning.`, ingredients: ["Almonds", "Cashews", "Peanuts", "Black Raisins", "Cranberry", "Pumpkin Seeds", "Sunflower Seeds"], variants: pet(58, 101, 149, 191), status: "active" as const })),
+  ...["Lime & Pepper", "Honey BBQ", "Peri Peri", "Herbs & Spices", "Korean Kimchi", "Mexican Salsa"].map((flavour) => ({ slug: `super-snack-${flavour.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`, name: `Super Snack — ${flavour}`, category: "super-snack", subcategory: flavour, tagline: `${flavour} flavour across premium nuts, raisins and seeds.`, description: `Almonds, cashews, green raisins, pumpkin and sunflower seeds with ${flavour.toLowerCase()} seasoning.`, ingredients: ["Almonds", "Cashews", "Green Raisins", "Pumpkin Seeds", "Sunflower Seeds"], variants: pet(64, 115, 169, 219), status: "active" as const })),
+  ...["Honey Roasted", "Korean Kimchi", "Mexican Salsa", "Herbs & Spices", "Achari Masti", "Lime & Pepper"].map((flavour) => ({ slug: `nut-mix-${flavour.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`, name: `Nut Mix — ${flavour}`, category: "nut-mix", subcategory: flavour, tagline: `${flavour} almonds and cashews for satisfying everyday crunch.`, description: `A premium almond and cashew blend finished with ${flavour.toLowerCase()} seasoning.`, ingredients: ["Almonds", "Cashews"], variants: pet(85, 155, 229, 229), status: "active" as const })),
+  ...(["320", "240"] as const).flatMap((count) => ["Sriracha", "Thai Chilli Sweet", "Salted Caramel", "Tangique", "Mexican Salsa", "Korean Kimchi", "Habanero Spicy", "Smoky BBQ"].map((flavour) => ({ slug: `cashews-${count}-${flavour.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`, name: `Cashews ${count} — ${flavour}`, category: "cashews", subcategory: `${count} Count`, tagline: `Premium ${count} count cashews with ${flavour.toLowerCase()} flavour.`, description: `Carefully roasted ${count} count cashews finished with ${flavour.toLowerCase()} seasoning.`, ingredients: ["Cashews"], variants: count === "320" ? pet(79, 145, 215, 279) : pet(82, 150, 223, 290), status: "active" as const }))),
 ];
 
 export const products: Product[] = [
@@ -324,7 +331,7 @@ export const products: Product[] = [
     tagline: "Everyday almonds, evenly roasted and lightly salted.",
     description: "Premium almonds roasted in small batches and finished with a light salting.",
     ingredients: ["Almonds", "Salt"],
-    variants: [g("50 g", 88), g("100 g", 162), g("150 g", 240), g("200 g", 313)],
+    variants: [g("50 g", 88), g("100 g", 162), g("150 g", 241), g("200 g", 315)],
     status: "active",
     bestSeller: true,
   },
@@ -335,7 +342,7 @@ export const products: Product[] = [
     tagline: "Smoky, savoury and moreish.",
     description: "Premium almonds tossed in a smoky barbecue seasoning.",
     ingredients: ["Almonds", "Smoky BBQ Seasoning"],
-    variants: [g("50 g", 91), g("100 g", 169), g("150 g", 251), g("200 g", 328)],
+    variants: [g("50 g", 91), g("100 g", 169), g("150 g", 251), g("200 g", 329)],
     status: "active",
   },
   {
@@ -357,7 +364,7 @@ export const products: Product[] = [
     tagline: "Bold Indian spice on premium almonds.",
     description: "Premium almonds coated with a lively Indian spice blend for a bold, satisfying crunch.",
     ingredients: ["Almonds", "Spice Mix"],
-    variants: [g("50 g", 91), g("100 g", 169), g("150 g", 251), g("200 g", 328)],
+    variants: [g("50 g", 91), g("100 g", 169), g("150 g", 251), g("200 g", 329)],
     status: "active",
     newLaunch: true,
   },
@@ -368,7 +375,7 @@ export const products: Product[] = [
     tagline: "Simple, peppery and warming.",
     description: "Roasted almonds finished with sea salt and cracked pepper for clean, classic flavour.",
     ingredients: ["Almonds", "Salt", "Pepper"],
-    variants: [g("50 g", 91), g("100 g", 169), g("150 g", 251), g("200 g", 328)],
+    variants: [g("50 g", 91), g("100 g", 169), g("150 g", 251), g("200 g", 329)],
     status: "active",
   },
   {
@@ -378,7 +385,7 @@ export const products: Product[] = [
     tagline: "Tangy salsa seasoning on crunchy almonds.",
     description: "Crunchy almonds coated in a tangy, savoury Mexican salsa seasoning.",
     ingredients: ["Almonds", "Mexican Salsa Seasoning"],
-    variants: [g("50 g", 91), g("100 g", 169), g("150 g", 251), g("200 g", 328)],
+    variants: [g("50 g", 91), g("100 g", 169), g("150 g", 251), g("200 g", 329)],
     status: "active",
   },
 
@@ -391,7 +398,7 @@ export const products: Product[] = [
     tagline: "Buttery 320 count cashews, lightly salted.",
     description: "Premium 320 count cashews roasted in small batches.",
     ingredients: ["Cashews", "Salt"],
-    variants: [g("50 g", 76), g("100 g", 137), g("150 g", 203), g("200 g", 265)],
+    variants: [g("50 g", 76), g("100 g", 138), g("150 g", 204), g("200 g", 265)],
     status: "active",
     bestSeller: true,
   },
@@ -403,7 +410,7 @@ export const products: Product[] = [
     tagline: "Zesty lime with a peppery finish.",
     description: "Premium 320 count cashews tossed in lime and cracked pepper.",
     ingredients: ["Cashews", "Lime", "Pepper"],
-    variants: [g("50 g", 79), g("100 g", 145), g("150 g", 215), g("200 g", 280)],
+    variants: [g("50 g", 79), g("100 g", 145), g("150 g", 215), g("200 g", 279)],
     status: "active",
   },
   {
@@ -414,7 +421,7 @@ export const products: Product[] = [
     tagline: "Larger 240 count cashews for a premium bite.",
     description: "Hand-selected 240 count cashews roasted and lightly salted.",
     ingredients: ["Cashews", "Salt"],
-    variants: [g("50 g", 78), g("100 g", 142), g("150 g", 211), g("200 g", 275)],
+    variants: [g("50 g", 78), g("100 g", 143), g("150 g", 211), g("200 g", 275)],
     status: "active",
   },
   {
@@ -425,7 +432,7 @@ export const products: Product[] = [
     tagline: "Big cashews, bright citrus, bold pepper.",
     description: "Hand-selected 240 count cashews with lime and pepper seasoning.",
     ingredients: ["Cashews", "Lime", "Pepper"],
-    variants: [g("50 g", 82), g("100 g", 150), g("150 g", 222), g("200 g", 290)],
+    variants: [g("50 g", 82), g("100 g", 150), g("150 g", 223), g("200 g", 290)],
     status: "active",
   },
 
@@ -464,7 +471,7 @@ export const products: Product[] = [
       "Sunflower Seeds",
       "Cranberry",
     ],
-    variants: [g("50 g", 57), g("100 g", 101), g("150 g", 148), g("200 g", 191)],
+    variants: [g("50 g", 58), g("100 g", 101), g("150 g", 149), g("200 g", 191)],
     status: "active",
   },
 
@@ -484,7 +491,7 @@ export const products: Product[] = [
       "Sunflower Seeds",
       "Achari Spice Mix",
     ],
-    variants: [g("50 g", 64), g("100 g", 114), g("150 g", 169), g("200 g", 218)],
+    variants: [g("50 g", 64), g("100 g", 115), g("150 g", 169), g("200 g", 219)],
     status: "active",
   },
 
@@ -496,7 +503,7 @@ export const products: Product[] = [
     tagline: "Almonds and cashews with a smoky finish.",
     description: "A simple two-nut mix seasoned with smoky barbecue spices.",
     ingredients: ["Almonds", "Cashews", "Smoky BBQ Seasoning"],
-    variants: [g("50 g", 84), g("100 g", 155), g("150 g", 229), g("200 g", 299)],
+    variants: [g("50 g", 85), g("100 g", 155), g("150 g", 229), g("200 g", 229)],
     status: "active",
   },
 
@@ -509,7 +516,7 @@ export const products: Product[] = [
     description:
       "Pumpkin, sunflower, flax, chia and sesame seeds blended for everyday nourishment.",
     ingredients: ["Pumpkin Seeds", "Sunflower Seeds", "Flax Seeds", "Chia Seeds", "Sesame Seeds"],
-    variants: [g("50 g", 44), g("100 g", 74), g("150 g", 109), g("200 g", 138)],
+    variants: [g("50 g", 44), g("100 g", 75), g("150 g", 109), g("200 g", 139)],
     status: "active",
   },
   {
@@ -529,7 +536,7 @@ export const products: Product[] = [
     tagline: "A balanced handful for every day.",
     description: "Almonds, cashews, pumpkin seeds, black raisins and cranberry.",
     ingredients: ["Almonds", "Cashews", "Pumpkin Seeds", "Black Raisins", "Cranberry"],
-    variants: [g("50 g", 70), g("100 g", 126), g("150 g", 186), g("200 g", 241)],
+    variants: [g("50 g", 69), g("100 g", 126), g("150 g", 187), g("200 g", 241)],
     status: "active",
   },
   {
@@ -539,7 +546,7 @@ export const products: Product[] = [
     tagline: "Sweet fruit meets crunchy nuts.",
     description: "Almonds, cashew and a bright fruit mix.",
     ingredients: ["Almonds", "Cashew", "Fruit Mix"],
-    variants: [g("50 g", 70), g("100 g", 126), g("150 g", 187), g("200 g", 242)],
+    variants: [g("50 g", 70), g("100 g", 126), g("150 g", 187), g("200 g", 243)],
     status: "active",
   },
   {
@@ -559,7 +566,7 @@ export const products: Product[] = [
     tagline: "The classic five dry fruits, raw and pure.",
     description: "Raw almonds, cashews, black raisins, green raisins and dry dates.",
     ingredients: ["Raw Almonds", "Cashews", "Black Raisins", "Green Raisins", "Dry Dates"],
-    variants: [g("50 g", 57), g("100 g", 101), g("150 g", 149), g("200 g", 192)],
+    variants: [g("50 g", 58), g("100 g", 101), g("150 g", 149), g("200 g", 192)],
     status: "active",
   },
 
@@ -602,7 +609,7 @@ export const products: Product[] = [
       "Blackcurrants",
       "Cherries",
     ],
-    variants: [g("50 g", 58), g("100 g", 103), g("150 g", 151), g("200 g", 195)],
+    variants: [g("50 g", 59), g("100 g", 103), g("150 g", 151), g("200 g", 195)],
     status: "active",
   },
   {
@@ -612,7 +619,7 @@ export const products: Product[] = [
     tagline: "Tart cranberry slices with a masala edge.",
     description: "Cranberry slices, seasoned for snacking.",
     ingredients: ["Cranberry Slices"],
-    variants: [g("50 g", 56), g("100 g", 98), g("150 g", 145), g("200 g", 186)],
+    variants: [g("50 g", 56), g("100 g", 99), g("150 g", 145), g("200 g", 187)],
     status: "active",
   },
   {
@@ -622,7 +629,7 @@ export const products: Product[] = [
     tagline: "Long raisins with a mango character.",
     description: "Soft long raisins, naturally sweet.",
     ingredients: ["Long Raisins"],
-    variants: [g("50 g", 51), g("100 g", 78), g("150 g", 129), g("200 g", 145)],
+    variants: [g("50 g", 51), g("100 g", 78), g("150 g", 129), g("200 g", 146)],
     status: "active",
   },
 
@@ -634,7 +641,7 @@ export const products: Product[] = [
     tagline: "Crunchy roasted soybeans, lightly salted.",
     description: "Roasted edamame with a clean, simple salting.",
     ingredients: ["Edamame", "Salt"],
-    variants: [g("50 g", 46), g("75 g", 63), g("180 g", 134)],
+    variants: [g("50 g", 46), g("75 g", 64), g("180 g", 135)],
     status: "active",
   },
   {
@@ -644,7 +651,7 @@ export const products: Product[] = [
     tagline: "Sweet cinnamon warmth on crunchy edamame.",
     description: "Roasted edamame finished with honey and cinnamon.",
     ingredients: ["Edamame", "Honey", "Cinnamon"],
-    variants: [g("50 g", 48), g("75 g", 67), g("180 g", 143)],
+    variants: [g("50 g", 49), g("75 g", 65), g("180 g", 144)],
     status: "active",
   },
   {
@@ -654,7 +661,7 @@ export const products: Product[] = [
     tagline: "Fiery kimchi seasoning.",
     description: "Roasted edamame with a lively Korean kimchi seasoning and a crisp finish.",
     ingredients: ["Edamame", "Kimchi Seasoning"],
-    variants: [g("50 g", 48), g("75 g", 67), g("180 g", 143)],
+    variants: [g("50 g", 49), g("75 g", 65), g("180 g", 144)],
     status: "active",
     newLaunch: true,
   },
