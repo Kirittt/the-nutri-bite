@@ -776,6 +776,10 @@ export const productsInSubcategory = (category: string, subcategory: string) => 
   });
 };
 
+export const getProductForSubcategory = (category: string, subcategory: string) =>
+  productsInSubcategory(category, subcategory).find((p) => p.status !== "coming-soon") ??
+  productsInSubcategory(category, subcategory)[0];
+
 export const fromPrice = (p: Product) => {
   const prices = p.variants.map((v) => v.price).filter((v): v is number => v !== null);
   return prices.length ? Math.min(...prices) : null;
