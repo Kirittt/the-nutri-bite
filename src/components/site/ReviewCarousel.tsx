@@ -61,9 +61,9 @@ export function ReviewCarousel() {
             <p className="mt-2 text-sm text-muted-foreground">Sample testimonials showing the experiences we aim to deliver.</p>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" size="icon" onClick={() => move(-1)} aria-label="Previous testimonials"><ChevronLeft /></Button>
+            <Button variant="outline" size="icon" onClick={() => { setPlaying(false); move(-1); }} aria-label="Previous testimonials"><ChevronLeft /></Button>
             <Button variant="outline" size="icon" onClick={() => setPlaying((value) => !value)} aria-label={playing ? "Pause testimonials" : "Play testimonials"}>{playing ? <Pause /> : <Play />}</Button>
-            <Button variant="outline" size="icon" onClick={() => move(1)} aria-label="Next testimonials"><ChevronRight /></Button>
+            <Button variant="outline" size="icon" onClick={() => { setPlaying(false); move(1); }} aria-label="Next testimonials"><ChevronRight /></Button>
           </div>
         </div>
         <div className="mt-8 grid gap-4 md:grid-cols-3" aria-live="polite">
