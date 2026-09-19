@@ -56,7 +56,7 @@ export function Header() {
   useEffect(() => {
     void supabase.auth.getUser().then(({ data }) => setUserId(data.user?.id ?? null));
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => setUserId(session?.user.id ?? null));
-    return () => listener.unsubscribe();
+    return () => listener.subscription.unsubscribe();
   }, []);
 
   return (
