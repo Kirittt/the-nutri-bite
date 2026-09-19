@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Check, Leaf, MessageCircle, ShoppingBag } from "lucide-react";
+import { Check, Heart, Leaf, MessageCircle, ShoppingBag, Sparkles, Star } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -165,6 +165,12 @@ function ProductPage() {
           )}
         </div>
       </div>
+
+      <section className="mt-16 grid gap-6 lg:grid-cols-3">
+        <div className="rounded-lg bg-softgreen p-6"><Sparkles className="text-leaf" /><h2 className="mt-3 font-display text-xl text-primary">Why you’ll enjoy it</h2><ul className="mt-3 space-y-2 text-sm text-muted-foreground"><li>• Thoughtfully selected ingredients</li><li>• Convenient packs for home, work or travel</li><li>• Satisfying flavour and texture</li></ul></div>
+        <div className="rounded-lg bg-beige p-6"><Heart className="text-primary" /><h2 className="mt-3 font-display text-xl text-primary">Made with care</h2><ul className="mt-3 space-y-2 text-sm text-muted-foreground"><li>• Neat and hygienic preparation</li><li>• Handmade in carefully managed batches</li><li>• Checked and packed with extra care and love</li></ul></div>
+        <div className="rounded-lg border border-border p-6"><div className="flex gap-1 text-sun">{[1,2,3,4,5].map((n)=><Star key={n} className="size-4 fill-current" />)}</div><h2 className="mt-3 font-display text-xl text-primary">“Fresh, flavourful and beautifully packed.”</h2><p className="mt-3 text-sm text-muted-foreground">A representative customer-style testimonial while verified reviews are collected.</p><span className="mt-4 inline-block rounded-full bg-muted px-2 py-1 text-[0.65rem] font-bold uppercase">Sample review — not included in ratings</span></div>
+      </section>
 
       {related.length > 0 && (
         <section className="mt-20">

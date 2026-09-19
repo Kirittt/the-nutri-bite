@@ -1,4 +1,4 @@
-import { createServerFn } from "@tanstack/react-start";
+import { createServerFn, getRequestHeader } from "@tanstack/react-start";
 import { z } from "zod";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
@@ -27,7 +27,8 @@ export const createOrder = createServerFn({ method: "POST" })
     });
     const subtotal = lineItems.reduce((sum, item) => sum + item.lineTotal, 0);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { data: session } = await supabaseAdmin.auth.getUser();
+    const bearer = getRequestHeader("authorization")?.replace(/^Bearer\s+/i, "");
+    const { data: session } = bearer ? await supabaseAdmin.auth.getUser(bearer) : { data: { user: null } };
     const userId = session.user?.id ?? null;
     const { data: order, error } = await supabaseAdmin.from("orders").insert({
       user_id: userId,
@@ -68,12 +69,27 @@ export const getAdminOverview = createServerFn({ method: "GET" })
     const { data: allowed } = await context.supabase.rpc("is_store_admin", { _user_id: context.userId });
     if (!allowed) throw new Error("Administrator access required.");
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const [{ data: orders }, { data: products }] = await Promise.all([
+    const [{ data: orders }, { data: products }, { data: reviews }, { data: banners }] = await Promise.all([
       supabaseAdmin.from("orders").select("id,order_number,customer_name,phone,status,total,created_at").order("created_at", { ascending: false }).limit(100),
       supabaseAdmin.from("store_products").select("id,slug,name,status,best_seller,new_launch,product_variants(id,label,price,stock,active)").order("name"),
+      supabaseAdmin.from("reviews").select("id,customer_name,rating,title,body,status,is_demo,store_products(name)").order("created_at", { ascending: false }).limit(100),
+      supabaseAdmin.from("site_banners").select("id,title,subtitle,active,sort_order").order("sort_order"),
     ]);
-    return { orders: orders ?? [], products: products ?? [] };
+    return { orders: orders ?? [], products: products ?? [], reviews: reviews ?? [], banners: banners ?? [] };
   });
+
+const orderStatuses = ["pending_confirmation","confirmed","processing","packed","ready_to_ship","shipped","out_for_delivery","delivered","cancelled","return_requested","returned","refunded"] as const;
+export const updateOrderStatus = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
+  .inputValidator((input) => z.object({ id: z.string().uuid(), status: z.enum(orderStatuses) }).parse(input))
+  .handler(async ({ data, context }) => { const { data: allowed } = await context.supabase.rpc("is_store_admin", { _user_id: context.userId }); if (!allowed) throw new Error("Administrator access required."); const { error } = await context.supabase.from("orders").update({ status: data.status }).eq("id", data.id); if (error) throw error; return { ok: true }; });
+
+export const moderateReview = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
+  .inputValidator((input) => z.object({ id: z.string().uuid(), status: z.enum(["approved","rejected","hidden"]) }).parse(input))
+  .handler(async ({ data, context }) => { const { data: allowed } = await context.supabase.rpc("is_store_admin", { _user_id: context.userId }); if (!allowed) throw new Error("Administrator access required."); const { error } = await context.supabase.from("reviews").update({ status: data.status }).eq("id", data.id); if (error) throw error; return { ok: true }; });
+
+export const updateBanner = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
+  .inputValidator((input) => z.object({ id: z.string().uuid(), active: z.boolean() }).parse(input))
+  .handler(async ({ data, context }) => { const { data: allowed } = await context.supabase.rpc("is_store_admin", { _user_id: context.userId }); if (!allowed) throw new Error("Administrator access required."); const { error } = await context.supabase.from("site_banners").update({ active: data.active }).eq("id", data.id); if (error) throw error; return { ok: true }; });
 
 export const updateVariantPrice = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
