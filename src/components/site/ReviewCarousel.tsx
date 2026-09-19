@@ -58,7 +58,6 @@ export function ReviewCarousel() {
           <div>
             <p className="text-sm font-bold uppercase text-leaf">Shared with warmth</p>
             <h2 id="customer-notes-title" className="mt-2 font-display text-3xl text-primary sm:text-4xl">Happy bites across India</h2>
-            <p className="mt-2 text-sm text-muted-foreground">Sample testimonials showing the experiences we aim to deliver.</p>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" size="icon" onClick={() => { setPlaying(false); move(-1); }} aria-label="Previous testimonials"><ChevronLeft /></Button>
@@ -76,7 +75,13 @@ export function ReviewCarousel() {
             </article>
           ))}
         </div>
-        <div className="mt-5 flex items-center justify-between text-xs text-muted-foreground"><span>Sample testimonials</span><span>{index + 1} / {reviews.length}</span></div>
+        <div className="mt-7 flex items-center justify-center gap-4" aria-hidden="true">
+          <ChevronLeft className="size-6 text-primary" />
+          <div className="relative h-px w-full max-w-2xl overflow-visible bg-primary/25">
+            <span className="testimonial-runner absolute top-1/2 block h-1 w-16 -translate-y-1/2 rounded-full bg-sun" />
+          </div>
+          <ChevronRight className="size-6 text-primary" />
+        </div>
       </div>
     </section>
   );

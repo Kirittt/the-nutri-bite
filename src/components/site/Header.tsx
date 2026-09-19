@@ -3,7 +3,7 @@ import { BookHeart, ChevronDown, Factory, Menu, Phone, ShoppingBag, Store, UserR
 import { useEffect, useState } from "react";
 
 import logo from "@/assets/nutri-bite-logo.png.asset.json";
-import { BRAND, categories, categorySubcategories } from "@/data/catalog";
+import { BRAND, categories, categorySubcategories, subcategorySlug } from "@/data/catalog";
 import { useCart } from "@/lib/cart";
 import { CategoryIcon } from "./icons";
 
@@ -97,7 +97,7 @@ export function Header() {
                         </button>
                       ))}
                     </div>
-                    {selectedCategory && <div className="p-6"><div className="flex items-start gap-4"><span className="grid size-12 shrink-0 place-items-center bg-softgreen"><CategoryIcon name={selectedCategory.icon} className="size-6 text-primary" /></span><div><h3 className="font-display text-2xl text-primary">{selectedCategory.name}</h3><p className="mt-1 text-sm text-muted-foreground">{selectedCategory.blurb}</p></div></div><div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-2">{(categorySubcategories[selectedCategory.slug] ?? []).map((item, index) => <Link key={item} to="/shop/$category" params={{ category: selectedCategory.slug }} onClick={() => setShopOpen(false)} className={`border-l-2 px-3 py-2 text-sm transition-transform hover:translate-x-1 ${index % 2 === 0 ? "border-leaf hover:text-leaf" : "border-sun hover:text-primary"}`}>{item}</Link>)}</div><Link to="/shop/$category" params={{ category: selectedCategory.slug }} onClick={() => setShopOpen(false)} className="mt-6 inline-flex items-center gap-2 bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-deep"><Store className="size-4" /> Shop {selectedCategory.name}</Link></div>}
+                    {selectedCategory && <div className="p-6"><div className="flex items-start gap-4"><span className="grid size-12 shrink-0 place-items-center bg-softgreen"><CategoryIcon name={selectedCategory.icon} className="size-6 text-primary" /></span><div><h3 className="font-display text-2xl text-primary">{selectedCategory.name}</h3><p className="mt-1 text-sm text-muted-foreground">{selectedCategory.blurb}</p></div></div><div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-2">{(categorySubcategories[selectedCategory.slug] ?? []).map((item, index) => <Link key={item} to="/shop/$category/$subcategory" params={{ category: selectedCategory.slug, subcategory: subcategorySlug(item) }} onClick={() => setShopOpen(false)} className={`group/item flex items-center gap-3 px-2 py-2 text-sm transition-transform hover:translate-x-1 ${index % 2 === 0 ? "hover:text-leaf" : "hover:text-primary"}`}><span className={`size-2.5 shrink-0 rotate-45 rounded-[2px] transition-transform group-hover/item:rotate-[135deg] ${index % 2 === 0 ? "bg-leaf" : "bg-sun"}`} />{item}</Link>)}</div><Link to="/shop/$category" params={{ category: selectedCategory.slug }} onClick={() => setShopOpen(false)} className="mt-6 inline-flex items-center gap-2 bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-deep"><Store className="size-4" /> Shop all {selectedCategory.name}</Link></div>}
                   </div>
                 </div>
               )}
@@ -156,16 +156,10 @@ export function Header() {
              {aboutLinks.map((item, index) => <Link key={item.to} to={item.to} onClick={() => setOpen(false)} className="flex items-center gap-2 py-2 pl-3 font-medium"><item.icon className={`size-4 ${index % 2 === 0 ? "text-leaf" : "text-sun"}`} />{item.label}</Link>)}
              <div className="grid gap-2 pb-2 sm:grid-cols-2">
               {categories.map((c) => (
-                <Link
-                  key={c.slug}
-                  to="/shop/$category"
-                  params={{ category: c.slug }}
-                  onClick={() => setOpen(false)}
-                   className="group border border-border bg-softgreen px-3 py-3 text-xs transition-transform hover:-translate-y-0.5 odd:bg-softgreen even:bg-beige"
-                >
-                   <span className="flex items-center gap-2 font-semibold"><CategoryIcon name={c.icon} className="size-4 text-leaf" />{c.name}</span>
-                   <span className="mt-1 block text-[0.68rem] leading-relaxed text-muted-foreground">{(categorySubcategories[c.slug] ?? []).join(" • ")}</span>
-                </Link>
+                <div key={c.slug} className="border border-border bg-softgreen px-3 py-3 odd:bg-softgreen even:bg-beige">
+                  <Link to="/shop/$category" params={{ category: c.slug }} onClick={() => setOpen(false)} className="flex items-center gap-2 text-xs font-semibold"><CategoryIcon name={c.icon} className="size-4 text-leaf" />{c.name}</Link>
+                  <div className="mt-2 flex flex-wrap gap-x-3 gap-y-2">{(categorySubcategories[c.slug] ?? []).map((item, index) => <Link key={item} to="/shop/$category/$subcategory" params={{ category: c.slug, subcategory: subcategorySlug(item) }} onClick={() => setOpen(false)} className="flex items-center gap-1.5 text-[0.68rem] text-muted-foreground"><span className={`size-1.5 rotate-45 rounded-[1px] ${index % 2 === 0 ? "bg-leaf" : "bg-sun"}`} />{item}</Link>)}</div>
+                </div>
               ))}
             </div>
             {navLinks.map((l) => (

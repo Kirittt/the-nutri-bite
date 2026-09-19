@@ -762,6 +762,20 @@ export const getCategory = (slug: string) => categories.find((c) => c.slug === s
 export const getProduct = (slug: string) => products.find((p) => p.slug === slug);
 export const productsIn = (slug: string) => products.filter((p) => p.category === slug);
 
+export const subcategorySlug = (value: string) =>
+  value.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+export const getSubcategoryLabel = (category: string, slug: string) =>
+  categorySubcategories[category]?.find((label) => subcategorySlug(label) === slug);
+
+export const productsInSubcategory = (category: string, subcategory: string) => {
+  const needle = subcategorySlug(subcategory);
+  return products.filter((product) => {
+    if (product.category !== category) return false;
+    return subcategorySlug(product.subcategory ?? "") === needle || subcategorySlug(product.name).includes(needle);
+  });
+};
+
 export const fromPrice = (p: Product) => {
   const prices = p.variants.map((v) => v.price).filter((v): v is number => v !== null);
   return prices.length ? Math.min(...prices) : null;

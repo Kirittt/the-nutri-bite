@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 
 import { CategoryIcon } from "@/components/site/icons";
 import { ProductCard } from "@/components/site/ProductCard";
-import { getCategory, productsIn } from "@/data/catalog";
+import { categorySubcategories, getCategory, productsIn, subcategorySlug } from "@/data/catalog";
 
 export const Route = createFileRoute("/shop/$category")({
   loader: ({ params }) => {
@@ -50,6 +50,15 @@ function CategoryPage() {
           <h1 className="font-display text-3xl text-primary">{category.name}</h1>
           <p className="text-sm text-muted-foreground">{category.blurb}</p>
         </div>
+      </div>
+
+      <div className="mt-8 flex flex-wrap gap-2">
+        {(categorySubcategories[category.slug] ?? []).map((item, index) => (
+          <Link key={item} to="/shop/$category/$subcategory" params={{ category: category.slug, subcategory: subcategorySlug(item) }} className="group flex items-center gap-2 border border-border bg-background px-3 py-2 text-sm transition-all hover:-translate-y-0.5 hover:shadow-soft">
+            <span className={`size-2 rotate-45 rounded-[2px] transition-transform group-hover:rotate-[135deg] ${index % 2 === 0 ? "bg-leaf" : "bg-sun"}`} />
+            {item}
+          </Link>
+        ))}
       </div>
 
       {items.length ? (
