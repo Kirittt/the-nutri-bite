@@ -30,4 +30,4 @@
 - [x] Expand the home-page Best Sellers display to two rows of five products
 - [x] Replace the plain story panel with food photography and stronger actions
 - [x] Add dedicated category and subcategory navigation with alternating brand bullets
-- [ ] Verify Shop flavour links, desktop/mobile presentation, and TypeScript
+- [x] Verify Shop flavour links, desktop/mobile presentation, and TypeScript
