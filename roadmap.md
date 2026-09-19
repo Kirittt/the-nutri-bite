@@ -39,7 +39,7 @@
 ## Home call-to-action and sweets menu
 - [x] Replace the plain green call-to-action with a clean food photograph
 - [x] List every Natural Sweets & Bites product in the desktop and mobile Shop menus
-- [ ] Verify the image, menu links, and mobile presentation
+- [x] Verify the image, menu links, and mobile presentation
 
 ## Store manager access
 - [x] Issue the owner's single-use store manager invitation (super_admin, 30 days)
