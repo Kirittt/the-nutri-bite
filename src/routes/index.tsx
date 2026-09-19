@@ -1,5 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, MessageCircle } from "lucide-react";
+import {
+  ArrowRight,
+  Box,
+  ClipboardCheck,
+  Flame,
+  MessageCircle,
+  Package,
+  Sparkles,
+  Wheat,
+} from "lucide-react";
 
 import { HeroCarousel } from "@/components/site/HeroCarousel";
 import { CategoryIcon } from "@/components/site/icons";
@@ -9,6 +18,39 @@ import { BRAND, categories, products } from "@/data/catalog";
 import { categoryImages } from "@/data/catalog-images";
 import { Button } from "@/components/ui/button";
 import { ReviewCarousel } from "@/components/site/ReviewCarousel";
+
+const processSteps = [
+  {
+    icon: Wheat,
+    title: "Ingredient selection",
+    body: "Fresh nuts, seeds, dates and berries are chosen for quality, size and taste.",
+  },
+  {
+    icon: ClipboardCheck,
+    title: "Preparation",
+    body: "Every ingredient is carefully cleaned, sorted and prepared in small batches.",
+  },
+  {
+    icon: Flame,
+    title: "Roasting & crafting",
+    body: "Controlled roasting and thoughtful blending bring out balanced flavour and texture.",
+  },
+  {
+    icon: Sparkles,
+    title: "Hygienic handling",
+    body: "Clean handling practices are followed throughout every stage of preparation.",
+  },
+  {
+    icon: Package,
+    title: "Careful packing",
+    body: "Each pack is filled, sealed and checked by hand to preserve freshness.",
+  },
+  {
+    icon: Box,
+    title: "Dispatch",
+    body: "Finished orders are packed securely and prepared for a safe journey to you.",
+  },
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -78,6 +120,43 @@ function Home() {
               <ProductCard key={p.slug} product={p} />
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Our process */}
+      <section className="border-y border-border bg-background">
+        <div className="container-page section-y">
+          <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+            <div className="max-w-2xl">
+              <p className="text-sm font-bold uppercase text-leaf">From selection to dispatch</p>
+              <h2 className="mt-2 font-display text-3xl text-primary sm:text-4xl">
+                Our process, made with care
+              </h2>
+              <p className="mt-3 text-muted-foreground">
+                Six thoughtful stages help us keep every batch neat, hygienic and ready to enjoy.
+              </p>
+            </div>
+            <Button asChild variant="outline" className="w-fit border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+              <Link to="/our-process">Read more <ArrowRight /></Link>
+            </Button>
+          </div>
+
+          <ol className="mt-9 grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+            {processSteps.map((step, index) => (
+              <li key={step.title} className="group relative border-t border-border pt-5">
+                <div className="flex items-start gap-4">
+                  <span className={`grid size-12 shrink-0 place-items-center rounded-lg transition-transform duration-300 group-hover:-translate-y-1 ${index % 2 === 0 ? "bg-softgreen text-leaf" : "bg-beige text-sun"}`}>
+                    <step.icon className="size-6" aria-hidden="true" />
+                  </span>
+                  <div>
+                    <span className="text-xs font-bold uppercase text-muted-foreground">Step {index + 1}</span>
+                    <h3 className="mt-1 font-display text-xl text-primary">{step.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.body}</p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 

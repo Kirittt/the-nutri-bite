@@ -32,6 +32,10 @@
 - [x] Add dedicated category and subcategory navigation with alternating brand bullets
 - [x] Verify Shop flavour links, desktop/mobile presentation, and TypeScript
 
+## Home process preview
+- [x] Add all six process stages below Best Sellers with a link to the full process page
+- [ ] Verify the section and link on desktop and mobile
+
 ## Store manager access
 - [x] Issue the owner's single-use store manager invitation (super_admin, 30 days)
 - [x] Surface the account page: store manager entry for staff, invitation-code link for everyone else
