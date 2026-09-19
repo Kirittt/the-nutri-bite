@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 
 import { CategoryIcon } from "@/components/site/icons";
 import { ProductCard } from "@/components/site/ProductCard";
-import { categorySubcategories, getCategory, productsIn, subcategorySlug } from "@/data/catalog";
+import { categorySubcategories, getCategory, getProductForSubcategory, productsIn, subcategorySlug } from "@/data/catalog";
 
 export const Route = createFileRoute("/shop/$category")({
   loader: ({ params }) => {
@@ -53,12 +53,16 @@ function CategoryPage() {
       </div>
 
       <div className="mt-8 flex flex-wrap gap-2">
-        {(categorySubcategories[category.slug] ?? []).map((item, index) => (
-          <Link key={item} to="/shop/$category/$subcategory" params={{ category: category.slug, subcategory: subcategorySlug(item) }} className="group flex items-center gap-2 border border-border bg-background px-3 py-2 text-sm transition-all hover:-translate-y-0.5 hover:shadow-soft">
-            <span className={`size-2 rotate-45 rounded-[2px] transition-transform group-hover:rotate-[135deg] ${index % 2 === 0 ? "bg-leaf" : "bg-sun"}`} />
-            {item}
-          </Link>
-        ))}
+        {(categorySubcategories[category.slug] ?? []).map((item, index) => {
+          const product = getProductForSubcategory(category.slug, item);
+          const bullet = <span className={`size-2 rotate-45 rounded-[2px] transition-transform group-hover:rotate-[135deg] ${index % 2 === 0 ? "bg-leaf" : "bg-sun"}`} />;
+          const cls = "group flex items-center gap-2 border border-border bg-background px-3 py-2 text-sm transition-all hover:-translate-y-0.5 hover:shadow-soft";
+          return product ? (
+            <Link key={item} to="/product/$slug" params={{ slug: product.slug }} className={cls}>{bullet}{item}</Link>
+          ) : (
+            <Link key={item} to="/shop/$category/$subcategory" params={{ category: category.slug, subcategory: subcategorySlug(item) }} className={cls}>{bullet}{item}</Link>
+          );
+        })}
       </div>
 
       {items.length ? (
