@@ -55,6 +55,8 @@ function Home() {
         </div>
       </section>
 
+      <section className="bg-beige"><div className="container-page section-y grid gap-8 lg:grid-cols-2"><div><p className="text-sm font-bold text-leaf uppercase">From our hands to your home</p><h2 className="mt-3 font-display text-4xl text-primary">Neat, hygienic and packed with love</h2><p className="mt-4 text-muted-foreground">Every batch moves through thoughtful preparation, careful handling and clean packing. Our team checks each pack before dispatch so your family receives it the way we intended.</p><Link to="/our-process" className="mt-6 inline-block font-semibold text-primary underline">See our six-step process</Link></div><div className="grid grid-cols-2 gap-3">{["Selected ingredients","Small-batch craft","Careful quality checks","Hand-packed finish"].map((item)=><div key={item} className="rounded-lg bg-background p-5 font-display text-lg text-primary shadow-soft">{item}</div>)}</div></div></section>
+
       {/* Categories */}
       <section className="container-page section-y">
         <h2 className="font-display text-3xl text-primary">Shop by collection</h2>

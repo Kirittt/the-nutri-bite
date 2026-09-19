@@ -29,6 +29,7 @@ import { Route as ShippingPolicyRouteImport } from './routes/shipping-policy'
 import { Route as TermsAndConditionsRouteImport } from './routes/terms-and-conditions'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedAdminInviteRouteImport } from './routes/_authenticated/admin-invite'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
 import { Route as ShopIndexRouteImport } from './routes/shop.index'
 import { Route as ShopCategoryRouteImport } from './routes/shop.$category'
@@ -132,6 +133,12 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminInviteRoute =
+  AuthenticatedAdminInviteRouteImport.update({
+    id: '/admin-invite',
+    path: '/admin-invite',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const ProductSlugRoute = ProductSlugRouteImport.update({
   id: '/product/$slug',
   path: '/product/$slug',
@@ -168,6 +175,7 @@ export interface FileRoutesByFullPath {
   '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/account': typeof AuthenticatedAccountRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/admin-invite': typeof AuthenticatedAdminInviteRoute
   '/product/$slug': typeof ProductSlugRoute
   '/shop/$category': typeof ShopCategoryRoute
   '/shop/': typeof ShopIndexRoute
@@ -192,6 +200,7 @@ export interface FileRoutesByTo {
   '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/account': typeof AuthenticatedAccountRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/admin-invite': typeof AuthenticatedAdminInviteRoute
   '/product/$slug': typeof ProductSlugRoute
   '/shop/$category': typeof ShopCategoryRoute
   '/shop': typeof ShopIndexRoute
@@ -218,6 +227,7 @@ export interface FileRoutesById {
   '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/admin-invite': typeof AuthenticatedAdminInviteRoute
   '/product/$slug': typeof ProductSlugRoute
   '/shop/$category': typeof ShopCategoryRoute
   '/shop/': typeof ShopIndexRoute
@@ -244,6 +254,7 @@ export interface FileRouteTypes {
     | '/terms-and-conditions'
     | '/account'
     | '/admin'
+    | '/admin-invite'
     | '/product/$slug'
     | '/shop/$category'
     | '/shop/'
@@ -268,6 +279,7 @@ export interface FileRouteTypes {
     | '/terms-and-conditions'
     | '/account'
     | '/admin'
+    | '/admin-invite'
     | '/product/$slug'
     | '/shop/$category'
     | '/shop'
@@ -293,6 +305,7 @@ export interface FileRouteTypes {
     | '/terms-and-conditions'
     | '/_authenticated/account'
     | '/_authenticated/admin'
+    | '/_authenticated/admin-invite'
     | '/product/$slug'
     | '/shop/$category'
     | '/shop/'
@@ -464,6 +477,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin-invite': {
+      id: '/_authenticated/admin-invite'
+      path: '/admin-invite'
+      fullPath: '/admin-invite'
+      preLoaderRoute: typeof AuthenticatedAdminInviteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/product/$slug': {
       id: '/product/$slug'
       path: '/product/$slug'
@@ -491,11 +511,13 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedAdminInviteRoute: typeof AuthenticatedAdminInviteRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAccountRoute: AuthenticatedAccountRoute,
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedAdminInviteRoute: AuthenticatedAdminInviteRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
