@@ -9,7 +9,6 @@ import { lovable } from "@/integrations/lovable";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/auth")({
-  ssr: false,
   head: () => ({ meta: [{ title: "Sign in — The Nutri Bite" }, { name: "description", content: "Sign in to view your Nutri Bite orders and delivery updates." }, { property: "og:title", content: "Sign in — The Nutri Bite" }, { property: "og:description", content: "Access your orders and delivery updates." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
   component: AuthPage,
 });
