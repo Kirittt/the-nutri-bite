@@ -31,3 +31,9 @@
 - [x] Replace the plain story panel with food photography and stronger actions
 - [x] Add dedicated category and subcategory navigation with alternating brand bullets
 - [x] Verify Shop flavour links, desktop/mobile presentation, and TypeScript
+
+## Store manager access
+- [x] Issue the owner's single-use store manager invitation (super_admin, 30 days)
+- [x] Surface the account page: store manager entry for staff, invitation-code link for everyone else
+- [x] Point the header account icon to My orders once signed in
+- [ ] Wire Google sign-in credentials so the Google button works (needs the owner's Google Cloud client ID and secret)
