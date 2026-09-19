@@ -3,7 +3,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ProductCard } from "@/components/site/ProductCard";
 import { getCategory, getSubcategoryLabel, productsInSubcategory } from "@/data/catalog";
 
-export const Route = createFileRoute("/shop/$category/$subcategory")({
+export const Route = createFileRoute("/shop/$category_/$subcategory")({
   loader: ({ params }) => {
     const category = getCategory(params.category);
     const subcategory = getSubcategoryLabel(params.category, params.subcategory);
