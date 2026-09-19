@@ -125,3 +125,16 @@
   padding-block: 3.5rem;
 }
 
+@keyframes promise-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@utility promise-marquee {
+  animation: promise-scroll 30s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promise-marquee { animation: none; }
+}
+
