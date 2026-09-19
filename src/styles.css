@@ -144,8 +144,13 @@
   animation: promise-scroll 30s linear infinite;
 }
 
+@utility product-review-track {
+  animation: promise-scroll 30s linear infinite reverse;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .promise-marquee { animation: none; }
   .testimonial-marquee { animation: none; }
+  .product-review-track { animation: none; width: 100%; overflow-x: auto; }
 }
 
