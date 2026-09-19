@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { HandHeart, Leaf, MessageCircle, ShieldCheck, Sparkles } from "lucide-react";
 
-import heroImg from "@/assets/hero-nutri-bite.jpg";
+import { HeroCarousel } from "@/components/site/HeroCarousel";
 import { CategoryIcon } from "@/components/site/icons";
 import { ProductCard } from "@/components/site/ProductCard";
 import { BRAND, categories, products } from "@/data/catalog";
@@ -38,53 +38,7 @@ function Home() {
 
   return (
     <div>
-      {/* Hero */}
-      <section className="bg-cream">
-        <div className="container-page grid items-center gap-10 py-14 lg:grid-cols-2 lg:py-20">
-          <div>
-            <span className="inline-block rounded-full bg-softgreen px-4 py-1.5 text-xs font-semibold tracking-widest text-primary uppercase">
-              Pure • Natural • Wholesome
-            </span>
-            <h1 className="mt-5 font-display text-5xl leading-[1.05] text-primary sm:text-6xl">
-              Small Bite.
-              <br />
-              Big Benefits.
-            </h1>
-            <p className="mt-5 max-w-lg text-lg text-muted-foreground">
-              Discover handcrafted sweets, premium nuts and wholesome snacks thoughtfully created
-              for everyday happiness.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                to="/shop"
-                className="rounded-xl bg-primary px-7 py-3.5 font-semibold text-primary-foreground shadow-soft transition-colors hover:bg-deep"
-              >
-                Shop Now
-              </Link>
-              <Link
-                to="/shop/$category"
-                params={{ category: "natural-sweets-bites" }}
-                className="rounded-xl border border-primary px-7 py-3.5 font-semibold text-primary hover:bg-softgreen"
-              >
-                Explore Natural Delights
-              </Link>
-              <a
-                href={BRAND.whatsapp}
-                className="inline-flex items-center gap-2 rounded-xl bg-sun px-7 py-3.5 font-semibold text-accent-foreground"
-              >
-                <MessageCircle className="size-5" /> WhatsApp Us
-              </a>
-            </div>
-          </div>
-          <img
-            src={heroImg}
-            alt="Handcrafted dry-fruit laddus, nut bites, dates and almonds on a wooden board"
-            className="rounded-3xl shadow-lift"
-            width={1600}
-            height={1200}
-          />
-        </div>
-      </section>
+      <HeroCarousel />
 
       {/* Promises */}
       <section className="border-y border-border bg-background">
