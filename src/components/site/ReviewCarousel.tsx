@@ -47,7 +47,9 @@ export function ReviewCarousel() {
     return () => window.clearInterval(timer);
   }, [playing]);
 
-  const visible = [0, 1, 2].map((offset) => reviews[(index + offset) % reviews.length]);
+  const visible = [0, 1, 2]
+    .map((offset) => reviews[(index + offset) % reviews.length])
+    .filter((review): review is (typeof reviews)[number] => review !== undefined);
 
   return (
     <section className="bg-beige" aria-labelledby="customer-notes-title">

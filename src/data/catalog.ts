@@ -26,6 +26,21 @@ export type Category = {
   blurb: string;
 };
 
+export const categorySubcategories: Record<string, string[]> = {
+  "natural-sweets-bites": ["Natural Laddu", "Dry Fruit Bites", "Date & Khajoor Bites", "Protein Sweets", "Rose & Gulkand Collection", "Chocolate Collection"],
+  almonds: ["Roasted & Salted", "Smoky BBQ", "Spicy", "Salt & Pepper", "Mexican Salsa", "Morning – Activated"],
+  cashews: ["320 Count", "240 Count", "Roasted & Salted", "Lime & Pepper", "Sriracha", "Thai Chilli Sweet", "Salted Caramel", "Tangique", "Mexican Salsa", "Korean Kimchi", "Habanero Spicy", "Smoky BBQ"],
+  "trail-mix": ["Roasted & Salted", "Protein Booster", "Teekha Chatpata", "Achari Masti", "Lime & Pepper", "Peri Peri"],
+  "super-snack": ["Achari Masti", "Lime & Pepper", "Honey BBQ", "Peri Peri", "Herbs & Spices", "Korean Kimchi", "Mexican Salsa"],
+  "nut-mix": ["Smoky BBQ", "Honey Roasted", "Korean Kimchi", "Mexican Salsa", "Herbs & Spices", "Achari Masti", "Lime & Pepper"],
+  "health-mix": ["Omega Boost", "Antioxidant Mix", "Trail Mix – Daily Dose", "Trail Mix – Fruit & Nut", "Trail Mix – Power Nut", "Panchmewa Mix"],
+  "berry-fruit-mix": ["Masala Berry Mix", "Masala Fruit Mix", "Masala Cranberry", "Mango Raisins"],
+  edamame: ["Roasted & Salted", "Honey Cinnamon", "Korean Kimchi"],
+  "mastana-makhana": ["Peri Peri", "Mint", "Himalayan Salt", "Cheese"],
+  "specialty-collection": ["Dry Fruit Mix", "Almond Dragees", "Almond Stuffed Dates"],
+  "gift-assorted": ["Assorted Bites", "Corporate Gifting", "Festive Gifting"],
+};
+
 export const categories: Category[] = [
   {
     slug: "natural-sweets-bites",
@@ -105,6 +120,13 @@ const g = (label: string, price: number | null): Variant => ({ label, price });
 
 const sweetNote =
   "Handcrafted and hygienically prepared, then packed with extra care and love.";
+
+const pendingFlavours: Product[] = [
+  ...["Teekha Chatpata", "Achari Masti", "Lime & Pepper", "Peri Peri"].map((flavour) => ({ slug: `trail-mix-${flavour.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`, name: `Trail Mix — ${flavour}`, category: "trail-mix", subcategory: flavour, tagline: `${flavour} seasoning on a balanced nut, seed and berry mix.`, description: `Almonds, cashews, peanuts, raisins, cranberry, pumpkin and sunflower seeds finished with ${flavour.toLowerCase()} seasoning.`, ingredients: ["Almonds", "Cashews", "Peanuts", "Black Raisins", "Cranberry", "Pumpkin Seeds", "Sunflower Seeds"], variants: [], status: "coming-soon" as const })),
+  ...["Lime & Pepper", "Honey BBQ", "Peri Peri", "Herbs & Spices", "Korean Kimchi", "Mexican Salsa"].map((flavour) => ({ slug: `super-snack-${flavour.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`, name: `Super Snack — ${flavour}`, category: "super-snack", subcategory: flavour, tagline: `${flavour} flavour across premium nuts, raisins and seeds.`, description: `Almonds, cashews, green raisins, pumpkin and sunflower seeds with ${flavour.toLowerCase()} seasoning.`, ingredients: ["Almonds", "Cashews", "Green Raisins", "Pumpkin Seeds", "Sunflower Seeds"], variants: [], status: "coming-soon" as const })),
+  ...["Honey Roasted", "Korean Kimchi", "Mexican Salsa", "Herbs & Spices", "Achari Masti", "Lime & Pepper"].map((flavour) => ({ slug: `nut-mix-${flavour.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`, name: `Nut Mix — ${flavour}`, category: "nut-mix", subcategory: flavour, tagline: `${flavour} almonds and cashews for satisfying everyday crunch.`, description: `A premium almond and cashew blend finished with ${flavour.toLowerCase()} seasoning.`, ingredients: ["Almonds", "Cashews"], variants: [], status: "coming-soon" as const })),
+  ...(["320", "240"] as const).flatMap((count) => ["Sriracha", "Thai Chilli Sweet", "Salted Caramel", "Tangique", "Mexican Salsa", "Korean Kimchi", "Habanero Spicy", "Smoky BBQ"].map((flavour) => ({ slug: `cashews-${count}-${flavour.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`, name: `Cashews ${count} — ${flavour}`, category: "cashews", subcategory: `${count} Count`, tagline: `Premium ${count} count cashews with ${flavour.toLowerCase()} flavour.`, description: `Carefully roasted ${count} count cashews finished with ${flavour.toLowerCase()} seasoning.`, ingredients: ["Cashews"], variants: [], status: "coming-soon" as const }))),
+];
 
 export const products: Product[] = [
   {
@@ -730,6 +752,7 @@ export const products: Product[] = [
     variants: [],
     status: "coming-soon",
   },
+  ...pendingFlavours,
 ];
 
 export const formatINR = (paise: number) =>
