@@ -136,7 +136,8 @@
 }
 
 @utility testimonial-marquee {
-  animation: testimonial-scroll 60s linear infinite;
+  /* Match the promise strip's visual travel speed across the much longer review track. */
+  animation: testimonial-scroll 210s linear infinite;
 }
 
 @utility promise-marquee {
