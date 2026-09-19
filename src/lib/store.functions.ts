@@ -1,4 +1,4 @@
-import { createServerFn, getRequestHeader } from "@tanstack/react-start";
+import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
@@ -27,11 +27,8 @@ export const createOrder = createServerFn({ method: "POST" })
     });
     const subtotal = lineItems.reduce((sum, item) => sum + item.lineTotal, 0);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const bearer = getRequestHeader("authorization")?.replace(/^Bearer\s+/i, "");
-    const { data: session } = bearer ? await supabaseAdmin.auth.getUser(bearer) : { data: { user: null } };
-    const userId = session.user?.id ?? null;
     const { data: order, error } = await supabaseAdmin.from("orders").insert({
-      user_id: userId,
+      user_id: null,
       customer_name: data.customerName,
       phone: data.phone,
       email: data.email,
