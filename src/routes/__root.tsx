@@ -15,6 +15,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CartProvider } from "@/lib/cart";
 import { Toaster } from "@/components/ui/sonner";
+import { CookieConsent } from "@/components/site/CookieConsent";
 
 function NotFoundComponent() {
   return (
@@ -145,6 +146,7 @@ function RootComponent() {
           <Footer />
         </div>
         <Toaster position="top-center" />
+        <CookieConsent />
       </CartProvider>
     </QueryClientProvider>
   );
