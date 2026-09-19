@@ -25,5 +25,15 @@ function AccountPage() {
   const isManager = roles.includes("admin") || roles.includes("super_admin");
   return <div className="container-page section-y"><div className="flex items-center justify-between"><div><h1 className="font-display text-4xl text-primary">My orders</h1><p className="mt-2 text-muted-foreground">Confirmed orders and delivery progress.</p></div><Button variant="outline" onClick={async () => { await supabase.auth.signOut(); navigate({ to: "/auth", replace: true }); }}>Sign out</Button></div>
     <div className="mt-8 grid gap-3">{orders.length ? orders.map((order) => <article key={order.order_number} className="flex flex-wrap items-center justify-between gap-4 rounded-lg border border-border p-5"><div className="flex gap-3"><PackageCheck className="text-leaf" /><div><h2 className="font-semibold">{order.order_number}</h2><p className="text-sm capitalize text-muted-foreground">{order.status.replaceAll("_", " ")}</p></div></div><div className="text-right"><strong>{formatINR(order.total)}</strong><p className="text-xs text-muted-foreground">{new Date(order.created_at).toLocaleDateString("en-IN")}</p></div></article>) : <div className="rounded-lg bg-softgreen p-10 text-center text-muted-foreground">No account-linked orders yet.</div>}</div>
+    {isManager ? <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-lg border border-leaf/40 bg-softgreen p-6">
+      <div className="flex items-start gap-3">
+        <ShieldCheck className="mt-0.5 size-5 text-primary" />
+        <div>
+          <h2 className="font-semibold text-primary">Store manager access</h2>
+          <p className="text-sm text-muted-foreground">Update products and prices, confirm orders and moderate reviews.</p>
+        </div>
+      </div>
+      <Button asChild><Link to="/admin">Open store manager</Link></Button>
+    </div> : <p className="mt-8 text-sm text-muted-foreground">Store team member? <Link to="/admin-invite" className="font-semibold text-primary underline underline-offset-4">Enter your invitation code</Link> to unlock the store manager area.</p>}
   </div>;
 }
