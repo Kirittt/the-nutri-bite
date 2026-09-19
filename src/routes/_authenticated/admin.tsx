@@ -17,7 +17,7 @@ export const Route = createFileRoute("/_authenticated/admin")({
 function AdminPage() {
   const [data, setData] = useState<Overview | null>(null); const [error, setError] = useState("");
   const load = () => getAdminOverview().then(setData).catch((reason: unknown) => setError(reason instanceof Error ? reason.message : "Access unavailable."));
-  useEffect(load, []);
+  useEffect(() => { void load(); }, []);
   if (error) return <div className="container-page section-y max-w-xl"><ShieldCheck className="size-10 text-primary" /><h1 className="mt-4 font-display text-4xl text-primary">Administrator access required</h1><p className="mt-3 text-muted-foreground">This area is restricted to invited store managers.</p></div>;
   if (!data) return <div className="container-page section-y">Loading store manager…</div>;
   return <div className="container-page section-y"><div className="flex items-center justify-between"><div><p className="text-sm font-bold text-leaf uppercase">Private workspace</p><h1 className="font-display text-4xl text-primary">Store manager</h1></div><Button variant="outline" size="icon" onClick={load} aria-label="Refresh"><RefreshCw /></Button></div>
