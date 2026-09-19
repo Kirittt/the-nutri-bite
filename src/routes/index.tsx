@@ -8,6 +8,7 @@ import { PromiseMarquee } from "@/components/site/PromiseMarquee";
 import { BRAND, categories, products } from "@/data/catalog";
 import { categoryImages } from "@/data/catalog-images";
 import { Button } from "@/components/ui/button";
+import { ReviewCarousel } from "@/components/site/ReviewCarousel";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -113,6 +114,7 @@ function Home() {
           ))}
         </div>
       </section>
+      <ReviewCarousel />
     </div>
   );
 }

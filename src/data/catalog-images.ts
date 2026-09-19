@@ -10,6 +10,13 @@ import specialty from "@/assets/clean/specialty.jpg";
 import superSnack from "@/assets/clean/super-snack.jpg";
 import sweets from "@/assets/clean/sweets.jpg";
 import trailMix from "@/assets/clean/trail-mix.jpg";
+import naturalLaddu from "@/assets/products/natural-laddu.jpg";
+import anjeerBite from "@/assets/products/anjeer-bite.jpg";
+import proteinBar from "@/assets/products/protein-bar.jpg";
+import darkChocolate from "@/assets/products/dark-chocolate-exotica.jpg";
+import morningAlmonds from "@/assets/products/morning-almonds.jpg";
+import spicyAlmonds from "@/assets/products/spicy-almonds.jpg";
+import edamameKimchi from "@/assets/products/edamame-kimchi.jpg";
 
 export const categoryImages: Record<string, string> = {
   "natural-sweets-bites": sweets,
@@ -26,7 +33,15 @@ export const categoryImages: Record<string, string> = {
   "gift-assorted": gifting,
 };
 
-const productImages: Record<string, string> = {};
+const productImages: Record<string, string> = {
+  "number-1-natural-laddu": naturalLaddu,
+  "aflatoon-anjeer-bite": anjeerBite,
+  "powerfull-protein-bar": proteinBar,
+  "blockbuster-dark-chocolate-exotica": darkChocolate,
+  "morning-activated-almonds": morningAlmonds,
+  "spicy-almonds": spicyAlmonds,
+  "edamame-korean-kimchi": edamameKimchi,
+};
 
 export function getProductImage(slug: string, category: string) {
   return productImages[slug] ?? categoryImages[category] ?? null;

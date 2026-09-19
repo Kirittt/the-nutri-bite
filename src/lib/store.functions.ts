@@ -16,6 +16,19 @@ const checkoutSchema = z.object({
   items: z.array(z.object({ slug: z.string(), variant: z.string(), qty: z.number().int().min(1).max(20) })).min(1).max(50),
 });
 
+const newsletterSchema = z.object({ email: z.string().trim().email().max(200) });
+
+export const subscribeNewsletter = createServerFn({ method: "POST" })
+  .inputValidator((input) => newsletterSchema.parse(input))
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const email = data.email.toLowerCase();
+    const { error } = await supabaseAdmin.from("newsletter_subscribers").insert({ email, source: "footer" });
+    if (error?.code === "23505") return { ok: true, existing: true };
+    if (error) throw new Error("We couldn’t save your email. Please try again.");
+    return { ok: true, existing: false };
+  });
+
 export const createOrder = createServerFn({ method: "POST" })
   .inputValidator((input) => checkoutSchema.parse(input))
   .handler(async ({ data }) => {
