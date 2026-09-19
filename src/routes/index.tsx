@@ -32,7 +32,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const bestSellers = products.filter((p) => p.bestSeller).slice(0, 5);
+  const bestSellers = products.filter((p) => p.bestSeller || p.newLaunch).slice(0, 10);
   const fresh = products.filter((p) => p.newLaunch);
 
   return (
@@ -83,20 +83,23 @@ function Home() {
 
       {/* Story strip */}
       <section className="container-page section-y">
-        <div className="rounded-3xl bg-deep px-8 py-14 text-center text-cream">
+        <div className="group relative min-h-[28rem] overflow-hidden rounded-lg">
+          <img src={categoryImages["trail-mix"]} alt="A colourful selection of wholesome nuts, seeds and dried fruits" className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+          <div className="absolute inset-0 bg-linear-to-r from-deep/95 via-deep/75 to-deep/20" />
+          <div className="relative flex min-h-[28rem] max-w-2xl flex-col justify-center px-7 py-14 text-cream sm:px-12">
+            <p className="text-sm font-bold uppercase text-sun">Made thoughtfully, enjoyed naturally</p>
           <h2 className="mx-auto max-w-2xl font-display text-3xl leading-snug">
             Nature’s goodness in every bite
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-cream/80">
+          <p className="mt-4 max-w-xl text-cream/80">
             The Nutri Bite brings nature’s goodness to every family through handcrafted sweets and
             wholesome snacks, thoughtfully created for healthier everyday living.
           </p>
-          <Link
-            to="/our-story"
-            className="mt-7 inline-block rounded-xl bg-sun px-7 py-3.5 font-semibold text-accent-foreground"
-          >
-            Read our story
-          </Link>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <Button asChild size="lg" className="bg-sun text-accent-foreground hover:bg-gold"><Link to="/shop">Shop wholesome bites <ArrowRight /></Link></Button>
+            <Button asChild size="lg" variant="outline" className="border-cream/60 bg-background/10 text-cream hover:bg-cream hover:text-deep"><Link to="/our-story">Read our story</Link></Button>
+          </div>
+          </div>
         </div>
       </section>
 

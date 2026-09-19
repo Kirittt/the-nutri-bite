@@ -24,3 +24,10 @@
 - [x] Add icons to the three About links
 - [x] Add a 30-item labeled sample-review carousel with autoplay and manual controls
 - [x] Verify route metadata, desktop/mobile layouts, interactions, and TypeScript
+
+## Shop navigation refinement
+- [x] Replace testimonial labels and numeric counter with animated directional progress
+- [x] Expand the home-page Best Sellers display to two rows of five products
+- [x] Replace the plain story panel with food photography and stronger actions
+- [x] Add dedicated category and subcategory navigation with alternating brand bullets
+- [ ] Verify Shop flavour links, desktop/mobile presentation, and TypeScript
