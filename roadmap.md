@@ -34,7 +34,7 @@
 
 ## Home process preview
 - [x] Add all six process stages below Best Sellers with a link to the full process page
-- [ ] Verify the section and link on desktop and mobile
+- [x] Verify the section and link on desktop and mobile
 
 ## Store manager access
 - [x] Issue the owner's single-use store manager invitation (super_admin, 30 days)
