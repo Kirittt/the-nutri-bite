@@ -1,6 +1,6 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { PackageCheck } from "lucide-react";
+import { PackageCheck, ShieldCheck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { getMyOrders } from "@/lib/store.functions";
