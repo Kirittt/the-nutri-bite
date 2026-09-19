@@ -50,7 +50,6 @@ export const Route = createFileRoute("/new-launches")({
       </section>
       <ReviewCarousel />
       </div>
-      </div>
     );
   },
 });
