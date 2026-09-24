@@ -43,7 +43,7 @@ export const getProductMedia = createServerFn({ method: "GET" })
     const storagePaths = paths.filter((path) => !/^https?:\/\//.test(path));
     const signedByPath = new Map<string, string>();
     if (storagePaths.length) {
-      const { data: signed } = await supabaseAdmin.storage.from("product-images").createSignedUrls(storagePaths, 3600);
+      const { data: signed } = await supabaseAdmin.storage.from("product-images").createSignedUrls(storagePaths, 86400);
       signed?.forEach((entry, index) => {
         const storagePath = storagePaths[index];
         if (entry.signedUrl && storagePath) signedByPath.set(storagePath, entry.signedUrl);
@@ -124,7 +124,7 @@ export const getAdminOverview = createServerFn({ method: "GET" })
       const storagePaths = paths.filter((path) => !/^https?:\/\//.test(path));
       const signedByPath = new Map<string, string>();
       if (storagePaths.length) {
-        const { data: signed } = await supabaseAdmin.storage.from("product-images").createSignedUrls(storagePaths, 3600);
+        const { data: signed } = await supabaseAdmin.storage.from("product-images").createSignedUrls(storagePaths, 86400);
         signed?.forEach((entry, index) => {
           const storagePath = storagePaths[index];
           if (entry.signedUrl && storagePath) signedByPath.set(storagePath, entry.signedUrl);
@@ -192,11 +192,11 @@ export const deleteProductImage = createServerFn({ method: "POST" })
     const paths = [...new Set([product.image_url, ...(product.gallery_urls ?? [])].filter((value): value is string => Boolean(value)))];
     if (!paths.includes(data.path)) throw new Error("Image does not belong to this product.");
     const next = paths.filter((path) => path !== data.path);
+    const { error: updateError } = await supabaseAdmin.from("store_products").update({ image_url: next[0] ?? null, gallery_urls: next }).eq("id", data.id);
+    if (updateError) throw updateError;
     if (!/^https?:\/\//.test(data.path)) {
       const { error: removeError } = await supabaseAdmin.storage.from("product-images").remove([data.path]);
       if (removeError) throw removeError;
     }
-    const { error: updateError } = await supabaseAdmin.from("store_products").update({ image_url: next[0] ?? null, gallery_urls: next }).eq("id", data.id);
-    if (updateError) throw updateError;
     return { ok: true };
   });
