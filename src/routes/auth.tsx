@@ -20,6 +20,20 @@ function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  async function signInWithGoogle() {
+    setBusy(true);
+    const result = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: window.location.origin + "/auth",
+      extraParams: { prompt: "select_account" },
+    });
+    setBusy(false);
+    if (result.error) {
+      toast.error(result.error.message);
+      return;
+    }
+    if (!result.redirected) navigate({ to: "/account" });
+  }
+
   async function submit(event: React.FormEvent) {
     event.preventDefault(); setBusy(true);
     const result = signUp ? await supabase.auth.signUp({ email, password }) : await supabase.auth.signInWithPassword({ email, password });
@@ -33,7 +47,7 @@ function AuthPage() {
     <div className="rounded-lg border border-border bg-card p-7 shadow-soft">
       <h1 className="font-display text-4xl text-primary">{signUp ? "Create your account" : "Welcome back"}</h1>
       <p className="mt-2 text-sm text-muted-foreground">View saved orders, delivery progress and addresses.</p>
-      <Button variant="outline" className="mt-6 w-full" onClick={() => lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin + "/auth" })}>Continue with Google</Button>
+      <Button variant="outline" className="mt-6 w-full" disabled={busy} onClick={signInWithGoogle}>Continue with Google</Button>
       <div className="my-5 flex items-center gap-3 text-xs text-muted-foreground"><span className="h-px flex-1 bg-border" />or email<span className="h-px flex-1 bg-border" /></div>
       <form onSubmit={submit} className="space-y-4">
         <div><Label htmlFor="email">Email</Label><Input id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1" /></div>
