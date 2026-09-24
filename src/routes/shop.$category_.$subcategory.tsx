@@ -12,9 +12,9 @@ export const Route = createFileRoute("/shop/$category_/$subcategory")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
-      return { meta: [{ title: "Not found — The Nutri Bite" }, { name: "robots", content: "noindex" }] };
+      return { meta: [{ title: "Not found — The Nutri Bite™" }, { name: "robots", content: "noindex" }] };
     }
-    const title = `${loaderData.subcategory} ${loaderData.category.name} — The Nutri Bite`;
+    const title = `${loaderData.subcategory} ${loaderData.category.name} — The Nutri Bite™`;
     const description = `Shop ${loaderData.subcategory} from our ${loaderData.category.name} collection.`;
     return { meta: [
       { title },

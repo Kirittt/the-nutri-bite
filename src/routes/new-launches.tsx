@@ -10,12 +10,12 @@ import { categoryImages } from "@/data/catalog-images";
 export const Route = createFileRoute("/new-launches")({
   head: () => ({
     meta: [
-      { title: "New Launches — The Nutri Bite" },
+      { title: "New Launches — The Nutri Bite™" },
       {
         name: "description",
-        content: "Discover fresh arrivals, handcrafted snacks and wholesome sweets from The Nutri Bite.",
+        content: "Discover fresh arrivals, handcrafted snacks and wholesome sweets from The Nutri Bite™.",
       },
-      { property: "og:title", content: "New Launches — The Nutri Bite" },
+      { property: "og:title", content: "New Launches — The Nutri Bite™" },
       { property: "og:description", content: "Explore fresh arrivals and find your next favourite wholesome snack." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

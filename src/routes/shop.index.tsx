@@ -7,13 +7,13 @@ import { categories, products } from "@/data/catalog";
 export const Route = createFileRoute("/shop/")({
   head: () => ({
     meta: [
-      { title: "Shop All — The Nutri Bite" },
+      { title: "Shop All — The Nutri Bite™" },
       {
         name: "description",
         content:
-          "Browse handcrafted natural sweets, flavoured almonds and cashews, trail mixes, health mixes and more from The Nutri Bite.",
+          "Browse handcrafted natural sweets, flavoured almonds and cashews, trail mixes, health mixes and more from The Nutri Bite™.",
       },
-      { property: "og:title", content: "Shop All — The Nutri Bite" },
+      { property: "og:title", content: "Shop All — The Nutri Bite™" },
       {
         property: "og:description",
         content: "Handcrafted sweets, premium nuts and wholesome snacks, delivered across India.",

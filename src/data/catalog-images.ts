@@ -17,6 +17,10 @@ import darkChocolate from "@/assets/products/dark-chocolate-exotica.jpg";
 import morningAlmonds from "@/assets/products/morning-almonds.jpg";
 import spicyAlmonds from "@/assets/products/spicy-almonds.jpg";
 import edamameKimchi from "@/assets/products/edamame-kimchi.jpg";
+import makhanaPeriPeri from "@/assets/products/makhana-peri-peri-clean.jpg";
+import makhanaMint from "@/assets/products/makhana-mint-clean.jpg";
+import makhanaHimalayan from "@/assets/products/makhana-himalayan-clean.jpg";
+import makhanaCheese from "@/assets/products/makhana-cheese-clean.jpg";
 
 export const categoryImages: Record<string, string> = {
   "natural-sweets-bites": sweets,
@@ -41,6 +45,10 @@ const productImages: Record<string, string> = {
   "morning-activated-almonds": morningAlmonds,
   "spicy-almonds": spicyAlmonds,
   "edamame-korean-kimchi": edamameKimchi,
+  "mastana-makhana-peri-peri": makhanaPeriPeri,
+  "mastana-makhana-mint": makhanaMint,
+  "mastana-makhana-himalayan-salt": makhanaHimalayan,
+  "mastana-makhana-cheese": makhanaCheese,
 };
 
 export function getProductImage(slug: string, category: string) {

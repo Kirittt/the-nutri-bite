@@ -27,11 +27,11 @@ export const Route = createFileRoute("/product/$slug")({
   head: ({ loaderData }) => {
     if (!loaderData) {
       return {
-        meta: [{ title: "Not found — The Nutri Bite" }, { name: "robots", content: "noindex" }],
+        meta: [{ title: "Not found — The Nutri Bite™" }, { name: "robots", content: "noindex" }],
       };
     }
     const { product } = loaderData;
-    const title = `${product.name} — The Nutri Bite`;
+    const title = `${product.name} — The Nutri Bite™`;
     return {
       meta: [
         { title },

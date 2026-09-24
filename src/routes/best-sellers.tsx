@@ -6,12 +6,12 @@ import { products } from "@/data/catalog";
 export const Route = createFileRoute("/best-sellers")({
   head: () => ({
     meta: [
-      { title: "Best Sellers — The Nutri Bite" },
+      { title: "Best Sellers — The Nutri Bite™" },
       {
         name: "description",
-        content: "The Nutri Bite favourites: signature laddu, anjeer bites, protein bars and more.",
+        content: "The Nutri Bite™ favourites: signature laddu, anjeer bites, protein bars and more.",
       },
-      { property: "og:title", content: "Best Sellers — The Nutri Bite" },
+      { property: "og:title", content: "Best Sellers — The Nutri Bite™" },
       {
         property: "og:description",
         content: "Our most-loved handcrafted sweets and premium nuts.",

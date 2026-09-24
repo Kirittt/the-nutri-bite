@@ -10,7 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/admin-invite")({
   validateSearch: (search) => z.object({ token: z.string().optional() }).parse(search),
-  head: () => ({ meta: [{ title: "Accept Store Invitation — The Nutri Bite" }, { name: "description", content: "Private one-time store manager invitation." }, { property: "og:title", content: "Accept Store Invitation — The Nutri Bite" }, { property: "og:description", content: "Private invitation." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Accept Store Invitation — The Nutri Bite™" }, { name: "description", content: "Private one-time store manager invitation." }, { property: "og:title", content: "Accept Store Invitation — The Nutri Bite™" }, { property: "og:description", content: "Private invitation." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
   component: InvitePage,
 });
 function InvitePage() {

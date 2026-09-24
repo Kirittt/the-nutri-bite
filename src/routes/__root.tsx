@@ -83,14 +83,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "The Nutri Bite — Healthy Bite, Happy Life" },
+      { title: "The Nutri Bite™ — Healthy Bite, Happy Life" },
       {
         name: "description",
         content:
-          "Handcrafted natural sweets, premium nuts and wholesome snacks from The Nutri Bite.",
+          "Handcrafted natural sweets, premium nuts and wholesome snacks from The Nutri Bite™.",
       },
-      { name: "author", content: "The Nutri Bite" },
-      { property: "og:title", content: "The Nutri Bite — Healthy Bite, Happy Life" },
+      { name: "author", content: "The Nutri Bite™" },
+      { property: "og:title", content: "The Nutri Bite™ — Healthy Bite, Happy Life" },
       {
         property: "og:description",
         content: "Small Bite. Big Benefits. Nature’s goodness in every bite.",

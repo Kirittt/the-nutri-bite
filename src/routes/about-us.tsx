@@ -9,9 +9,9 @@ import sweetsImage from "@/assets/clean/sweets.jpg";
 export const Route = createFileRoute("/about-us")({
   head: () => ({
     meta: [
-      { title: "About Us — The Nutri Bite" },
-      { name: "description", content: "Meet The Nutri Bite, a Gujarat food brand crafting natural sweets, premium nuts and wholesome snacks with care." },
-      { property: "og:title", content: "About Us — The Nutri Bite" },
+      { title: "About Us — The Nutri Bite™" },
+      { name: "description", content: "Meet The Nutri Bite™, a Gujarat food brand crafting natural sweets, premium nuts and wholesome snacks with care." },
+      { property: "og:title", content: "About Us — The Nutri Bite™" },
       { property: "og:description", content: "Wholesome ingredients, careful small-batch preparation and thoughtful packing." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -31,7 +31,7 @@ function AboutPage() {
     <div>
       <section className="container-page section-y grid gap-10 lg:grid-cols-[1.05fr_.95fr] lg:items-center">
         <div>
-          <p className="text-sm font-bold uppercase text-leaf">About The Nutri Bite</p>
+          <p className="text-sm font-bold uppercase text-leaf">About The Nutri Bite™</p>
           <h1 className="mt-3 max-w-3xl font-display text-4xl text-primary sm:text-5xl">Food made thoughtfully, for everyday moments</h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">We are a Gujarat-based food brand bringing together handcrafted natural sweets, premium nuts, fruit mixes and wholesome snacks. Our aim is simple: make better snacking feel delicious, dependable and easy to share.</p>
           <div className="mt-7 flex flex-wrap gap-3">
