@@ -90,7 +90,7 @@ export const getAdminOverview = createServerFn({ method: "GET" })
       supabaseAdmin.from("orders").select("id,order_number,customer_name,phone,status,total,created_at").order("created_at", { ascending: false }).limit(100),
       supabaseAdmin.from("store_products").select("id,slug,name,status,best_seller,new_launch,product_variants(id,label,price,stock,active)").order("name"),
       supabaseAdmin.from("reviews").select("id,customer_name,rating,title,body,status,is_demo,store_products(name)").order("created_at", { ascending: false }).limit(100),
-      supabaseAdmin.from("site_banners").select("id,title,subtitle,active,sort_order").order("sort_order"),
+      supabaseAdmin.from("site_banners").select("id,title,subtitle,image_url,mobile_image_url,cta_text,cta_link,active,sort_order").order("sort_order"),
     ]);
     return { orders: orders ?? [], products: products ?? [], reviews: reviews ?? [], banners: banners ?? [] };
   });

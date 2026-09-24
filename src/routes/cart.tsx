@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { BRAND, formatINR } from "@/data/catalog";
+import { BRAND, formatINR, getProduct } from "@/data/catalog";
 import { useCart } from "@/lib/cart";
 import { createOrder } from "@/lib/store.functions";
 import { getProductImage } from "@/data/catalog-images";
@@ -90,7 +90,7 @@ function CartPage() {
     <div className="container-page section-y">
       <h1 className="font-display text-4xl text-primary">Your Cart</h1>
 
-      {confirmation ? <div className="mt-10 mx-auto max-w-3xl overflow-hidden rounded-lg border border-border bg-card shadow-lift"><div className="bg-softgreen p-8 text-center"><h2 className="font-display text-3xl text-primary">Order saved</h2><p className="mt-3">Your reference is <strong>{confirmation}</strong>.</p><p className="mt-2 text-sm text-muted-foreground">Review your order and send it to our team to confirm delivery and payment.</p></div><div className="divide-y divide-border">{confirmedItems.map((item)=><div key={`${item.slug}-${item.variant}`} className="flex items-center gap-4 p-4"><img src={getProductImage(item.slug, "") ?? undefined} alt="" className="size-16 rounded-md bg-softgreen object-cover" width={64} height={64} /><div className="min-w-0 flex-1"><p className="font-semibold">{item.name}</p><p className="text-xs text-muted-foreground">{item.variant} • Quantity {item.qty}</p></div><strong>{formatINR(item.price * item.qty)}</strong></div>)}</div><div className="flex items-center justify-between border-t border-border p-5"><span className="font-semibold">Order total</span><strong className="text-xl text-primary">{formatINR(confirmedSubtotal)}</strong></div><div className="p-5 pt-0"><a href={`https://wa.me/${BRAND.phoneHref.replace("+", "")}?text=${encodeURIComponent(`Hello The Nutri Bite, please confirm order ${confirmation}.\n${confirmedItems.map((item)=>`• ${item.name} (${item.variant}) x${item.qty} — ${formatINR(item.price * item.qty)}`).join("\n")}\nTotal: ${formatINR(confirmedSubtotal)}`)}`} className="flex w-full justify-center rounded-md bg-primary px-6 py-3 font-semibold text-primary-foreground">Confirm on WhatsApp</a></div></div> : items.length === 0 ? (
+      {confirmation ? <div className="mt-10 mx-auto max-w-3xl overflow-hidden rounded-lg border border-border bg-card shadow-lift"><div className="bg-softgreen p-8 text-center"><h2 className="font-display text-3xl text-primary">Order saved</h2><p className="mt-3">Your reference is <strong>{confirmation}</strong>.</p><p className="mt-2 text-sm text-muted-foreground">Review your order and send it to our team to confirm delivery and payment.</p></div><div className="divide-y divide-border">{confirmedItems.map((item)=>{const product=getProduct(item.slug);const image=getProductImage(item.slug,product?.category ?? "");return <div key={`${item.slug}-${item.variant}`} className="flex items-center gap-4 p-4">{image ? <img src={image} alt="" className="size-16 rounded-md bg-softgreen object-cover" width={64} height={64} /> : <span className="size-16 rounded-md bg-softgreen" />}<div className="min-w-0 flex-1"><p className="font-semibold">{item.name}</p><p className="text-xs text-muted-foreground">{item.variant} • Quantity {item.qty}</p></div><strong>{formatINR(item.price * item.qty)}</strong></div>})}</div><div className="flex items-center justify-between border-t border-border p-5"><span className="font-semibold">Order total</span><strong className="text-xl text-primary">{formatINR(confirmedSubtotal)}</strong></div><div className="p-5 pt-0"><a href={`https://wa.me/${BRAND.phoneHref.replace("+", "")}?text=${encodeURIComponent(`Hello The Nutri Bite, please confirm order ${confirmation}.\n${confirmedItems.map((item)=>`• ${item.name} (${item.variant}) x${item.qty} — ${formatINR(item.price * item.qty)}`).join("\n")}\nTotal: ${formatINR(confirmedSubtotal)}`)}`} className="flex w-full justify-center rounded-md bg-primary px-6 py-3 font-semibold text-primary-foreground">Confirm on WhatsApp</a></div></div> : items.length === 0 ? (
         <div className="mt-10 grid place-items-center rounded-3xl bg-softgreen p-16 text-center">
           <ShoppingBag className="size-10 text-primary/40" />
           <p className="mt-4 text-muted-foreground">Your cart is empty.</p>
@@ -106,7 +106,7 @@ function CartPage() {
           <ul className="divide-y divide-border rounded-2xl border border-border">
             {items.map((i) => (
               <li key={`${i.slug}-${i.variant}`} className="flex flex-wrap items-center gap-4 p-4">
-                <img src={getProductImage(i.slug, "") ?? undefined} alt="" className="size-16 rounded-md bg-softgreen object-cover" loading="lazy" width={64} height={64} />
+                {(() => { const product = getProduct(i.slug); const image = getProductImage(i.slug, product?.category ?? ""); return image ? <img src={image} alt="" className="size-16 rounded-md bg-softgreen object-cover" loading="lazy" width={64} height={64} /> : <span className="size-16 rounded-md bg-softgreen" />; })()}
                 <div className="min-w-40 flex-1">
                   <Link
                     to="/product/$slug"
