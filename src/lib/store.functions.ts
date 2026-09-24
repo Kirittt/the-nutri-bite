@@ -1,7 +1,9 @@
 import { createServerFn } from "@tanstack/react-start";
+import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { Database } from "@/integrations/supabase/types";
 import { getProduct } from "@/data/catalog";
 
 const checkoutSchema = z.object({
@@ -30,8 +32,17 @@ const productMediaSchema = z.object({ slug: z.string().trim().min(1).max(160) })
 export const getProductMedia = createServerFn({ method: "GET" })
   .inputValidator((input) => productMediaSchema.parse(input))
   .handler(async ({ data }) => {
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { data: product, error } = await supabaseAdmin
+    const key = process.env['SUPABASE_PUBLISHABLE_KEY']!;
+    const supabasePublic = createClient<Database>(process.env['SUPABASE_URL']!, key, {
+      auth: { persistSession: false, autoRefreshToken: false },
+      global: { fetch: (input, init) => {
+        const headers = new Headers(init?.headers);
+        if (key.startsWith("sb_") && headers.get("Authorization") === `Bearer ${key}`) headers.delete("Authorization");
+        headers.set("apikey", key);
+        return fetch(input, { ...init, headers });
+      } },
+    });
+    const { data: product, error } = await supabasePublic
       .from("store_products")
       .select("image_url,gallery_urls")
       .eq("slug", data.slug)
@@ -43,6 +54,7 @@ export const getProductMedia = createServerFn({ method: "GET" })
     const storagePaths = paths.filter((path) => !/^https?:\/\//.test(path));
     const signedByPath = new Map<string, string>();
     if (storagePaths.length) {
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
       const { data: signed } = await supabaseAdmin.storage.from("product-images").createSignedUrls(storagePaths, 86400);
       signed?.forEach((entry, index) => {
         const storagePath = storagePaths[index];
