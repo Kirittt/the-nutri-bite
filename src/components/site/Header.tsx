@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { BookHeart, ChevronDown, Factory, Menu, Phone, ShoppingBag, Store, UserRound, UsersRound, X } from "lucide-react";
+import { BookHeart, ChevronDown, ChevronRight, Factory, Menu, Phone, ShoppingBag, Store, UserRound, UsersRound, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import logo from "@/assets/nutri-bite-logo.png.asset.json";
@@ -48,6 +48,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [shopOpen, setShopOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [mobileCategory, setMobileCategory] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState(categories[0]?.slug ?? "");
   const selectedCategory = categories.find((category) => category.slug === activeCategory) ?? categories[0];
   const activeIndex = Math.max(0, categories.findIndex((category) => category.slug === selectedCategory?.slug));
@@ -59,6 +60,10 @@ export function Header() {
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => setUserId(session?.user.id ?? null));
     return () => listener.subscription.unsubscribe();
   }, []);
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
 
   return (
     <header className="sticky top-0 z-50">
@@ -74,9 +79,9 @@ export function Header() {
           </button>
 
           <Link to="/" className="group flex items-center gap-3">
-            <img src={logo.url} alt="The Nutri Bite" className="size-14 object-contain transition-transform duration-300 group-hover:scale-105 group-hover:rotate-2" />
+             <img src={logo.url} alt="The Nutri Bite" className="size-14 object-contain transition-transform duration-300 group-hover:scale-105 group-hover:rotate-2" />
             <span className="hidden text-sm leading-tight sm:block">
-              <span className="block font-display text-lg text-primary">The Nutri Bite</span>
+               <span className="block font-display text-lg text-primary">The Nutri Bite™</span>
               <span className="block text-[0.7rem] tracking-wide text-muted-foreground">
                 Healthy Bite, Happy Life
               </span>
@@ -92,8 +97,8 @@ export function Header() {
               onMouseEnter={() => setShopOpen(true)}
               onMouseLeave={() => setShopOpen(false)}
             >
-              <Link to="/shop" className="hover:text-primary">
-                Shop
+              <Link to="/shop" className="inline-flex items-center gap-1 hover:text-primary">
+                Shop <ChevronDown className="size-3.5" />
               </Link>
               {shopOpen && (
                 <div className="absolute top-full left-1/2 w-[56rem] -translate-x-1/2 pt-4">
@@ -145,7 +150,7 @@ export function Header() {
       </div>
 
       {open && (
-        <div className="border-b border-border bg-background lg:hidden">
+        <div className="fixed inset-x-0 top-29 bottom-0 overflow-y-auto overscroll-contain border-b border-border bg-background lg:hidden">
           <div className="container-page grid gap-1 py-4">
             <div className="flex items-center justify-between">
               <span className="text-xs tracking-widest uppercase text-muted-foreground">Menu</span>
@@ -162,11 +167,12 @@ export function Header() {
             {userId ? <Link to="/account" onClick={() => setOpen(false)} className="py-2 font-medium">My account</Link> : <Link to="/auth" onClick={() => setOpen(false)} className="py-2 font-medium">Sign in / Account</Link>}
             <p className="pt-3 text-xs font-bold uppercase text-muted-foreground">About</p>
              {aboutLinks.map((item, index) => <Link key={item.to} to={item.to} onClick={() => setOpen(false)} className="flex items-center gap-2 py-2 pl-3 font-medium"><item.icon className={`size-4 ${index % 2 === 0 ? "text-leaf" : "text-sun"}`} />{item.label}</Link>)}
-             <div className="grid gap-2 pb-2 sm:grid-cols-2">
+             <p className="pt-3 text-xs font-bold uppercase text-muted-foreground">Shop collections</p>
+             <div className="grid gap-2 pb-2">
               {categories.map((c, categoryIndex) => (
                 <div key={c.slug} className="border border-border bg-softgreen px-3 py-3 odd:bg-softgreen even:bg-beige">
-                  <Link to="/shop/$category" params={{ category: c.slug }} onClick={() => setOpen(false)} className="flex items-center gap-2 text-xs font-semibold"><CategoryIcon name={c.icon} className={`size-4 ${categoryIndex % 2 === 0 ? "text-leaf" : "text-sun"}`} />{c.name}</Link>
-                  <div className="mt-2 flex flex-wrap gap-x-3 gap-y-2">{c.slug === "natural-sweets-bites" ? productsIn(c.slug).map((product) => <Link key={product.slug} to="/product/$slug" params={{ slug: product.slug }} onClick={() => setOpen(false)} className="flex items-center gap-1.5 text-[0.68rem] text-muted-foreground"><span className={`size-1.5 rotate-45 rounded-[1px] ${categoryIndex % 2 === 0 ? "bg-leaf" : "bg-sun"}`} />{product.name}</Link>) : (categorySubcategories[c.slug] ?? []).map((item) => { const product = getProductForSubcategory(c.slug, item); return product ? <Link key={item} to="/product/$slug" params={{ slug: product.slug }} onClick={() => setOpen(false)} className="flex items-center gap-1.5 text-[0.68rem] text-muted-foreground"><span className={`size-1.5 rotate-45 rounded-[1px] ${categoryIndex % 2 === 0 ? "bg-leaf" : "bg-sun"}`} />{item}</Link> : <Link key={item} to="/shop/$category/$subcategory" params={{ category: c.slug, subcategory: subcategorySlug(item) }} onClick={() => setOpen(false)} className="flex items-center gap-1.5 text-[0.68rem] text-muted-foreground"><span className={`size-1.5 rotate-45 rounded-[1px] ${categoryIndex % 2 === 0 ? "bg-leaf" : "bg-sun"}`} />{item}</Link>; })}</div>
+                   <Button type="button" variant="ghost" onClick={() => setMobileCategory((value) => value === c.slug ? null : c.slug)} className="h-auto w-full justify-start p-0 text-xs font-semibold"><CategoryIcon name={c.icon} className={`size-4 ${categoryIndex % 2 === 0 ? "text-leaf" : "text-sun"}`} />{c.name}<ChevronRight className={`ml-auto transition-transform ${mobileCategory === c.slug ? "rotate-90" : ""}`} /></Button>
+                   {mobileCategory === c.slug && <div className="mt-3 grid gap-2 border-t border-border pt-3">{c.slug === "natural-sweets-bites" ? productsIn(c.slug).map((product) => <Link key={product.slug} to="/product/$slug" params={{ slug: product.slug }} onClick={() => setOpen(false)} className="flex items-center gap-2 text-xs text-muted-foreground"><span className={`size-1.5 rotate-45 rounded-[1px] ${categoryIndex % 2 === 0 ? "bg-leaf" : "bg-sun"}`} />{product.name}</Link>) : (categorySubcategories[c.slug] ?? []).map((item) => { const product = getProductForSubcategory(c.slug, item); return product ? <Link key={item} to="/product/$slug" params={{ slug: product.slug }} onClick={() => setOpen(false)} className="flex items-center gap-2 text-xs text-muted-foreground"><span className={`size-1.5 rotate-45 rounded-[1px] ${categoryIndex % 2 === 0 ? "bg-leaf" : "bg-sun"}`} />{item}</Link> : <Link key={item} to="/shop/$category/$subcategory" params={{ category: c.slug, subcategory: subcategorySlug(item) }} onClick={() => setOpen(false)} className="flex items-center gap-2 text-xs text-muted-foreground"><span className={`size-1.5 rotate-45 rounded-[1px] ${categoryIndex % 2 === 0 ? "bg-leaf" : "bg-sun"}`} />{item}</Link>; })}<Link to="/shop/$category" params={{ category: c.slug }} onClick={() => setOpen(false)} className="mt-1 text-xs font-bold text-primary">View all {c.name}</Link></div>}
                 </div>
               ))}
             </div>

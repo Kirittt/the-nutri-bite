@@ -46,3 +46,9 @@
 - [x] Surface the account page: store manager entry for staff, invitation-code link for everyone else
 - [x] Point the header account icon to My orders once signed in
 - [ ] Wire Google sign-in credentials so the Google button works (needs the owner's Google Cloud client ID and secret)
+
+## Feedback document refresh
+- [x] Launch four Mastana Makhana flavours in one 70 g jar size at ₹189
+- [x] Replace supplied promotional makhana artwork with clean, text-free food photography
+- [ ] Complete menu, cart, home-process, contact-review, trademark, and banner-management feedback
+- [ ] Verify every changed flow on desktop and mobile

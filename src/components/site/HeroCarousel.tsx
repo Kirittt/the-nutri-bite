@@ -16,7 +16,7 @@ const slides = [
   ["Wholesome Health Mixes", "Seeds, berries and nuts in easy everyday combinations."],
   ["Snack Bright", "Playful flavours, quality ingredients and careful small-batch preparation."],
   ["Berry & Fruit Mix", "Colourful fruit and berry blends with a lively Indian twist."],
-  ["Mastana Makhana", "Four exciting flavours, roasted and ready to launch soon."],
+  ["Mastana Makhana", "Four crunchy flavours in 70 g jars, each available for ₹189."],
   ["Packed With Extra Care & Love", "Hygienically prepared, checked and thoughtfully packed."],
 ] as const;
 

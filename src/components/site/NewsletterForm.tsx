@@ -26,10 +26,10 @@ export function NewsletterForm() {
   }
 
   return (
-    <form onSubmit={submit} className="flex w-full max-w-xl flex-col gap-2 sm:flex-row">
+    <form onSubmit={submit} className="grid w-full max-w-xl gap-2 sm:grid-cols-[minmax(12rem,1fr)_auto]">
       <label htmlFor="newsletter-email" className="sr-only">Email address</label>
-      <input id="newsletter-email" type="email" required value={email} onChange={(event) => setEmail(event.target.value)} placeholder="Your email address" className="h-11 min-w-0 flex-1 rounded-md border border-cream/30 bg-background px-4 text-foreground outline-none focus:border-sun focus:ring-2 focus:ring-sun/30" />
-      <Button type="submit" size="lg" disabled={busy} className="bg-sun text-accent-foreground hover:bg-gold"><Mail /> {busy ? "Subscribing…" : "Subscribe by email"}</Button>
+      <input id="newsletter-email" type="email" required value={email} onChange={(event) => setEmail(event.target.value)} placeholder="Your email address" className="h-11 min-w-0 rounded-md border border-cream/30 bg-background px-4 text-foreground outline-none focus:border-sun focus:ring-2 focus:ring-sun/30" />
+      <Button type="submit" size="lg" disabled={busy} className="h-11 w-full bg-sun text-accent-foreground hover:bg-gold"><Mail /> {busy ? "Subscribing…" : "Subscribe by email"}</Button>
     </form>
   );
 }
