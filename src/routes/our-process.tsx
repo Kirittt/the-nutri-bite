@@ -5,13 +5,13 @@ import processImage from "@/assets/clean/nut-mix.jpg";
 export const Route = createFileRoute("/our-process")({
   head: () => ({
     meta: [
-      { title: "Our Process — The Nutri Bite" },
+      { title: "Our Process — The Nutri Bite™" },
       {
         name: "description",
         content:
-          "From ingredient selection to careful packing — how The Nutri Bite makes its sweets and snacks.",
+          "From ingredient selection to careful packing — how The Nutri Bite™ makes its sweets and snacks.",
       },
-      { property: "og:title", content: "Our Process — The Nutri Bite" },
+      { property: "og:title", content: "Our Process — The Nutri Bite™" },
       {
         property: "og:description",
         content: "Handcrafted and hygienically prepared, then packed with extra care and love.",

@@ -7,13 +7,13 @@ import { BRAND } from "@/data/catalog";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — The Nutri Bite" },
+      { title: "Contact — The Nutri Bite™" },
       {
         name: "description",
         content:
-          "Call or WhatsApp The Nutri Bite on +91 84878 79935, or visit our Gandhinagar office and Himmatnagar facility.",
+          "Call or WhatsApp The Nutri Bite™ on +91 84878 79935, or visit our Gandhinagar office and Himmatnagar facility.",
       },
-      { property: "og:title", content: "Contact — The Nutri Bite" },
+      { property: "og:title", content: "Contact — The Nutri Bite™" },
       { property: "og:description", content: "We would love to hear from you." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

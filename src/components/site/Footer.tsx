@@ -19,7 +19,7 @@ export function Footer() {
           <div className="flex items-center gap-3">
             <img
               src={logo.url}
-              alt="The Nutri Bite"
+              alt="The Nutri Bite™"
               className="size-16 rounded-full bg-background object-contain p-1 transition duration-300 hover:scale-105 hover:rotate-2"
               loading="lazy"
             />
@@ -134,7 +134,7 @@ export function Footer() {
         <div className="border-t border-cream/15 pt-8 sm:col-span-2 lg:col-span-5">
           <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
             <div><h3 className="font-display text-2xl">Subscribe now</h3><p className="mt-1 text-sm text-cream/70">Get new launches and collection news by email or WhatsApp.</p></div>
-             <div className="grid w-full max-w-xl gap-3"><NewsletterForm /><Button asChild size="lg" variant="outline" className="h-11 w-full border-cream/40 bg-transparent text-cream hover:bg-cream hover:text-deep"><a href={`https://wa.me/${BRAND.phoneHref.replace("+", "")}?text=${encodeURIComponent("Please subscribe me to The Nutri Bite updates.")}`} target="_blank" rel="noreferrer"><MessageCircle /> Subscribe on WhatsApp</a></Button></div>
+             <div className="grid w-full max-w-xl gap-3"><NewsletterForm /><Button asChild size="lg" variant="outline" className="h-11 w-full border-cream/40 bg-transparent text-cream hover:bg-cream hover:text-deep"><a href={`https://wa.me/${BRAND.phoneHref.replace("+", "")}?text=${encodeURIComponent("Please subscribe me to The Nutri Bite™ updates.")}`} target="_blank" rel="noreferrer"><MessageCircle /> Subscribe on WhatsApp</a></Button></div>
           </div>
         </div>
       </div>

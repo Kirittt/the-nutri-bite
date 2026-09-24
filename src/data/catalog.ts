@@ -805,7 +805,7 @@ export const BRAND = {
   phoneHref: "+918487879935",
   whatsapp:
     "https://wa.me/918487879935?text=" +
-    encodeURIComponent("Hello The Nutri Bite, I would like to know more about your products."),
+    encodeURIComponent("Hello The Nutri Bite™, I would like to know more about your products."),
   instagram: "https://www.instagram.com/the_nutribite",
   factory: "Himmatnagar – Ambaji Highway, 383235, Gujarat, India",
   office:

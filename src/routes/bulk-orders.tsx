@@ -6,13 +6,13 @@ import { BRAND } from "@/data/catalog";
 export const Route = createFileRoute("/bulk-orders")({
   head: () => ({
     meta: [
-      { title: "Bulk, Corporate & Private Label — The Nutri Bite" },
+      { title: "Bulk, Corporate & Private Label — The Nutri Bite™" },
       {
         name: "description",
         content:
-          "Corporate gifting, festive hampers and private label manufacturing from The Nutri Bite, Gujarat.",
+          "Corporate gifting, festive hampers and private label manufacturing from The Nutri Bite™, Gujarat.",
       },
-      { property: "og:title", content: "Bulk, Corporate & Private Label — The Nutri Bite" },
+      { property: "og:title", content: "Bulk, Corporate & Private Label — The Nutri Bite™" },
       {
         property: "og:description",
         content: "Talk to us about bulk orders, corporate gifting and private label snacks.",

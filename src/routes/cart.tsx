@@ -17,9 +17,9 @@ type CheckoutErrors = Partial<Record<CheckoutFields, string>>;
 export const Route = createFileRoute("/cart")({
   head: () => ({
     meta: [
-      { title: "Your Cart — The Nutri Bite" },
+      { title: "Your Cart — The Nutri Bite™" },
       { name: "description", content: "Review the handcrafted sweets and snacks in your cart." },
-      { property: "og:title", content: "Your Cart — The Nutri Bite" },
+      { property: "og:title", content: "Your Cart — The Nutri Bite™" },
       { property: "og:description", content: "Review your Nutri Bite selection before ordering." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -46,7 +46,7 @@ function CartPage() {
   const whatsappOrder =
     "https://wa.me/918487879935?text=" +
     encodeURIComponent(
-      "Hello The Nutri Bite, I would like to order:\n" +
+      "Hello The Nutri Bite™, I would like to order:\n" +
         items.map((i) => `• ${i.name} (${i.variant}) x${i.qty}`).join("\n") +
         `\nTotal: ${formatINR(subtotal)}`,
     );
@@ -90,7 +90,7 @@ function CartPage() {
     <div className="container-page section-y">
       <h1 className="font-display text-4xl text-primary">Your Cart</h1>
 
-      {confirmation ? <div className="mt-10 mx-auto max-w-3xl overflow-hidden rounded-lg border border-border bg-card shadow-lift"><div className="bg-softgreen p-8 text-center"><h2 className="font-display text-3xl text-primary">Order saved</h2><p className="mt-3">Your reference is <strong>{confirmation}</strong>.</p><p className="mt-2 text-sm text-muted-foreground">Review your order and send it to our team to confirm delivery and payment.</p></div><div className="divide-y divide-border">{confirmedItems.map((item)=>{const product=getProduct(item.slug);const image=getProductImage(item.slug,product?.category ?? "");return <div key={`${item.slug}-${item.variant}`} className="flex items-center gap-4 p-4">{image ? <img src={image} alt="" className="size-16 rounded-md bg-softgreen object-cover" width={64} height={64} /> : <span className="size-16 rounded-md bg-softgreen" />}<div className="min-w-0 flex-1"><p className="font-semibold">{item.name}</p><p className="text-xs text-muted-foreground">{item.variant} • Quantity {item.qty}</p></div><strong>{formatINR(item.price * item.qty)}</strong></div>})}</div><div className="flex items-center justify-between border-t border-border p-5"><span className="font-semibold">Order total</span><strong className="text-xl text-primary">{formatINR(confirmedSubtotal)}</strong></div><div className="p-5 pt-0"><a href={`https://wa.me/${BRAND.phoneHref.replace("+", "")}?text=${encodeURIComponent(`Hello The Nutri Bite, please confirm order ${confirmation}.\n${confirmedItems.map((item)=>`• ${item.name} (${item.variant}) x${item.qty} — ${formatINR(item.price * item.qty)}`).join("\n")}\nTotal: ${formatINR(confirmedSubtotal)}`)}`} className="flex w-full justify-center rounded-md bg-primary px-6 py-3 font-semibold text-primary-foreground">Confirm on WhatsApp</a></div></div> : items.length === 0 ? (
+      {confirmation ? <div className="mt-10 mx-auto max-w-3xl overflow-hidden rounded-lg border border-border bg-card shadow-lift"><div className="bg-softgreen p-8 text-center"><h2 className="font-display text-3xl text-primary">Order saved</h2><p className="mt-3">Your reference is <strong>{confirmation}</strong>.</p><p className="mt-2 text-sm text-muted-foreground">Review your order and send it to our team to confirm delivery and payment.</p></div><div className="divide-y divide-border">{confirmedItems.map((item)=>{const product=getProduct(item.slug);const image=getProductImage(item.slug,product?.category ?? "");return <div key={`${item.slug}-${item.variant}`} className="flex items-center gap-4 p-4">{image ? <img src={image} alt="" className="size-16 rounded-md bg-softgreen object-cover" width={64} height={64} /> : <span className="size-16 rounded-md bg-softgreen" />}<div className="min-w-0 flex-1"><p className="font-semibold">{item.name}</p><p className="text-xs text-muted-foreground">{item.variant} • Quantity {item.qty}</p></div><strong>{formatINR(item.price * item.qty)}</strong></div>})}</div><div className="flex items-center justify-between border-t border-border p-5"><span className="font-semibold">Order total</span><strong className="text-xl text-primary">{formatINR(confirmedSubtotal)}</strong></div><div className="p-5 pt-0"><a href={`https://wa.me/${BRAND.phoneHref.replace("+", "")}?text=${encodeURIComponent(`Hello The Nutri Bite™, please confirm order ${confirmation}.\n${confirmedItems.map((item)=>`• ${item.name} (${item.variant}) x${item.qty} — ${formatINR(item.price * item.qty)}`).join("\n")}\nTotal: ${formatINR(confirmedSubtotal)}`)}`} className="flex w-full justify-center rounded-md bg-primary px-6 py-3 font-semibold text-primary-foreground">Confirm on WhatsApp</a></div></div> : items.length === 0 ? (
         <div className="mt-10 grid place-items-center rounded-3xl bg-softgreen p-16 text-center">
           <ShoppingBag className="size-10 text-primary/40" />
           <p className="mt-4 text-muted-foreground">Your cart is empty.</p>

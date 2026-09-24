@@ -41,7 +41,7 @@ const navLinks = [
 const aboutLinks = [
   { to: "/our-story", label: "Our Story", body: "Why we started", icon: BookHeart },
   { to: "/our-process", label: "Our Process", body: "How every batch is made", icon: Factory },
-  { to: "/about-us", label: "About Us", body: "Meet The Nutri Bite", icon: UsersRound },
+  { to: "/about-us", label: "About Us", body: "Meet The Nutri Bite™", icon: UsersRound },
 ] as const;
 
 export function Header() {
@@ -80,7 +80,7 @@ export function Header() {
           </button>
 
           <Link to="/" className="group flex items-center gap-3">
-             <img src={logo.url} alt="The Nutri Bite" className="size-14 object-contain transition-transform duration-300 group-hover:scale-105 group-hover:rotate-2" />
+             <img src={logo.url} alt="The Nutri Bite™" className="size-14 object-contain transition-transform duration-300 group-hover:scale-105 group-hover:rotate-2" />
             <span className="hidden text-sm leading-tight sm:block">
                <span className="block font-display text-lg text-primary">The Nutri Bite™</span>
               <span className="block text-[0.7rem] tracking-wide text-muted-foreground">

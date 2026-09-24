@@ -9,7 +9,7 @@ import { formatINR } from "@/data/catalog";
 
 type Order = Awaited<ReturnType<typeof getMyOrders>>[number];
 export const Route = createFileRoute("/_authenticated/account")({
-  head: () => ({ meta: [{ title: "My Orders — The Nutri Bite" }, { name: "description", content: "Review your Nutri Bite orders and delivery updates." }, { property: "og:title", content: "My Orders — The Nutri Bite" }, { property: "og:description", content: "Private customer order history." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "My Orders — The Nutri Bite™" }, { name: "description", content: "Review your Nutri Bite orders and delivery updates." }, { property: "og:title", content: "My Orders — The Nutri Bite™" }, { property: "og:description", content: "Private customer order history." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
   component: AccountPage,
 });
 function AccountPage() {

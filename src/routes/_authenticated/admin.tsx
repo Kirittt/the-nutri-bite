@@ -11,7 +11,7 @@ import { getAdminOverview, moderateReview, updateBanner, updateBannerContent, up
 
 type Overview = Awaited<ReturnType<typeof getAdminOverview>>;
 export const Route = createFileRoute("/_authenticated/admin")({
-  head: () => ({ meta: [{ title: "Store Manager — The Nutri Bite" }, { name: "description", content: "Private product and order management for The Nutri Bite." }, { property: "og:title", content: "Store Manager — The Nutri Bite" }, { property: "og:description", content: "Private store administration." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Store Manager — The Nutri Bite™" }, { name: "description", content: "Private product and order management for The Nutri Bite™." }, { property: "og:title", content: "Store Manager — The Nutri Bite™" }, { property: "og:description", content: "Private store administration." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
   component: AdminPage,
 });
 function AdminPage() {

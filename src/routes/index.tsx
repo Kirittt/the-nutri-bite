@@ -55,13 +55,13 @@ const processSteps = [
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "The Nutri Bite — Healthy Bite, Happy Life" },
+      { title: "The Nutri Bite™ — Healthy Bite, Happy Life" },
       {
         name: "description",
         content:
-          "Handcrafted natural sweets, premium flavoured almonds and cashews, trail mixes and wholesome snacks from The Nutri Bite, Gujarat.",
+          "Handcrafted natural sweets, premium flavoured almonds and cashews, trail mixes and wholesome snacks from The Nutri Bite™, Gujarat.",
       },
-      { property: "og:title", content: "The Nutri Bite — Healthy Bite, Happy Life" },
+      { property: "og:title", content: "The Nutri Bite™ — Healthy Bite, Happy Life" },
       {
         property: "og:description",
         content: "Small Bite. Big Benefits. Nature’s goodness in every bite.",
@@ -178,7 +178,7 @@ function Home() {
             Nature’s goodness in every bite
           </h2>
           <p className="mt-4 max-w-xl text-cream/80">
-            The Nutri Bite brings nature’s goodness to every family through handcrafted sweets and
+            The Nutri Bite™ brings nature’s goodness to every family through handcrafted sweets and
             wholesome snacks, thoughtfully created for healthier everyday living.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
