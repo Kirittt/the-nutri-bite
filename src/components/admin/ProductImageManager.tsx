@@ -38,7 +38,11 @@ export function ProductImageManager({ productId, productName, productSlug, paths
     const nextIndex = index + direction;
     if (nextIndex < 0 || nextIndex >= paths.length) return;
     const next = [...paths];
-    [next[index], next[nextIndex]] = [next[nextIndex], next[index]];
+    const currentPath = next[index];
+    const targetPath = next[nextIndex];
+    if (!currentPath || !targetPath) return;
+    next[index] = targetPath;
+    next[nextIndex] = currentPath;
     void saveOrder(next);
   };
 

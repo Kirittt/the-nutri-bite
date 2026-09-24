@@ -45,7 +45,8 @@ export const getProductMedia = createServerFn({ method: "GET" })
     if (storagePaths.length) {
       const { data: signed } = await supabaseAdmin.storage.from("product-images").createSignedUrls(storagePaths, 3600);
       signed?.forEach((entry, index) => {
-        if (entry.signedUrl) signedByPath.set(storagePaths[index], entry.signedUrl);
+        const storagePath = storagePaths[index];
+        if (entry.signedUrl && storagePath) signedByPath.set(storagePath, entry.signedUrl);
       });
     }
     return paths.map((path) => absoluteUrls.includes(path) ? path : signedByPath.get(path)).filter((url): url is string => Boolean(url));
@@ -125,7 +126,8 @@ export const getAdminOverview = createServerFn({ method: "GET" })
       if (storagePaths.length) {
         const { data: signed } = await supabaseAdmin.storage.from("product-images").createSignedUrls(storagePaths, 3600);
         signed?.forEach((entry, index) => {
-          if (entry.signedUrl) signedByPath.set(storagePaths[index], entry.signedUrl);
+          const storagePath = storagePaths[index];
+          if (entry.signedUrl && storagePath) signedByPath.set(storagePath, entry.signedUrl);
         });
       }
       return { ...product, media_paths: paths, media_preview_urls: paths.map((path) => /^https?:\/\//.test(path) ? path : signedByPath.get(path) ?? "") };
