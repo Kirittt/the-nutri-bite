@@ -45,7 +45,7 @@
 - [x] Issue the owner's single-use store manager invitation (super_admin, 30 days)
 - [x] Surface the account page: store manager entry for staff, invitation-code link for everyone else
 - [x] Point the header account icon to My orders once signed in
-- [ ] Wire Google sign-in credentials so the Google button works (needs the owner's Google Cloud client ID and secret)
+- [x] Enable managed Google sign-in without owner-supplied credentials
 
 ## Feedback document refresh
 - [x] Launch four Mastana Makhana flavours in one 70 g jar size at ₹189
@@ -55,4 +55,4 @@
 - [x] Verify every changed flow on desktop and mobile
 
 ## Product media management
-- [ ] Let admins upload, preview, arrange, and remove multiple images for each product; show them on product pages
+- [x] Let admins upload, preview, arrange, and remove multiple images for each product; show them on product pages

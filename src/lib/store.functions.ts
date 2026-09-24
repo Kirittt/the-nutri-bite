@@ -1,7 +1,9 @@
 import { createServerFn } from "@tanstack/react-start";
+import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { Database } from "@/integrations/supabase/types";
 import { getProduct } from "@/data/catalog";
 
 const checkoutSchema = z.object({
@@ -24,6 +26,43 @@ export const getActiveBanners = createServerFn({ method: "GET" }).handler(async 
   if (error) return [];
   return data ?? [];
 });
+
+const productMediaSchema = z.object({ slug: z.string().trim().min(1).max(160) });
+
+export const getProductMedia = createServerFn({ method: "GET" })
+  .inputValidator((input) => productMediaSchema.parse(input))
+  .handler(async ({ data }) => {
+    const key = process.env['SUPABASE_PUBLISHABLE_KEY']!;
+    const supabasePublic = createClient<Database>(process.env['SUPABASE_URL']!, key, {
+      auth: { persistSession: false, autoRefreshToken: false },
+      global: { fetch: (input, init) => {
+        const headers = new Headers(init?.headers);
+        if (key.startsWith("sb_") && headers.get("Authorization") === `Bearer ${key}`) headers.delete("Authorization");
+        headers.set("apikey", key);
+        return fetch(input, { ...init, headers });
+      } },
+    });
+    const { data: product, error } = await supabasePublic
+      .from("store_products")
+      .select("image_url,gallery_urls")
+      .eq("slug", data.slug)
+      .in("status", ["active", "coming-soon"])
+      .maybeSingle();
+    if (error || !product) return [];
+    const paths = [...new Set([product.image_url, ...(product.gallery_urls ?? [])].filter((value): value is string => Boolean(value)))];
+    const absoluteUrls = paths.filter((path) => /^https?:\/\//.test(path));
+    const storagePaths = paths.filter((path) => !/^https?:\/\//.test(path));
+    const signedByPath = new Map<string, string>();
+    if (storagePaths.length) {
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+      const { data: signed } = await supabaseAdmin.storage.from("product-images").createSignedUrls(storagePaths, 86400);
+      signed?.forEach((entry, index) => {
+        const storagePath = storagePaths[index];
+        if (entry.signedUrl && storagePath) signedByPath.set(storagePath, entry.signedUrl);
+      });
+    }
+    return paths.map((path) => absoluteUrls.includes(path) ? path : signedByPath.get(path)).filter((url): url is string => Boolean(url));
+  });
 
 export const subscribeNewsletter = createServerFn({ method: "POST" })
   .inputValidator((input) => newsletterSchema.parse(input))
@@ -88,11 +127,24 @@ export const getAdminOverview = createServerFn({ method: "GET" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const [{ data: orders }, { data: products }, { data: reviews }, { data: banners }] = await Promise.all([
       supabaseAdmin.from("orders").select("id,order_number,customer_name,phone,status,total,created_at").order("created_at", { ascending: false }).limit(100),
-      supabaseAdmin.from("store_products").select("id,slug,name,status,best_seller,new_launch,product_variants(id,label,price,stock,active)").order("name"),
+      supabaseAdmin.from("store_products").select("id,slug,name,status,best_seller,new_launch,image_url,gallery_urls,product_variants(id,label,price,stock,active)").order("name"),
       supabaseAdmin.from("reviews").select("id,customer_name,rating,title,body,status,is_demo,store_products(name)").order("created_at", { ascending: false }).limit(100),
       supabaseAdmin.from("site_banners").select("id,title,subtitle,image_url,mobile_image_url,cta_text,cta_link,active,sort_order").order("sort_order"),
     ]);
-    return { orders: orders ?? [], products: products ?? [], reviews: reviews ?? [], banners: banners ?? [] };
+    const productsWithPreviews = await Promise.all((products ?? []).map(async (product) => {
+      const paths = [...new Set([product.image_url, ...(product.gallery_urls ?? [])].filter((value): value is string => Boolean(value)))];
+      const storagePaths = paths.filter((path) => !/^https?:\/\//.test(path));
+      const signedByPath = new Map<string, string>();
+      if (storagePaths.length) {
+        const { data: signed } = await supabaseAdmin.storage.from("product-images").createSignedUrls(storagePaths, 86400);
+        signed?.forEach((entry, index) => {
+          const storagePath = storagePaths[index];
+          if (entry.signedUrl && storagePath) signedByPath.set(storagePath, entry.signedUrl);
+        });
+      }
+      return { ...product, media_paths: paths, media_preview_urls: paths.map((path) => /^https?:\/\//.test(path) ? path : signedByPath.get(path) ?? "") };
+    }));
+    return { orders: orders ?? [], products: productsWithPreviews, reviews: reviews ?? [], banners: banners ?? [] };
   });
 
 const orderStatuses = ["pending_confirmation","confirmed","processing","packed","ready_to_ship","shipped","out_for_delivery","delivered","cancelled","return_requested","returned","refunded"] as const;
@@ -124,5 +176,39 @@ export const updateVariantPrice = createServerFn({ method: "POST" })
     if (!allowed) throw new Error("Administrator access required.");
     const { error } = await context.supabase.from("product_variants").update({ price: data.price }).eq("id", data.id);
     if (error) throw error;
+    return { ok: true };
+  });
+
+const gallerySchema = z.object({ id: z.string().uuid(), paths: z.array(z.string().trim().min(1).max(500)).max(12) });
+
+export const updateProductGallery = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input) => gallerySchema.parse(input))
+  .handler(async ({ data, context }) => {
+    const { data: allowed } = await context.supabase.rpc("is_store_admin", { _user_id: context.userId });
+    if (!allowed) throw new Error("Administrator access required.");
+    const { error } = await context.supabase.from("store_products").update({ image_url: data.paths[0] ?? null, gallery_urls: data.paths }).eq("id", data.id);
+    if (error) throw error;
+    return { ok: true };
+  });
+
+export const deleteProductImage = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input) => z.object({ id: z.string().uuid(), path: z.string().trim().min(1).max(500) }).parse(input))
+  .handler(async ({ data, context }) => {
+    const { data: allowed } = await context.supabase.rpc("is_store_admin", { _user_id: context.userId });
+    if (!allowed) throw new Error("Administrator access required.");
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: product, error: readError } = await supabaseAdmin.from("store_products").select("image_url,gallery_urls").eq("id", data.id).single();
+    if (readError || !product) throw new Error("Product not found.");
+    const paths = [...new Set([product.image_url, ...(product.gallery_urls ?? [])].filter((value): value is string => Boolean(value)))];
+    if (!paths.includes(data.path)) throw new Error("Image does not belong to this product.");
+    const next = paths.filter((path) => path !== data.path);
+    const { error: updateError } = await supabaseAdmin.from("store_products").update({ image_url: next[0] ?? null, gallery_urls: next }).eq("id", data.id);
+    if (updateError) throw updateError;
+    if (!/^https?:\/\//.test(data.path)) {
+      const { error: removeError } = await supabaseAdmin.storage.from("product-images").remove([data.path]);
+      if (removeError) throw removeError;
+    }
     return { ok: true };
   });
