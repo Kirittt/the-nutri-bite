@@ -12,9 +12,10 @@ import { formatINR, getCategory, getProduct, productsIn } from "@/data/catalog";
 import { BRAND } from "@/data/catalog";
 import { useCart } from "@/lib/cart";
 import { getProductImage } from "@/data/catalog-images";
+import { getProductMedia } from "@/lib/store.functions";
 
 export const Route = createFileRoute("/product/$slug")({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
     const product = getProduct(params.slug);
     if (!product) throw notFound();
     return {
@@ -22,6 +23,7 @@ export const Route = createFileRoute("/product/$slug")({
       related: productsIn(product.category)
         .filter((p) => p.slug !== product.slug)
         .slice(0, 4),
+      media: await getProductMedia({ data: { slug: product.slug } }),
     };
   },
   head: ({ loaderData }) => {
@@ -47,13 +49,16 @@ export const Route = createFileRoute("/product/$slug")({
 });
 
 function ProductPage() {
-  const { product, related } = Route.useLoaderData();
+  const { product, related, media } = Route.useLoaderData();
   const cat = getCategory(product.category);
   const { add } = useCart();
   const firstPriced = product.variants.findIndex((v) => v.price !== null);
   const [selected, setSelected] = useState(firstPriced === -1 ? 0 : firstPriced);
   const variant = product.variants[selected];
-  const image = getProductImage(product.slug, product.category);
+  const fallbackImage = getProductImage(product.slug, product.category);
+  const images = media.length ? media : fallbackImage ? [fallbackImage] : [];
+  const [activeImage, setActiveImage] = useState(0);
+  const image = images[activeImage] ?? images[0];
 
   return (
     <div className="container-page section-y">
@@ -70,8 +75,11 @@ function ProductPage() {
       </nav>
 
       <div className="mt-6 grid gap-10 lg:grid-cols-2">
-        <div className="group grid aspect-square place-items-center overflow-hidden rounded-lg bg-linear-to-br from-softgreen to-beige">
-          {image ? <img src={image} alt={product.name} className="size-full object-cover transition-transform duration-500 group-hover:scale-105" width={1200} height={900} /> : <CategoryIcon name={cat?.icon ?? "cookie"} className="size-28 text-primary/25 transition-transform group-hover:scale-110" />}
+        <div>
+          <div className="group grid aspect-square place-items-center overflow-hidden rounded-lg bg-linear-to-br from-softgreen to-beige">
+            {image ? <img src={image} alt={product.name} className="size-full object-cover transition-transform duration-500 group-hover:scale-105" width={1200} height={900} /> : <CategoryIcon name={cat?.icon ?? "cookie"} className="size-28 text-primary/25 transition-transform group-hover:scale-110" />}
+          </div>
+          {images.length > 1 && <div className="mt-3 grid grid-cols-5 gap-2 sm:grid-cols-6">{images.map((url, index) => <button key={url} type="button" onClick={() => setActiveImage(index)} aria-label={`View ${product.name} image ${index + 1}`} aria-pressed={activeImage === index} className={`aspect-square overflow-hidden rounded-md border-2 transition-colors ${activeImage === index ? "border-primary" : "border-transparent hover:border-border"}`}><img src={url} alt="" className="size-full object-cover" width={160} height={160} loading={index === 0 ? "eager" : "lazy"} /></button>)}</div>}
         </div>
 
         <div>
