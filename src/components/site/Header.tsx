@@ -7,6 +7,7 @@ import { BRAND, categories, categorySubcategories, getProductForSubcategory, pro
 import { useCart } from "@/lib/cart";
 import { supabase } from "@/integrations/supabase/client";
 import { CategoryIcon } from "./icons";
+import { Button } from "@/components/ui/button";
 
 const messages = [
   "Handcrafted With Care",
