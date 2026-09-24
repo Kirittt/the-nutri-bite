@@ -18,6 +18,13 @@ const checkoutSchema = z.object({
 
 const newsletterSchema = z.object({ email: z.string().trim().email().max(200) });
 
+export const getActiveBanners = createServerFn({ method: "GET" }).handler(async () => {
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { data, error } = await supabaseAdmin.from("site_banners").select("id,title,subtitle,image_url,mobile_image_url,cta_text,cta_link,sort_order").eq("active", true).order("sort_order");
+  if (error) return [];
+  return data ?? [];
+});
+
 export const subscribeNewsletter = createServerFn({ method: "POST" })
   .inputValidator((input) => newsletterSchema.parse(input))
   .handler(async ({ data }) => {
@@ -100,6 +107,10 @@ export const moderateReview = createServerFn({ method: "POST" }).middleware([req
 export const updateBanner = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((input) => z.object({ id: z.string().uuid(), active: z.boolean() }).parse(input))
   .handler(async ({ data, context }) => { const { data: allowed } = await context.supabase.rpc("is_store_admin", { _user_id: context.userId }); if (!allowed) throw new Error("Administrator access required."); const { error } = await context.supabase.from("site_banners").update({ active: data.active }).eq("id", data.id); if (error) throw error; return { ok: true }; });
+
+export const updateBannerContent = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
+  .inputValidator((input) => z.object({ id: z.string().uuid(), title: z.string().trim().min(2).max(120), subtitle: z.string().trim().max(240), imageUrl: z.string().trim().url().or(z.literal("")), mobileImageUrl: z.string().trim().url().or(z.literal("")), ctaText: z.string().trim().max(40), ctaLink: z.string().trim().max(300) }).parse(input))
+  .handler(async ({ data, context }) => { const { data: allowed } = await context.supabase.rpc("is_store_admin", { _user_id: context.userId }); if (!allowed) throw new Error("Administrator access required."); const { error } = await context.supabase.from("site_banners").update({ title: data.title, subtitle: data.subtitle, image_url: data.imageUrl || null, mobile_image_url: data.mobileImageUrl || null, cta_text: data.ctaText || null, cta_link: data.ctaLink || null }).eq("id", data.id); if (error) throw error; return { ok: true }; });
 
 export const updateVariantPrice = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])

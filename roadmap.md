@@ -50,5 +50,6 @@
 ## Feedback document refresh
 - [x] Launch four Mastana Makhana flavours in one 70 g jar size at ₹189
 - [x] Replace supplied promotional makhana artwork with clean, text-free food photography
-- [ ] Complete cart, trademark, and banner-management feedback
+- [x] Complete nested mobile menu, cart validation and summaries, home-process, and contact-review feedback
+- [ ] Complete site-wide trademark and banner-management feedback
 - [ ] Verify every changed flow on desktop and mobile
