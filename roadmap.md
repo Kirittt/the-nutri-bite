@@ -53,3 +53,6 @@
 - [x] Complete nested mobile menu, cart validation and summaries, home-process, and contact-review feedback
 - [x] Complete site-wide trademark and banner-management feedback
 - [x] Verify every changed flow on desktop and mobile
+
+## Product media management
+- [ ] Let admins upload, preview, arrange, and remove multiple images for each product; show them on product pages
