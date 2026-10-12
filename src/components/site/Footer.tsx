@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, BookOpen, Facebook, Instagram, MapPin, MessageCircle, Phone, Youtube } from "lucide-react";
 
-import logo from "@/assets/nutri-bite-logo.png.asset.json";
-import brochure from "@/assets/the-nutri-bite-brochure.pdf.asset.json";
+const logo = { url: "/nutri-bite-logo.png" };
+const brochure = { url: "/the-nutri-bite-brochure.pdf" };
 import { BRAND, categories } from "@/data/catalog";
 import { Button } from "@/components/ui/button";
 import { NewsletterForm } from "./NewsletterForm";
