@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { BookHeart, ChevronDown, ChevronRight, Factory, Menu, Phone, ShoppingBag, Store, UserRound, UsersRound, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import logo from "@/assets/nutri-bite-logo.png.asset.json";
+const logo = { url: "/nutri-bite-logo.png" };
 import { BRAND, categories, categorySubcategories, getProductForSubcategory, productsIn, subcategorySlug } from "@/data/catalog";
 import { useCart } from "@/lib/cart";
 import { supabase } from "@/integrations/supabase/client";
