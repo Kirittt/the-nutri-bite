@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -134,13 +135,16 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const compactWorkspace = useRouterState({
+    select: (state) => state.location.pathname === "/auth" || state.location.pathname === "/admin",
+  });
 
   return (
     <QueryClientProvider client={queryClient}>
       <CartProvider>
-        <div className="flex min-h-screen flex-col">
+        <div className={compactWorkspace ? "flex flex-col [&>footer]:mt-0" : "flex min-h-screen flex-col"}>
           <Header />
-          <main className="flex-1">
+          <main className={compactWorkspace ? "flex-none" : "flex-1"}>
             {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
             <Outlet />
           </main>
