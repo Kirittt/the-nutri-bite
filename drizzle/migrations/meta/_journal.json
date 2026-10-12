@@ -29,6 +29,13 @@
       "when": 1790256152482,
       "tag": "0003_secure_product_image_uploads",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1791799624977,
+      "tag": "0004_grant_owner_admin",
+      "breakpoints": true
     }
   ]
 }
