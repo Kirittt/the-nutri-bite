@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep sign-in and store-manager layouts content-height without the storefront footer's extra top margin, so short forms do not create blank scrolling areas.
