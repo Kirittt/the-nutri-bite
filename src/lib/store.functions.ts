@@ -212,3 +212,42 @@ export const deleteProductImage = createServerFn({ method: "POST" })
     }
     return { ok: true };
   });
+const assignableRoles = ["customer", "staff", "admin", "super_admin"] as const;
+
+async function requireSuperAdmin(context: { supabase: any; userId: string }) {
+  const { data } = await context.supabase.rpc("has_role", { _user_id: context.userId, _role: "super_admin" });
+  if (!data) throw new Error("Super admin access required.");
+}
+
+export const getTeamMembers = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    await requireSuperAdmin(context);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const [{ data: users }, { data: roles }] = await Promise.all([
+      supabaseAdmin.auth.admin.listUsers({ page: 1, perPage: 200 }),
+      supabaseAdmin.from("user_roles").select("user_id,role"),
+    ]);
+    return (users?.users ?? []).map((user) => ({
+      id: user.id,
+      email: user.email ?? "",
+      created_at: user.created_at,
+      last_sign_in_at: user.last_sign_in_at ?? null,
+      roles: (roles ?? []).filter((row) => row.user_id === user.id).map((row) => row.role as string),
+      is_self: user.id === context.userId,
+    }));
+  });
+
+export const setUserRole = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input) => z.object({ userId: z.string().uuid(), role: z.enum(assignableRoles), enabled: z.boolean() }).parse(input))
+  .handler(async ({ context, data }) => {
+    await requireSuperAdmin(context);
+    if (data.userId === context.userId && data.role === "super_admin" && !data.enabled) throw new Error("You cannot remove your own super admin role.");
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const result = data.enabled
+      ? await supabaseAdmin.from("user_roles").upsert({ user_id: data.userId, role: data.role }, { onConflict: "user_id,role", ignoreDuplicates: true })
+      : await supabaseAdmin.from("user_roles").delete().eq("user_id", data.userId).eq("role", data.role);
+    if (result.error) throw new Error("Role could not be updated.");
+    return { ok: true };
+  });
